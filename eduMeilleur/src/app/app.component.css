@@ -1,0 +1,16 @@
+.row{
+    border-style: solid;
+}
+
+.col,.col-2,.col-6{
+    border-style: dotted;
+}
+
+#lang{
+   
+}
+
+nav a{
+    text-decoration: none;
+    color: inherit;
+}
