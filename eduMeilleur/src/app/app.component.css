@@ -6,11 +6,7 @@
     border-style: dotted;
 }
 
-#lang{
-   
-}
-
-nav a{
+a{
     text-decoration: none;
     color: inherit;
 }

@@ -1,1 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+.row{
+    border-style: solid;
+}
+
+.col,.col-2,.col-6, .container{
+    border-style: dotted;
+}
