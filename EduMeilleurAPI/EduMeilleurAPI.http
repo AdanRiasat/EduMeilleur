@@ -1,0 +1,6 @@
+@EduMeilleurAPI_HostAddress = http://localhost:5030
+
+GET {{EduMeilleurAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

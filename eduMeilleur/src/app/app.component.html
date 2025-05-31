@@ -11,7 +11,7 @@
             <div class="row align-items-center text-center" style="height: 60px;">
               <div class="col"><a>Sujets</a></div>
               <div class="col"><a>AI</a></div>
-              <div class="col"><a>Aide</a></div>
+              <div class="col"><a>Explore</a></div>
               <div class="col"><a>Contacter Nous</a></div>
             </div>
         </nav>
@@ -19,22 +19,26 @@
       
     
       <div class="col-2 text-end">
-        <div class="row">
-          <!--User nav-->
-          <div class="col-6">
-            <nav>
-              <a [routerLink]="['/signup']">Sign up</a> | 
-              <a [routerLink]="['/login']">Log in</a>
-            </nav>
+        <nav>
+          <div class="row">
+            <!--User nav-->
+              <div class="col-6">
+                <a [routerLink]="['/signup']">Sign up</a> | 
+                <a [routerLink]="['/login']">Log in</a>
+              </div>
+
+              <div class="col-6 text-center">
+                <!--Language selector-->
+                <div id="lang">
+                  EN
+                </div>
+                <!--Profile-->
+                <a [routerLink]="['/profile']"><img class="img-circle" src="assets/images/istockphoto-1419410282-612x612.jpg"></a>
+              </div>
+
+             
           </div>
-          <!--Language selector-->
-          <div class="col-6 text-center">
-            <div id="lang">
-              EN
-            </div>
-        </div>
-        </div>
-        
+        </nav>
       </div>
     
     

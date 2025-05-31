@@ -1,0 +1,28 @@
+.centered-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  text-align: center;
+}
+
+.paragraph-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+/* Keep your existing styles */
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+ngb-carousel img {
+  max-height: 400px;
+  object-fit: cover;
+}

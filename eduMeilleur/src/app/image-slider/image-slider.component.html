@@ -1,0 +1,14 @@
+<div class="slider-container">
+  <button class="arrow left" (click)="prev()" [disabled]="currentIndex === 0">&#8592;</button>
+  <div class="slider-viewport">
+    <div
+      class="slider-track"
+      #sliderTrack
+      (transitionend)="onTransitionEnd()"
+      [style.transition]="transitioning ? 'transform 0.3s' : 'none'"
+    >
+      <img *ngFor="let img of images" [src]="img" class="slide" draggable="false" />
+    </div>
+  </div>
+  <button class="arrow right" (click)="next()" [disabled]="currentIndex === images.length - 1">&#8594;</button>
+</div>
