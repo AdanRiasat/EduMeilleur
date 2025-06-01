@@ -1,31 +1,27 @@
 import { AfterViewChecked, Component, ElementRef, ViewChild } from '@angular/core';
-
-interface Message {
-  text: string;
-  isUser: boolean;
-  timestamp: Date;
-  options?: string[];
-}
+import { AiService } from '../services/ai.service';
+import { ChatMessage } from '../models/chatMessage';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { marked } from 'marked';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-ai',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, CommonModule],
   templateUrl: './ai.component.html',
   styleUrl: './ai.component.css'
 })
 export class AiComponent implements AfterViewChecked{
-  @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
-  @ViewChild('messageInput') private messageInput!: ElementRef;
-  
-  messages: Message[] = [
-    {
-      text: 'Hello! How can I help you today?',
-      isUser: false,
-      timestamp: new Date()
-    }
-  ];
 
+  userMessage: string = ""
+  messages: ChatMessage[] = []
+
+  constructor(public aiService: AiService, public sanitizer: DomSanitizer) {}
+
+  @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
+  
   ngAfterViewChecked() {
     this.scrollToBottom();
   }
@@ -37,29 +33,22 @@ export class AiComponent implements AfterViewChecked{
     } catch(err) { }
   }
 
-  sendMessage(text: string): void {
-    if (!text.trim()) return;
+  async sendMessage() {
+    let text = this.userMessage.trim()
+    console.log(text);
     
     // Add user message
-    this.messages.push({
-      text: text,
-      isUser: true,
-      timestamp: new Date()
-    });
+    this.messages.push(new ChatMessage(text, true, new Date))
 
-    // Simulate bot response (you would replace this with actual API call)
-    setTimeout(() => {
-      this.messages.push({
-        text: 'Thanks for your message! I\'ll get back to you shortly.',
-        isUser: false,
-        timestamp: new Date()
-      });
-    }, 1000);
+    //bot response
+    let botReply = await this.aiService.sendMessage(text)
+    this.messages.push(new ChatMessage(botReply, false, new Date))
+    console.log(botReply);
   }
 
-  // Optional: For handling option buttons
-  handleOption(option: string): void {
-    this.sendMessage(option);
+  formatMessage(message: string): SafeHtml {
+    const rawHtml: string = marked.parse(message) as string
+    return this.sanitizer.bypassSecurityTrustHtml(rawHtml);
   }
 }
 
