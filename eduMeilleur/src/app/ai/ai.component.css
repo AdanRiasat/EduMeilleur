@@ -1,0 +1,51 @@
+/* Custom styles for the chatbot */
+.chat-messages {
+  height: 400px;
+  overflow-y: auto;
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.message-content {
+  max-width: 80%;
+  padding: 10px 15px;
+  border-radius: 20px;
+}
+
+.bot-message {
+  justify-content: flex-start;
+}
+
+.bot-message .message-content {
+  background-color: #f0f2f5;
+  color: #000;
+  border-bottom-left-radius: 5px;
+}
+
+.user-message {
+  justify-content: flex-end;
+}
+
+.user-message .message-content {
+  background-color: #0d6efd;
+  color: white;
+  border-bottom-right-radius: 5px;
+}
+
+.message-time {
+  font-size: 0.75rem;
+  margin-top: 5px;
+  text-align: right;
+}
+
+.user-message .message-time small {
+  color: rgba(255, 255, 255, 0.8) !important;
+}

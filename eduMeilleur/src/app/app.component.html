@@ -10,7 +10,7 @@
         <nav>
             <div class="row align-items-center text-center" style="height: 60px;">
               <div class="col"><a>Sujets</a></div>
-              <div class="col"><a>AI</a></div>
+              <div class="col"><a [routerLink]="['/ai']">AI</a></div>
               <div class="col"><a>Explore</a></div>
               <div class="col"><a>Contacter Nous</a></div>
             </div>
@@ -22,18 +22,22 @@
         <nav>
           <div class="row">
             <!--User nav-->
-              <div class="col-6">
-                <a [routerLink]="['/signup']">Sign up</a> | 
-                <a [routerLink]="['/login']">Log in</a>
+              <div class="col-4">
+                <button (click)="disconnect()">dc</button>
               </div>
 
-              <div class="col-6 text-center">
+              <div class="col-8 text-center">
                 <!--Language selector-->
                 <div id="lang">
                   EN
                 </div>
                 <!--Profile-->
-                <a [routerLink]="['/profile']"><img class="img-circle" src="assets/images/istockphoto-1419410282-612x612.jpg"></a>
+                <div *ngIf="userIsConnected">
+                  <a [routerLink]="['/profile']"><img class="img-circle" src="assets/images/istockphoto-1419410282-612x612.jpg"></a>
+                </div>
+                <div *ngIf="!userIsConnected">
+                  <a [routerLink]="['/login']"><img class="img-circle" src="assets/images/istockphoto-1419410282-612x612.jpg"></a>
+                </div>
               </div>
 
              

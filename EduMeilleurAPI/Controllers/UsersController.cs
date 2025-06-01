@@ -1,9 +1,11 @@
 ﻿using EduMeilleurAPI.Models;
 using EduMeilleurAPI.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -70,7 +72,8 @@ namespace EduMeilleurAPI.Controllers
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
-                    validTo = token.ValidTo
+                    validTo = token.ValidTo,
+                    profile = new ProfileDisplayDTO(user.UserName, user.Bio, user.School, user.SchoolYear)
                 });
             }
             else
@@ -78,6 +81,26 @@ namespace EduMeilleurAPI.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest,
                     new { Message = "Le nom d'utilisateur ou le mot de passe est invalide." });
             }
+        }
+
+        [HttpGet("{username}")]
+        public async Task<IActionResult> GetProfilePicture(string username)
+        {
+            User? user = await _userManager.FindByNameAsync(username);
+            if (user == null) return NotFound();
+
+            if (user.FileName == null)
+            {
+                //default.png
+            }
+            else
+            {
+                byte[] bytes = System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() + "/images/pfp/" + user.FileName);
+                return File(bytes, user.MimeType);
+            }
+
+
+            return Ok();
         }
     }
 }
