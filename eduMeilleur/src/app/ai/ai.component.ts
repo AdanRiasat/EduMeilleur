@@ -47,7 +47,7 @@ export class AiComponent implements AfterViewChecked{
   }
 
   formatMessage(message: string): SafeHtml {
-    const rawHtml: string = marked.parse(message) as string
+    let rawHtml: string = marked.parse(message) as string
     return this.sanitizer.bypassSecurityTrustHtml(rawHtml);
   }
 }

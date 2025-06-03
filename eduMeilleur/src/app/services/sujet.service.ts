@@ -38,6 +38,10 @@ export class SujetService {
     let x = await lastValueFrom(this.http.get<Notes>(domain + "/api/Notes/GetNotes/" + id))
     console.log(x);
 
+    let notes = x.content
+    let response = await lastValueFrom(this.http.get(domain + "/Notes/" + notes, {responseType: 'text'}))
+
+    x.content = response
     return x
   }
 }

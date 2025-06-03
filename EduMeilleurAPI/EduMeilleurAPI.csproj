@@ -23,9 +23,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\Notes\" />
     <Folder Include="images\full\" />
     <Folder Include="images\pfp\" />
     <Folder Include="RawSQL\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Notes\test.md" />
   </ItemGroup>
 
 </Project>

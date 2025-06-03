@@ -14,8 +14,8 @@
             </div>
         </div>
 
-        <div class="col">
-            {{currentNotes?.content}}
+        <div class="col" *ngIf="currentNotes && currentNotes.content != null">
+            <div [innerHTML]="formatMessage(currentNotes.content)"></div>
         </div>
     </div>
 </div>

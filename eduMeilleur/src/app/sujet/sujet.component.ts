@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { DisplaySujet } from '../models/displaySujet';
 import { Notes } from '../models/notes';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { marked } from 'marked';
 
 @Component({
   selector: 'app-sujet',
@@ -20,7 +22,7 @@ export class SujetComponent implements OnInit{
   allNotes: Notes[] = []
   currentNotes: Notes | null = null
 
-  constructor(public sujetService: SujetService, public route: ActivatedRoute){}
+  constructor(public sujetService: SujetService, public route: ActivatedRoute, public sanitizer: DomSanitizer){}
 
   async ngOnInit() {
     this.id = this.route.snapshot.paramMap.get("id")
@@ -28,6 +30,8 @@ export class SujetComponent implements OnInit{
       this.sujet = await this.sujetService.getSujet(parseFloat(this.id))
       await this.getAllNotes(parseFloat(this.id))
     }
+
+    
 
   }
 
@@ -39,6 +43,11 @@ export class SujetComponent implements OnInit{
   async getCurrentNotes(id: number){
     this.currentNotes = await this.sujetService.getNotes(id)
   }
+
+  formatMessage(message: string): SafeHtml {
+      const rawHtml: string = marked.parse(message) as string
+      return this.sanitizer.bypassSecurityTrustHtml(rawHtml);
+    }
 
   
 }
