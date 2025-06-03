@@ -2,15 +2,16 @@
   <!-- Category Buttons -->
   <div class="row mb-4 justify-content-center">
     <div class="col-auto">
-      <button class="btn btn-outline-danger me-2">Math</button>
-      <button class="btn btn-outline-success me-2">Science</button>
-      <button class="btn btn-outline-primary">French</button>
+      <button class="btn btn-outline-secondary me-2" (click)="sort('All')">All</button>
+      <button class="btn btn-outline-danger me-2" (click)="sort('Math')">Math</button>
+      <button class="btn btn-outline-success me-2" (click)="sort('Science')">Science</button>
+      <button class="btn btn-outline-primary" (click)="sort('French')">French</button>
     </div>
   </div>
 
   <!-- Subjects Grid -->
   <div class="row g-4">
-  <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let s of sujets">
+  <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let s of displaySujets">
     <a [routerLink]="['/sujets', s.id]" class="text-decoration-none text-dark">
       <div class="card h-100 shadow-sm border-0">
         <div class="card-body">

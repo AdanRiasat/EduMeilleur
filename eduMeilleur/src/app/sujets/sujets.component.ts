@@ -13,10 +13,31 @@ import { RouterModule } from '@angular/router';
 })
 export class SujetsComponent implements OnInit{
   sujets: DisplaySujet[] = []
+  displaySujets: DisplaySujet[] = []
 
   constructor(public sujetService: SujetService) {}
 
   async ngOnInit(){
-    this.sujets = await this.sujetService.getSujets()
+    await this.getSujets()
+    this.displaySujets = this.sujets
+  }
+
+  async getSujets(){
+     this.sujets = await this.sujetService.getSujets()
+  }
+
+  sort(type: string){
+    if (type == "All"){
+      this.displaySujets = this.sujets
+      return
+    }
+
+    this.displaySujets = []
+
+    for(let s of this.sujets){
+      if (s.type == type){
+        this.displaySujets.push(s)
+      }
+    }
   }
 }
