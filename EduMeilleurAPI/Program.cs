@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using EduMeilleurAPI.Services;
 
 
 
@@ -65,6 +66,8 @@ builder.Services.AddCors(options =>
         policy.AllowAnyOrigin();
     });
 });
+
+builder.Services.AddScoped<SubjectService>();
 
 var app = builder.Build();
 

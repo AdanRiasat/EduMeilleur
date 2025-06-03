@@ -1,0 +1,23 @@
+<div class="container py-4">
+  <!-- Category Buttons -->
+  <div class="row mb-4 justify-content-center">
+    <div class="col-auto">
+      <button class="btn btn-outline-danger me-2">Math</button>
+      <button class="btn btn-outline-success me-2">Science</button>
+      <button class="btn btn-outline-primary">French</button>
+    </div>
+  </div>
+
+  <!-- Subjects Grid -->
+  <div class="row g-4">
+  <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let s of sujets">
+    <a [routerLink]="['/sujets', s.id]" class="text-decoration-none text-dark">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title">{{ s.name }}</h5>
+          <p class="card-text">{{ s.description }}</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>

@@ -16,5 +16,6 @@ namespace EduMeilleurAPI.Data
         }
 
         public DbSet<EduMeilleurAPI.Models.Picture> Picture { get; set; } = default!;
+        public DbSet<EduMeilleurAPI.Models.Subject> Subject { get; set; } = default!;
     }
 }

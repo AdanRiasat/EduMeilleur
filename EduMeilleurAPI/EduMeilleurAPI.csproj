@@ -25,6 +25,7 @@
   <ItemGroup>
     <Folder Include="images\full\" />
     <Folder Include="images\pfp\" />
+    <Folder Include="RawSQL\" />
   </ItemGroup>
 
 </Project>

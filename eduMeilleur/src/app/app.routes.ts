@@ -4,6 +4,8 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AiComponent } from './ai/ai.component';
+import { SujetsComponent } from './sujets/sujets.component';
+import { SujetComponent } from './sujet/sujet.component';
 
 export const routes: Routes = [
     {path: "", redirectTo: "/home", pathMatch: "full"},
@@ -11,5 +13,7 @@ export const routes: Routes = [
     {path: "signup", component: SignUpComponent},
     {path: "login", component: LoginComponent},
     {path: "profile", component: ProfileComponent},
-    {path: "ai", component: AiComponent}
+    {path: "ai", component: AiComponent},
+    {path: "sujets", component: SujetsComponent},
+    {path: "sujets/:id", component: SujetComponent}
 ];
