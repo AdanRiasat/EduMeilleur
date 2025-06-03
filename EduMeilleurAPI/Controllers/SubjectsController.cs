@@ -42,7 +42,6 @@ namespace EduMeilleurAPI.Controllers
             return new SubjectDisplayDTO(subject);
         }
 
-        
 
         
     }
