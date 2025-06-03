@@ -15,7 +15,7 @@ namespace EduMeilleurAPI.Services
 
         private bool IsConstextValid()
         {
-            return _context != null && _context.Subject != null;
+            return _context != null && _context.Notes != null;
         }
 
         public async Task<List<Notes>?> GetAllAsync(int subjectId)

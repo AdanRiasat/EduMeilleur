@@ -6,6 +6,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { AiComponent } from './ai/ai.component';
 import { SujetsComponent } from './sujets/sujets.component';
 import { SujetComponent } from './sujet/sujet.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 
 export const routes: Routes = [
     {path: "", redirectTo: "/home", pathMatch: "full"},
@@ -15,5 +16,6 @@ export const routes: Routes = [
     {path: "profile", component: ProfileComponent},
     {path: "ai", component: AiComponent},
     {path: "sujets", component: SujetsComponent},
-    {path: "sujets/:id", component: SujetComponent}
+    {path: "sujets/:id", component: SujetComponent},
+    {path: "contactUs", component: ContactUsComponent}
 ];

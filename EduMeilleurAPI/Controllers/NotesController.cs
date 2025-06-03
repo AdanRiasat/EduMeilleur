@@ -29,7 +29,7 @@ namespace EduMeilleurAPI.Controllers
             List<Notes>? notes = await _notesService.GetAllAsync(id);
             if (notes == null) return StatusCode(StatusCodes.Status500InternalServerError);
 
-            return notes;
+            return Ok(notes);
         }
 
         // GET: api/Notes/5
@@ -40,7 +40,7 @@ namespace EduMeilleurAPI.Controllers
 
             if (notes == null) return NotFound();
 
-            return notes;
+            return Ok(notes);
         }
     }
 }

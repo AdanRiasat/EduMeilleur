@@ -73,7 +73,8 @@ namespace EduMeilleurAPI.Controllers
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     validTo = token.ValidTo,
-                    profile = new ProfileDisplayDTO(user)
+                    profile = new ProfileDisplayDTO(user),
+                    Roles = roles
                 });
             }
             else

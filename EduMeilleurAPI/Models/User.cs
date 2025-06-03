@@ -12,5 +12,7 @@ namespace EduMeilleurAPI.Models
         //Pfp
         public string? FileName { get; set; }
         public string? MimeType { get; set; }
+
+        public virtual List<QuestionTeacher>? Questions { get; set; }
     }
 }

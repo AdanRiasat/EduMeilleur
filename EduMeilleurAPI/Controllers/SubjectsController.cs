@@ -30,7 +30,7 @@ namespace EduMeilleurAPI.Controllers
             List<SubjectDisplayDTO>? subjects = await _subjectService.GetAllAsync();
             if (subjects == null) return StatusCode(StatusCodes.Status500InternalServerError);
            
-            return subjects;
+            return Ok(subjects);
         }
 
         [HttpGet("{id}")]
@@ -39,7 +39,7 @@ namespace EduMeilleurAPI.Controllers
             Subject? subject = await _subjectService.GetAsync(id);
             if (subject == null) return StatusCode(StatusCodes.Status500InternalServerError);
 
-            return new SubjectDisplayDTO(subject);
+            return Ok(new SubjectDisplayDTO(subject));
         }
 
 
