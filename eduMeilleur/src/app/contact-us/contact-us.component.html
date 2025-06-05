@@ -3,9 +3,9 @@
     <h4>Send us a message!</h4>
     <div class="row">
         <div class="col">
-            <input id="titleTeacher" type="text" name="titleTeacher" placeholder="Title"><br>
-            <textarea id="messageTeacher" placeholder="Message" rows="5"  cols="50" name="messageTeacher"></textarea><br>
-            <button>Send</button>
+            <input id="titleTeacher" type="text" name="titleTeacher" placeholder="Title" [(ngModel)]="titleTeacher"><br>
+            <textarea id="messageTeacher" placeholder="Message" rows="5"  cols="50" name="messageTeacher" [(ngModel)]="messageTeacher"></textarea><br>
+            <button (click)="postQuestion()">Send</button>
         </div>
     </div>
 </div>

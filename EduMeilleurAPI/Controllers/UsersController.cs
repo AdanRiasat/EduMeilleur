@@ -56,6 +56,7 @@ namespace EduMeilleurAPI.Controllers
                 foreach (string role in roles)
                 {
                     authClaims.Add(new Claim(ClaimTypes.Role, role));
+                   
                 }
                 authClaims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
 

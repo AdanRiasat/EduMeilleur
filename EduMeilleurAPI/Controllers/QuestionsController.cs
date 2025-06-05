@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using EduMeilleurAPI.Services;
+using EduMeilleurAPI.Models.DTO;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace EduMeilleurAPI.Controllers
 {
@@ -28,11 +31,18 @@ namespace EduMeilleurAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize]
-        public async Task<ActionResult<QuestionTeacher>> PostQuestionTeacher(QuestionTeacher question)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<QuestionTeacher>> PostQuestionTeacher(QuestionDTO questionDTO)
         {
             User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             if (user == null) return NotFound();
+
+            QuestionTeacher question = new QuestionTeacher()
+            {
+                Title = questionDTO.Title,
+                Message = questionDTO.Message,
+                user = user
+            };
 
             question.user = user;
 
@@ -42,7 +52,5 @@ namespace EduMeilleurAPI.Controllers
         }
 
 
-
-       
     }
 }

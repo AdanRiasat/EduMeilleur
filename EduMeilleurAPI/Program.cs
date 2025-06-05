@@ -7,10 +7,16 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using EduMeilleurAPI.Services;
+using System.Security.Claims;
 
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.SetMinimumLevel(LogLevel.Debug);
+
 builder.Services.AddDbContext<EduMeilleurAPIContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("EduMeilleurAPIContext") ?? throw new InvalidOperationException("Connection string 'EduMeilleurAPIContext' not found."));
@@ -33,13 +39,24 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = true,
         ValidAudience = "http://localhost:4200", // Audience : Client
         ValidIssuer = "https://localhost:7027", // ⛔ Issuer : Serveur -> HTTPS VÉRIFIEZ le PORT de votre serveur dans launchsettings.json !
+        ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-            .GetBytes("LooOOongue Phrase SiNoN Ça ne Marchera PaAaAAAaAas !")) // Clé pour déchiffrer les tokens
+            .GetBytes("LooOOongue Phrase SiNoN Ça ne Marchera PaAaAAAaAas !")), // Clé pour déchiffrer les tokens
+
+        ClockSkew = TimeSpan.Zero
     };
 });
 
-builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<EduMeilleurAPIContext>();
+builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<EduMeilleurAPIContext>().AddDefaultTokenProviders();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Events.OnRedirectToLogin = context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        return Task.CompletedTask;
+    };
+});
 
 builder.Services.Configure<IdentityOptions>(options => //modify later
 {
@@ -72,6 +89,8 @@ builder.Services.AddScoped<NotesService>();
 builder.Services.AddScoped<QuestionService>();
 
 var app = builder.Build();
+
+app.UseRouting();
 
 app.UseCors("AllowAll");
 
