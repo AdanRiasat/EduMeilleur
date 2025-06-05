@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using EduMeilleurAPI.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using System.Reflection.Emit;
 
 namespace EduMeilleurAPI.Data
 {
@@ -51,6 +52,18 @@ namespace EduMeilleurAPI.Data
                 new IdentityUserRole<string> { UserId = u1.Id, RoleId = "1" },
                 new IdentityUserRole<string> { UserId = u2.Id, RoleId = "2"}
             );
+
+            builder.Entity<Notes>()
+            .HasOne(n => n.Subject)
+            .WithMany(s => s.Notes)
+            .HasForeignKey("SubjectId");
+
+            builder.Entity<Notes>().HasData(
+                new { Id = 1, Title = "1.1 sigma time with me", Content = "test.md", SubjectId = 1, Chapter = "Trigonometry" },
+                new {Id = 2, Title = "1.2 erm what the skibidi", Content = "test.md", SubjectId = 1, Chapter = "Trigonometry"},
+                new {Id = 3, Title = "1* REVISION on skibidi", Content = "test.md", SubjectId = 1, Chapter = "Trigonometry" },
+                new {Id = 4, Title = "2.1 is he bothering you?", Content = "test.md", SubjectId = 1, Chapter = "Absolute value"}
+            );
         }
 
 
@@ -59,5 +72,6 @@ namespace EduMeilleurAPI.Data
         public DbSet<EduMeilleurAPI.Models.Subject> Subject { get; set; } = default!;
         public DbSet<EduMeilleurAPI.Models.Notes> Notes { get; set; } = default!;
         public DbSet<EduMeilleurAPI.Models.QuestionTeacher> QuestionTeacher { get; set; } = default!;
+        public DbSet<EduMeilleurAPI.Models.Exercise> Exercise { get; set; } = default!;
     }
 }

@@ -37,8 +37,14 @@ namespace EduMeilleurAPI.Controllers
         public async Task<ActionResult<Notes>> GetNotes(int id)
         {
             var notes = await _notesService.GetAsync(id);
-
             if (notes == null) return NotFound();
+
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Notes", notes.Content);
+            if (!System.IO.File.Exists(filePath)) return NotFound("Markdown file not found");
+
+            string markdown = await System.IO.File.ReadAllTextAsync(filePath);
+
+            notes.Content = markdown;
 
             return Ok(notes);
         }

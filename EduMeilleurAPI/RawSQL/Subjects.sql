@@ -13,9 +13,4 @@ VALUES ('SN4','hello my name is jonh and this is a placeholder because im a pret
 ('Physique','hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do','Science')
 GO
 
-INSERT INTO Notes(Title, Content, SubjectId)
-VALUES ('1.1 sigma male me', 'test.md', 1),
-('1.1 sigma time', 'hello', 1),
-('1.1 sigma time', 'my name is jonh teehee', 1)
-GO
 

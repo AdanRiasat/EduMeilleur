@@ -6,6 +6,7 @@ import { Notes } from '../models/notes';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { marked } from 'marked';
+import { Exercise } from '../models/Exercise';
 
 @Component({
   selector: 'app-sujet',
@@ -22,6 +23,9 @@ export class SujetComponent implements OnInit{
   allNotes: Notes[] = []
   currentNotes: Notes | null = null
 
+  allExercises: Exercise[] = []
+  currentExercice: Exercise | null = null
+
   constructor(public sujetService: SujetService, public route: ActivatedRoute, public sanitizer: DomSanitizer){}
 
   async ngOnInit() {
@@ -30,9 +34,6 @@ export class SujetComponent implements OnInit{
       this.sujet = await this.sujetService.getSujet(parseFloat(this.id))
       await this.getAllNotes(parseFloat(this.id))
     }
-
-    
-
   }
 
   async getAllNotes(id: number){
@@ -47,7 +48,18 @@ export class SujetComponent implements OnInit{
   formatMessage(message: string): SafeHtml {
       const rawHtml: string = marked.parse(message) as string
       return this.sanitizer.bypassSecurityTrustHtml(rawHtml);
-    }
+  }
+
+  async getAllExercices(id: number){
+    this.allExercises = await this.sujetService.getAllExercise(id)
+    console.log(this.allNotes);
+  }
+
+  async getCurrentExercise(id: number){
+    this.currentExercice = await this.sujetService.getExercise(id)
+  }
+
+
 
   
 }

@@ -7,10 +7,17 @@
             <button>Videos</button>
 
             <div class="row" *ngFor="let n of allNotes">
-                <div class="col">
+                <div *ngIf="n.title[2] != '1'">
+                    <div class="col title">
                     <a (click)="getCurrentNotes(n.id)">{{n.title}}</a>
+                    </div>
                 </div>
 
+                <div *ngIf="n.title[2] == '1'">
+                    <div class="col">
+                        <a (click)="getCurrentNotes(n.id)"><strong>{{n.title}}</strong></a>
+                    </div>
+                </div>
             </div>
         </div>
 

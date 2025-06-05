@@ -87,6 +87,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<SubjectService>();
 builder.Services.AddScoped<NotesService>();
 builder.Services.AddScoped<QuestionService>();
+builder.Services.AddScoped<ExerciseService>();
 
 var app = builder.Build();
 

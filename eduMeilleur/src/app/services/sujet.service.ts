@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { DisplaySujet } from '../models/displaySujet';
 import { Notes } from '../models/notes';
+import { Exercise } from '../models/Exercise';
 
 const domain: string ="https://localhost:7027"
 
@@ -37,11 +38,20 @@ export class SujetService {
   async getNotes(id: number): Promise<Notes>{
     let x = await lastValueFrom(this.http.get<Notes>(domain + "/api/Notes/GetNotes/" + id))
     console.log(x);
+    return x
+  }
 
-    let notes = x.content
-    let response = await lastValueFrom(this.http.get(domain + "/Notes/" + notes, {responseType: 'text'}))
+  async getAllExercise(id: number): Promise<Exercise[]> {
+    let x = await lastValueFrom(this.http.get<Exercise[]>(domain + "/api/Exercises/GetAllExercises/" + id))
+    console.log(x);
 
-    x.content = response
+    return x
+  }
+
+  async getExercise(id: number): Promise<Exercise> {
+    let x = await lastValueFrom(this.http.get<Exercise>(domain + "/api/Exercises/GetExercise/" + id))
+    console.log(x);
+
     return x
   }
 }
