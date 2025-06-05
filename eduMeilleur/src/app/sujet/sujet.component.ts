@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { SujetService } from '../services/sujet.service';
 import { ActivatedRoute } from '@angular/router';
 import { DisplaySujet } from '../models/displaySujet';
-import { Notes } from '../models/notes';
+import { Item } from '../models/Item';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { marked } from 'marked';
-import { Exercise } from '../models/Exercise';
 
 @Component({
   selector: 'app-sujet',
@@ -18,48 +17,35 @@ import { Exercise } from '../models/Exercise';
 export class SujetComponent implements OnInit{
   
   sujet: DisplaySujet | null = null
-  id: string | null = null
+  id: number = 0 //this is subjectId
 
-  allNotes: Notes[] = []
-  currentNotes: Notes | null = null
-
-  allExercises: Exercise[] = []
-  currentExercice: Exercise | null = null
+  allItems: Item[] = []
+  currentItem: Item | null = null
+  currentType: string = ""
 
   constructor(public sujetService: SujetService, public route: ActivatedRoute, public sanitizer: DomSanitizer){}
 
   async ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get("id")
-    if (this.id != null){
-      this.sujet = await this.sujetService.getSujet(parseFloat(this.id))
-      await this.getAllNotes(parseFloat(this.id))
+    let sujetIdStringData: string | null = this.route.snapshot.paramMap.get("id")
+    if (sujetIdStringData != null){
+      this.id = parseFloat(sujetIdStringData)
+      this.sujet = await this.sujetService.getSujet(this.id)
+      await this.getAllItems("Notes")
     }
   }
 
-  async getAllNotes(id: number){
-    this.allNotes = await this.sujetService.getAllNotes(id)
-    console.log(this.allNotes);
+  async getAllItems(type: string){
+    this.allItems = await this.sujetService.getAllItems(this.id, type)
+    console.log(this.allItems);
+    this.currentType = type
   }
 
-  async getCurrentNotes(id: number){
-    this.currentNotes = await this.sujetService.getNotes(id)
+  async getCurrentItem(id: number, type: string){
+    this.currentItem = await this.sujetService.getItem(id, type)
   }
 
   formatMessage(message: string): SafeHtml {
       const rawHtml: string = marked.parse(message) as string
       return this.sanitizer.bypassSecurityTrustHtml(rawHtml);
   }
-
-  async getAllExercices(id: number){
-    this.allExercises = await this.sujetService.getAllExercise(id)
-    console.log(this.allNotes);
-  }
-
-  async getCurrentExercise(id: number){
-    this.currentExercice = await this.sujetService.getExercise(id)
-  }
-
-
-
-  
 }

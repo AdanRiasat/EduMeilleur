@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { DisplaySujet } from '../models/displaySujet';
-import { Notes } from '../models/notes';
-import { Exercise } from '../models/Exercise';
+import { Item } from '../models/Item';
 
 const domain: string ="https://localhost:7027"
 
@@ -28,30 +27,16 @@ export class SujetService {
     return x
   } 
 
-  async getAllNotes(id: number): Promise<Notes[]>{
-    let x = await lastValueFrom(this.http.get<Notes[]>(domain + "/api/Notes/GetAllNotes/" + id))
+  async getAllItems(id: number, type: string): Promise<Item[]>{
+    let x = await lastValueFrom(this.http.get<Item[]>(domain + "/api/Notes/GetAll" + type + "/" + id))
     console.log(x);
 
     return x
   }
 
-  async getNotes(id: number): Promise<Notes>{
-    let x = await lastValueFrom(this.http.get<Notes>(domain + "/api/Notes/GetNotes/" + id))
+  async getItem(id: number, type: string): Promise<Item>{
+    let x = await lastValueFrom(this.http.get<Item>(domain + "/api/Notes/Get" + type + "/" + id))
     console.log(x);
-    return x
-  }
-
-  async getAllExercise(id: number): Promise<Exercise[]> {
-    let x = await lastValueFrom(this.http.get<Exercise[]>(domain + "/api/Exercises/GetAllExercises/" + id))
-    console.log(x);
-
-    return x
-  }
-
-  async getExercise(id: number): Promise<Exercise> {
-    let x = await lastValueFrom(this.http.get<Exercise>(domain + "/api/Exercises/GetExercise/" + id))
-    console.log(x);
-
     return x
   }
 }

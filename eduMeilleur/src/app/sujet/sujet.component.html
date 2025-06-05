@@ -2,27 +2,27 @@
     <div class="row">
         <div class="col-2">
             <h3>{{sujet?.name}}</h3>
-            <button>Notes</button>
-            <button>Exercises</button>
+            <button (click)="getAllItems('Notes')">Notes</button>
+            <button (click)="getAllItems('Exercises')">Exercises</button>
             <button>Videos</button>
 
-            <div class="row" *ngFor="let n of allNotes">
+            <div class="row" *ngFor="let n of allItems">
                 <div *ngIf="n.title[2] != '1'">
                     <div class="col title">
-                    <a (click)="getCurrentNotes(n.id)">{{n.title}}</a>
+                        <a (click)="getCurrentItem(n.id, this.currentType)">{{n.title}}</a>
                     </div>
                 </div>
 
                 <div *ngIf="n.title[2] == '1'">
                     <div class="col">
-                        <a (click)="getCurrentNotes(n.id)"><strong>{{n.title}}</strong></a>
+                        <a (click)="getCurrentItem(n.id, this.currentType)"><strong>{{n.title}}</strong></a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col" *ngIf="currentNotes && currentNotes.content != null">
-            <div [innerHTML]="formatMessage(currentNotes.content)"></div>
+        <div class="col" *ngIf="currentItem && currentItem.content != null">
+            <div [innerHTML]="formatMessage(currentItem.content)"></div>
         </div>
     </div>
 </div>
