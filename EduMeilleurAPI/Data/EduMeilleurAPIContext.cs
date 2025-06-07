@@ -89,6 +89,12 @@ namespace EduMeilleurAPI.Data
                 new Exercise { Id = 2, Title = "Find the function", Content = "testExerc.md", ChapterId = 1},
                 new Exercise { Id = 3, Title = "Simplification", Content = "testExerc.md", ChapterId = 1 }
             );
+
+            builder.Entity<Video>().HasData(
+                new Video { Id = 1, Title = "hmmm I cant quite remember", Content = "vidExample.md", ChapterId = 1},
+                new Video { Id = 2, Title = "Favorite color?", Content = "vidExample.md", ChapterId = 1},
+                new Video { Id = 3, Title = "Sigma vs Alpha", Content = "vidExample.md", ChapterId = 2}
+            );
         }
 
 
@@ -98,5 +104,6 @@ namespace EduMeilleurAPI.Data
         public DbSet<EduMeilleurAPI.Models.Notes> Notes { get; set; } = default!;
         public DbSet<EduMeilleurAPI.Models.QuestionTeacher> QuestionTeacher { get; set; } = default!;
         public DbSet<EduMeilleurAPI.Models.Exercise> Exercise { get; set; } = default!;
+        public DbSet<EduMeilleurAPI.Models.Video> Video { get; set; } = default!;
     }
 }

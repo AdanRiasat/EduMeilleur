@@ -11,6 +11,8 @@ namespace EduMeilleurAPI.Models
         [JsonIgnore]
         public virtual Subject Subject { get; set; } = null!;
 
-        public virtual List<Exercise> Exercise { get; set; } = new List<Exercise>();
+        public virtual List<Exercise> Exercises { get; set; } = new List<Exercise>();
+        public virtual List<Notes> Notes { get; set; } = new List<Notes>();
+        public virtual List<Video> Videos { get; set; } = new List<Video>();
     }
 }

@@ -88,6 +88,7 @@ builder.Services.AddScoped<SubjectService>();
 builder.Services.AddScoped<NotesService>();
 builder.Services.AddScoped<QuestionService>();
 builder.Services.AddScoped<ExerciseService>();
+builder.Services.AddScoped<VideoService>();
 
 var app = builder.Build();
 

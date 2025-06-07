@@ -77,3 +77,5 @@ z ≈ √52 ≈ 7.21 cm
 
 - a) Height = 5 × sin(70°) ≈ 4.7 m  
 - b) Distance from wall = 5 × cos(70°) ≈ 1.71 m
+  
+

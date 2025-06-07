@@ -51,3 +51,12 @@ Quantum mechanics (QM) is the foundational **theory in physics** that describes 
 Quantum mechanics describes the universe at its most fundamental level as **probabilistic, granular, inherently wavelike, and non-local**. It replaces the deterministic clockwork universe of classical physics with a realm where possibilities exist simultaneously, certainty is elusive, and measurement plays an active role in shaping reality observed.
 
 While deeply counterintuitive, it's proven to be **the most accurate and powerful scientific theory ever developed** for the microscopic world that forms the basis of everything. It's a beautiful, bizarre, and fundamentally different description of reality.
+
+## Video Lesson
+
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/x3mRwqmJ6oE"
+frameborder="0"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen>
+</iframe>

@@ -4,7 +4,7 @@
             <h3>{{sujet?.name}}</h3>
             <button (click)="getAllItems('Notes')">Notes</button>
             <button (click)="getAllItems('Exercises')">Exercises</button>
-            <button>Videos</button>
+            <button (click)="getAllItems('Videos')">Videos</button>
 
             <div class="row" *ngFor="let c of chapters">
                 <strong>{{c}}</strong>
