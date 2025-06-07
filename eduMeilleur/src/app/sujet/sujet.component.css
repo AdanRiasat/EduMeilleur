@@ -2,3 +2,15 @@
     position: relative;
     left: 10px;
 }
+
+.scroll-sidebar,
+.scroll-content {
+  height: 100vh;       /* Full screen height */
+  overflow-y: auto;    /* Enable vertical scrolling */
+  padding: 1rem;
+}
+
+.scroll-sidebar {
+  border-right: 1px solid #ddd; /* Optional: visual separation */
+  background-color: #f8f9fa;    /* Optional: subtle background */
+}

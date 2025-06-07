@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2">
+        <div class="col-2 scroll-sidebar">
             <h3>{{sujet?.name}}</h3>
             <button (click)="getAllItems('Notes')">Notes</button>
             <button (click)="getAllItems('Exercises')">Exercises</button>
@@ -14,13 +14,12 @@
                             <a (click)="getCurrentItem(n.id, this.currentType)">{{n.title}}</a>
                         </div>
                     </div>
-
                 </div>
             </div>
             
         </div>
 
-        <div class="col" *ngIf="currentItem && currentItem.content != null">
+        <div class="col scroll-content" *ngIf="currentItem && currentItem.content != null">
             <div [innerHTML]="formatMessage(currentItem.content)"></div>
         </div>
     </div>
