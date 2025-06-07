@@ -22,7 +22,7 @@ namespace EduMeilleurAPI.Services
         {
             if (!IsConstextValid()) return null;
 
-            return await _context.Exercise.Where(e => e.Notes.Subject.Id == subjectid).ToListAsync();
+            return await _context.Exercise.Where(e => e.Chapter.Subject.Id == subjectid).ToListAsync();
         }
 
         public async Task<Exercise?> GetAsync(int id)

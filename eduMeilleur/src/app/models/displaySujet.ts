@@ -3,6 +3,7 @@ export class DisplaySujet{
         public id: number,
         public name: string,
         public description: string,
-        public type: string
+        public type: string,
+        public chapters: string[]
     ) {}
 }

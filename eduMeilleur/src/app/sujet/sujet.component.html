@@ -6,19 +6,18 @@
             <button (click)="getAllItems('Exercises')">Exercises</button>
             <button>Videos</button>
 
-            <div class="row" *ngFor="let n of allItems">
-                <div *ngIf="n.title[2] != '1'">
-                    <div class="col title">
-                        <a (click)="getCurrentItem(n.id, this.currentType)">{{n.title}}</a>
+            <div class="row" *ngFor="let c of chapters">
+                <strong>{{c}}</strong>
+                <div *ngFor="let n of allItems">
+                    <div *ngIf="n.chapter == c">
+                        <div class="col title">
+                            <a (click)="getCurrentItem(n.id, this.currentType)">{{n.title}}</a>
+                        </div>
                     </div>
-                </div>
 
-                <div *ngIf="n.title[2] == '1'">
-                    <div class="col">
-                        <a (click)="getCurrentItem(n.id, this.currentType)"><strong>{{n.title}}</strong></a>
-                    </div>
                 </div>
             </div>
+            
         </div>
 
         <div class="col" *ngIf="currentItem && currentItem.content != null">

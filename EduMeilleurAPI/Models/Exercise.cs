@@ -8,7 +8,8 @@ namespace EduMeilleurAPI.Models
         public string Title { get; set; } = null!;
         public string Content { get; set; } = null!;
 
+        public int ChapterId { get; set; }
         [JsonIgnore]
-        public virtual Notes Notes { get; set; } = null!;
+        public virtual Chapter Chapter { get; set; }
     }
 }

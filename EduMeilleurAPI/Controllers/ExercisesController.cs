@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using EduMeilleurAPI.Data;
 using EduMeilleurAPI.Models;
 using EduMeilleurAPI.Services;
+using EduMeilleurAPI.Migrations;
+using EduMeilleurAPI.Models.DTO;
+using static Azure.Core.HttpHeader;
 
 namespace EduMeilleurAPI.Controllers
 {
@@ -29,15 +32,27 @@ namespace EduMeilleurAPI.Controllers
             var exercises = await _exerciseService.GetAllAsync(id);
             if (exercises == null) return StatusCode(StatusCodes.Status500InternalServerError);
 
-            return Ok(exercises);
+            var items = new List<ItemDisplayDTO>();
+
+            foreach (var item in exercises)
+            {
+                items.Add(new ItemDisplayDTO(item.Id, item.Title, item.Content, item.Chapter.Title));
+            }
+
+            return Ok(items);
         }
 
         // GET: api/Exercises/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Exercise>> GetExercise(int id)
+        public async Task<ActionResult<Exercise>> GetExercises(int id) //s for simpler frontend
         {
             var exercise = await _exerciseService.GetAsync(id);
             if (exercise == null) return StatusCode(StatusCodes.Status500InternalServerError);
+
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Exercises", exercise.Content);
+            if (!System.IO.File.Exists(filePath)) return NotFound("Markdown file not found");
+
+            exercise.Content = await System.IO.File.ReadAllTextAsync(filePath);
 
             return Ok(exercise);
         }

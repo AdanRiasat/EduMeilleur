@@ -3,6 +3,6 @@ export class Item{
         public id: number,
         public title: string,
         public content: string,
-        public type: string
+        public chapter: string 
     ) {}
 }

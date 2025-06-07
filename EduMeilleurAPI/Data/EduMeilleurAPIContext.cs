@@ -53,16 +53,41 @@ namespace EduMeilleurAPI.Data
                 new IdentityUserRole<string> { UserId = u2.Id, RoleId = "2"}
             );
 
-            builder.Entity<Notes>()
+            builder.Entity<Subject>().HasData(
+                new Subject { Id = 1, Name = "SN4", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Math" },
+                new Subject { Id = 2, Name = "SN5", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Math" },
+                new Subject { Id = 3, Name = "CST4", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Math" },
+                new Subject { Id = 4, Name = "CST5", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Math" },
+                new Subject { Id = 5, Name = "TS4", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Math" },
+                new Subject { Id = 6, Name = "TS5", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Math" },
+                new Subject { Id = 7, Name = "ST", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Science" },
+                new Subject { Id = 8, Name = "STE", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Science" },
+                new Subject { Id = 9, Name = "Chimie", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Science" },
+                new Subject { Id = 10, Name = "Physique", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Science" }
+            );
+
+            builder.Entity<Chapter>()
             .HasOne(n => n.Subject)
-            .WithMany(s => s.Notes)
+            .WithMany(s => s.Chapters)
             .HasForeignKey("SubjectId");
 
+            builder.Entity<Chapter>().HasData(
+                new {Id = 1, Title = "1 the first one", SubjectId = 1},
+                new {Id = 2, Title = "2 the second one", SubjectId = 1},
+                new {Id = 3, Title = "3 the third one", SubjectId = 1}
+            );
+
             builder.Entity<Notes>().HasData(
-                new { Id = 1, Title = "1.1 sigma time with me", Content = "test.md", SubjectId = 1, Chapter = "Trigonometry" },
-                new {Id = 2, Title = "1.2 erm what the skibidi", Content = "test.md", SubjectId = 1, Chapter = "Trigonometry"},
-                new {Id = 3, Title = "1* REVISION on skibidi", Content = "test.md", SubjectId = 1, Chapter = "Trigonometry" },
-                new {Id = 4, Title = "2.1 is he bothering you?", Content = "test.md", SubjectId = 1, Chapter = "Absolute value"}
+                new Notes { Id = 1, Title = "1.1 sigma time with me", Content = "test.md", ChapterId = 1,},
+                new Notes {Id = 2, Title = "1.2 erm what the skibidi", Content = "test.md", ChapterId = 1 },
+                new Notes { Id = 3, Title = "1* REVISION on skibidi", Content = "test.md", ChapterId = 1 },
+                new Notes { Id = 4, Title = "2.1 is he bothering you?", Content = "test.md", ChapterId = 2,}
+            );
+            
+            builder.Entity<Exercise>().HasData(
+                new Exercise {Id = 1, Title = "Pythagore with friends", Content = "testExerc.md", ChapterId = 1},
+                new Exercise { Id = 2, Title = "Find the function", Content = "testExerc.md", ChapterId = 1},
+                new Exercise { Id = 3, Title = "Simplification", Content = "testExerc.md", ChapterId = 1 }
             );
         }
 

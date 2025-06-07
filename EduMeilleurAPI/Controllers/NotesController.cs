@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using EduMeilleurAPI.Data;
 using EduMeilleurAPI.Models;
 using EduMeilleurAPI.Services;
+using EduMeilleurAPI.Models.DTO;
 
 namespace EduMeilleurAPI.Controllers
 {
@@ -29,7 +30,15 @@ namespace EduMeilleurAPI.Controllers
             List<Notes>? notes = await _notesService.GetAllAsync(id);
             if (notes == null) return StatusCode(StatusCodes.Status500InternalServerError);
 
-            return Ok(notes);
+            var items = new List<ItemDisplayDTO>();
+
+            foreach (var item in notes)
+            {
+                
+                items.Add(new ItemDisplayDTO(item.Id, item.Title, item.Content, item.Chapter.Title));
+            }
+
+            return Ok(items);
         }
 
         // GET: api/Notes/5
@@ -45,6 +54,7 @@ namespace EduMeilleurAPI.Controllers
             string markdown = await System.IO.File.ReadAllTextAsync(filePath);
 
             notes.Content = markdown;
+            
 
             return Ok(notes);
         }

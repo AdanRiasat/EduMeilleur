@@ -5,13 +5,12 @@ namespace EduMeilleurAPI.Models
     public class Notes
     {
         public int Id { get; set; }
-        public string Chapter { get; set; } = null!;
         public string Title { get; set; } = null!;
         public string Content { get; set; } = null!;
 
+        public int ChapterId { get; set; }
         [JsonIgnore]
-        public virtual Subject Subject { get; set; } = null!;
-        [JsonIgnore]
-        public virtual List<Exercise> Exercise { get; set; } = new List<Exercise>();
+        public virtual Chapter Chapter { get; set; } = null!;
+        
     }
 }

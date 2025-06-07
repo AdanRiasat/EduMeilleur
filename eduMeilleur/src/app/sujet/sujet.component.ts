@@ -17,6 +17,7 @@ import { marked } from 'marked';
 export class SujetComponent implements OnInit{
   
   sujet: DisplaySujet | null = null
+  chapters: string[] = []
   id: number = 0 //this is subjectId
 
   allItems: Item[] = []
@@ -30,6 +31,7 @@ export class SujetComponent implements OnInit{
     if (sujetIdStringData != null){
       this.id = parseFloat(sujetIdStringData)
       this.sujet = await this.sujetService.getSujet(this.id)
+      this.chapters = this.sujet.chapters
       await this.getAllItems("Notes")
     }
   }
