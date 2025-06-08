@@ -1,6 +1,7 @@
 <div class="container-fluid">
-    <ngb-carousel>
-  <ng-template ngbSlide>
+  <!-- Hero Carousel -->
+  <ngb-carousel>
+    <ng-template ngbSlide>
       <div class="position-relative">
         <img src="assets/images/istockphoto-1419410282-612x612.jpg" class="d-block w-100" alt="Slide 1">
         <div class="carousel-caption">
@@ -12,46 +13,70 @@
       </div>
     </ng-template>
 
-  <ng-template ngbSlide>
-    <img src="assets/images/pexels-souvenirpixels-414612.jpg" class="d-block w-100" alt="Slide 2">
-    <div class="carousel-caption">
-      <h3>Second Slide</h3>
-    </div>
-  </ng-template>
-
-  <ng-template ngbSlide>
-    <img src="assets/images/pexels-souvenirpixels-414612.jpg" class="d-block w-100" alt="Slide 2">
-    <div class="carousel-caption">
-      <h3>Third Slide</h3>
-    </div>
-  </ng-template>
-</ngb-carousel>
-
-  <div class="row">
-    <div class="col-10">
-      <h2>Explore</h2>
-      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-        Dolorem natus enim iusto numquam quam eos mollitia modi error quia perspiciatis. Sapiente velit consequatur natus recusandae dolore nihil tempora quia voluptatum?
-      </p>
-
-      <div class="row justify-content-center">
-        <div class="col-2 text-center">
-          something
-        </div>
-        <div class="col-2 text-center">
-          holyshit
-        </div>
-        <div class="col-2 text-center">
-          how he do that
-        </div>
+    <ng-template ngbSlide>
+      <img src="assets/images/pexels-souvenirpixels-414612.jpg" class="d-block w-100" alt="Slide 2">
+      <div class="carousel-caption">
+        <h3>Second Slide</h3>
       </div>
+    </ng-template>
 
+    <ng-template ngbSlide>
+      <img src="assets/images/pexels-souvenirpixels-414612.jpg" class="d-block w-100" alt="Slide 3">
+      <div class="carousel-caption">
+        <h3>Third Slide</h3>
+      </div>
+    </ng-template>
+  </ngb-carousel>
+
+  <!-- Second carousel (Swiper) -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col text-center">
+        <h2>Find your subject</h2>
+        <h4>We have notes, exercises and videos for each</h4>
+        <app-image-slider></app-image-slider>
+      </div>
     </div>
+  </div>
+  
+
+  <!-- Explore Section -->
+  <div class="row feature-section align-items-center">
+    <div class="col-lg-8">
+      <h2>Explore</h2>
+      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorem natus enim iusto numquam quam eos mollitia modi error quia perspiciatis...</p>
+
+      <div class="d-flex flex-wrap gap-2">
+        <span class="tag-box">placholder</span>
+        <span class="tag-box">what</span>
+        <span class="tag-box">no way</span>
+        <span class="tag-box">skibidi?</span>
+        <span class="tag-box">mr beast!</span>
+      </div>
+    </div>
+    <div class="col-lg-4 text-center">
+      <img class="img-fluid" src="assets/images/pexels-someimage.jpg" alt="image of document">
+    </div>
+  </div>
+
+  <!-- Contact Us -->
+  <div class="row feature-section align-items-center">
+    <div class="col-lg-8">
+      <h2>Need more help?</h2>
+      <p>Send your questions to a real teacher!</p>
+      <button>Try now</button>
+    </div>
+    <div class="col-lg-4 text-center">
+      <img class="img-fluid" src="assets/images/teacher.jpg" alt="image of teacher">
+    </div>
+  </div>
+
+  <!-- AI Section -->
+  <div class="row feature-section text-center">
     <div class="col">
-      <img class="img-fluid" src="" alt="image of document">
+      <h2>Our AI-powered chatbot!</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus eos vel architecto...</p>
+      <button [routerLink]="['/ai']">Try now</button>
     </div>
   </div>
 </div>
-
-<!-- Second carousel (swipeable, no arrows) -->
-<app-image-slider></app-image-slider>
