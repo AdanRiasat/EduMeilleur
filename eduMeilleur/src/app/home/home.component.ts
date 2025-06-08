@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { ImageSliderComponent } from '../image-slider/image-slider.component';
+import { SujetService } from '../services/sujet.service';
+import { DisplaySujet } from '../models/displaySujet';
 
 @Component({
   selector: 'app-home',
@@ -10,10 +12,8 @@ import { ImageSliderComponent } from '../image-slider/image-slider.component';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements AfterViewInit {
-  ngAfterViewInit(): void {
-    throw new Error('Method not implemented.');
-  }
+export class HomeComponent  {
+
+ 
   
-  
-  }
+}

@@ -1,6 +1,6 @@
 <header>
   <div class="container-fluid">
-    <div class="row">
+    <div id="main-row" class="row">
 
       <div class="col-1 align-self-center text-center">
         <a [routerLink]="['']">ÉduMeilleur</a>
@@ -9,10 +9,10 @@
       <div class="col">
         <nav>
             <div class="row align-items-center text-center" style="height: 60px;">
-              <div class="col"><a [routerLink]="['/sujets']">Sujets</a></div>
-              <div class="col"><a [routerLink]="['/ai']">AI</a></div>
-              <div class="col"><a>Explore</a></div>
-              <div class="col"><a [routerLink]="['/contactUs']">Contacter Nous</a></div>
+              <div [routerLink]="['/sujets']" class="col nav-bar"><a>Sujets</a></div>
+              <div [routerLink]="['/ai']" class="col nav-bar"><a>AI</a></div>
+              <div class="col nav-bar"><a>Explore</a></div>
+              <div [routerLink]="['/contactUs']" class="col nav-bar"><a>Contacter Nous</a></div>
             </div>
         </nav>
       </div>
@@ -23,20 +23,29 @@
           <div class="row">
             <!--User nav-->
               <div class="col-4">
-                <button (click)="disconnect()">dc</button>
+                <select class="form-select" id="lang" name="lang">
+                  <option value="english">EN</option>
+                  <option value="french">FR</option>
+
+                </select>
               </div>
 
-              <div class="col-8 text-center">
-                <!--Language selector-->
-                <div id="lang">
-                  EN
-                </div>
-                <!--Profile-->
-                <div *ngIf="userIsConnected">
-                  <a [routerLink]="['/profile']"><img class="img-circle" src="assets/images/istockphoto-1419410282-612x612.jpg"></a>
-                </div>
-                <div *ngIf="!userIsConnected">
-                  <a [routerLink]="['/login']"><img class="img-circle" src="assets/images/istockphoto-1419410282-612x612.jpg"></a>
+              <div class="col-8 text-end">
+                <div class="d-flex justify-content-end align-items-center gap-4">
+                  
+                  <button (click)="disconnect()" class="btn btn-link p-0"><i class="bi bi-box-arrow-right" style="font-size: 1.5rem;"></i></button>
+
+                  <div *ngIf="userIsConnected">
+                    <a [routerLink]="['/profile']">
+                      <img class="img-circle" src="assets/images/istockphoto-1419410282-612x612.jpg">
+                    </a>
+                  </div>
+                  <div *ngIf="!userIsConnected">
+                    <a [routerLink]="['/login']">
+                      <img class="img-circle" src="assets/images/istockphoto-1419410282-612x612.jpg">
+                    </a>
+                  </div>
+
                 </div>
               </div>
 
@@ -54,5 +63,12 @@
 </main>
 
 <footer>
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col text-center">
+        this is my footer, do you like it?
+      </div>
+    </div>
 
+  </div>
 </footer>

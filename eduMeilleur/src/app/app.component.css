@@ -1,8 +1,24 @@
+header {
+  height: 70px;
+  background-color: white; /* or your preferred color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* optional for subtle depth */
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* make sure it stays on top */
+}
 
 a{
     text-decoration: none;
     color: inherit;
     cursor: pointer;
+}
+
+.nav-bar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .img-circle{
@@ -12,12 +28,11 @@ a{
    object-fit: cover;
 }
 
-#lang, .img-circle{
-    display: inline-block;
-    margin-right: 20px;
+#lang {
+  font-weight: 500;
 }
 
-#lang{
-    position: relative;
-    bottom: 5px;
+footer .row{
+    height: 50px;
 }
+

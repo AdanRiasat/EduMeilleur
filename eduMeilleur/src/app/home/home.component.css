@@ -26,3 +26,11 @@ ngb-carousel img {
   max-height: 400px;
   object-fit: cover;
 }
+
+.col-2{
+  padding: 10px;
+  margin-right: 40px;
+  margin-left: 40px;
+  border-style: solid;
+}
+
