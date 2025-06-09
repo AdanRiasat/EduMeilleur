@@ -19,7 +19,9 @@ export class LoginComponent {
 
   async login() {
     await this.userService.login(this.username, this.password)
-    if (localStorage.getItem("token") != null){
+    if (this.userService.token() != null){
+      console.log(this.userService.token());
+      
       this.router.navigate(['/profile']);
     }
   }

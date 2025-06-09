@@ -39,7 +39,8 @@ namespace EduMeilleurAPI.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest,
                     new { Message = "La création de l'utilisateur a échoué." });
             }
-            return Ok(new { Message = "Inscription réussie ! 🥳" });
+
+            return Ok(await GenerateLoginResponse(user));
         }
 
         [HttpPost]
@@ -51,38 +52,43 @@ namespace EduMeilleurAPI.Controllers
 
             if (user != null && await _userManager.CheckPasswordAsync(user, login.Password))
             {
-                IList<string> roles = await _userManager.GetRolesAsync(user);
-                List<Claim> authClaims = new List<Claim>();
-                foreach (string role in roles)
-                {
-                    authClaims.Add(new Claim(ClaimTypes.Role, role));
-                   
-                }
-                authClaims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
-
-                SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8
-                    .GetBytes("LooOOongue Phrase SiNoN Ça ne Marchera PaAaAAAaAas !")); // Phrase identique dans Program.cs
-                JwtSecurityToken token = new JwtSecurityToken(
-                    issuer: "https://localhost:7027", 
-                    audience: "http://localhost:4200",
-                    claims: authClaims,
-                    expires: DateTime.Now.AddMinutes(30),
-                    signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
-                    );
-
-                return Ok(new
-                {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    validTo = token.ValidTo,
-                    profile = new ProfileDisplayDTO(user),
-                    Roles = roles
-                });
+                return Ok(await GenerateLoginResponse(user));
             }
             else
             {
                 return StatusCode(StatusCodes.Status400BadRequest,
                     new { Message = "Le nom d'utilisateur ou le mot de passe est invalide." });
             }
+        }
+
+        private async Task<ActionResult> GenerateLoginResponse(User user)
+        {
+            IList<string> roles = await _userManager.GetRolesAsync(user);
+            List<Claim> authClaims = new List<Claim>();
+            foreach (string role in roles)
+            {
+                authClaims.Add(new Claim(ClaimTypes.Role, role));
+
+            }
+            authClaims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
+
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8
+                .GetBytes("LooOOongue Phrase SiNoN Ça ne Marchera PaAaAAAaAas !")); // Phrase identique dans Program.cs
+            JwtSecurityToken token = new JwtSecurityToken(
+                issuer: "https://localhost:7027",
+                audience: "http://localhost:4200",
+                claims: authClaims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
+                );
+
+            return Ok(new
+            {
+                token = new JwtSecurityTokenHandler().WriteToken(token),
+                validTo = token.ValidTo,
+                profile = new ProfileDisplayDTO(user),
+                Roles = roles
+            });
         }
 
         [HttpGet("{username}")]

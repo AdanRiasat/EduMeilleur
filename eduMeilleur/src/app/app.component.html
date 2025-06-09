@@ -36,16 +36,12 @@
                   
                   <button (click)="disconnect()" class="btn btn-link p-0"><i class="bi bi-box-arrow-right" style="font-size: 1.5rem;"></i></button>
 
-                  <div *ngIf="userIsConnected">
-                    <a [routerLink]="['/profile']">
+                  
+                    <a (click)="profile()">
                       <img class="img-circle" src="assets/images/istockphoto-1419410282-612x612.jpg">
                     </a>
-                  </div>
-                  <div *ngIf="!userIsConnected">
-                    <a [routerLink]="['/login']">
-                      <img class="img-circle" src="assets/images/istockphoto-1419410282-612x612.jpg">
-                    </a>
-                  </div>
+                 
+                  
 
                 </div>
               </div>
