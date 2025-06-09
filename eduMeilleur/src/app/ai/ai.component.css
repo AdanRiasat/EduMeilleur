@@ -2,7 +2,7 @@
 :host {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 100px); /* Full viewport height */
+  height: calc(100vh - 130px); /* Full viewport height */
 }
 
 .container-fluid {
