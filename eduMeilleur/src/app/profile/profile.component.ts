@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Profile } from '../models/profile';
+import { UserService } from '../services/user.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -13,6 +15,8 @@ export class ProfileComponent implements OnInit{
   profile: Profile | null = null
   username: string | undefined = ""
   bio: string | undefined = ""
+
+  constructor(public userService: UserService) {}
   
   ngOnInit() {
      this.userIsConnected = localStorage.getItem("token") != null;
@@ -23,8 +27,7 @@ export class ProfileComponent implements OnInit{
       this.username = this.profile?.username
       this.bio = this.profile?.bio
      }
-
-     
+ 
   }
 
 

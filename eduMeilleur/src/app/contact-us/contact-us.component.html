@@ -5,6 +5,7 @@
         <div class="col">
             <input id="titleTeacher" type="text" name="titleTeacher" placeholder="Title" [(ngModel)]="titleTeacher"><br>
             <textarea id="messageTeacher" placeholder="Message" rows="5"  cols="50" name="messageTeacher" [(ngModel)]="messageTeacher"></textarea><br>
+            <input #fileInputTeacher multiple type="file" name="image">
             <button (click)="postQuestion()">Send</button>
         </div>
     </div>

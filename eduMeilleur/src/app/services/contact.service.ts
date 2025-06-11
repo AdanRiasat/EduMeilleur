@@ -11,18 +11,13 @@ export class ContactService {
 
   constructor(public http: HttpClient) { }
 
-  async postQuestion(title: string, message: string){
+  async postQuestion(dto: FormData){
     let token = localStorage.getItem("token");
     let httpOptions = {
         headers : new HttpHeaders({
         'Authorization' : `Bearer ${token}`
         })
     };
-
-    let dto = {
-      title: title,
-      message: message
-    }
 
     let x = await lastValueFrom(this.http.post<any>(domain + "/api/Questions/PostQuestionTeacher", dto, httpOptions))
     console.log(x);
