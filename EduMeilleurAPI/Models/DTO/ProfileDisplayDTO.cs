@@ -8,6 +8,7 @@ namespace EduMeilleurAPI.Models.DTO
         public string? Bio {  get; set; } = null!;
         public string? School { get; set; } 
         public string? SchoolYear { get; set; } 
+        public int IQPoints { get; set; }
 
         public ProfileDisplayDTO(User user)
         {
@@ -15,6 +16,7 @@ namespace EduMeilleurAPI.Models.DTO
             Bio = user.Bio;
             School = user.School;
             SchoolYear = user.SchoolYear;
+            IQPoints = user.IQPoints;
         }
     }
 }

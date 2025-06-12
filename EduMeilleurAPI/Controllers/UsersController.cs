@@ -1,11 +1,14 @@
 ﻿using EduMeilleurAPI.Models;
 using EduMeilleurAPI.Models.DTO;
+using EduMeilleurAPI.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+using SixLabors.ImageSharp;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -17,10 +20,12 @@ namespace EduMeilleurAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
+        private readonly PictureService _pictureService;
 
-        public UsersController(UserManager<User> userManager)
+        public UsersController(UserManager<User> userManager, PictureService pictureService)
         {
             _userManager = userManager;
+            _pictureService = pictureService;
         }
 
         [HttpPost]
@@ -29,7 +34,8 @@ namespace EduMeilleurAPI.Controllers
             User user = new User()
             {
                 UserName = register.Username,
-                Email = register.Email
+                Email = register.Email,
+                IQPoints = 0
             };
 
             IdentityResult identityResult = await _userManager.CreateAsync(user, register.Password);
@@ -107,6 +113,70 @@ namespace EduMeilleurAPI.Controllers
                 byte[] bytes = System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() + "/images/pfp/" + user.FileName);
                 return File(bytes, user.MimeType);
             }
+        }
+
+        [HttpPut]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<ProfileDisplayDTO>> EditProfile()
+        {
+            User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            if (user == null) return NotFound();
+
+            string? Username = Request.Form["username"];
+            string? Email = Request.Form["email"];
+            string? Bio = Request.Form["bio"];
+            string? School = Request.Form["school"];
+            string? SchoolYear = Request.Form["schoolYear"];
+
+            if (Username == null || Email == null || Username == "" || Email == "") return BadRequest();
+            
+            user.UserName = Username;
+            user.Email = Email;
+
+            if (Bio != null)
+                user.Bio = Bio;
+
+            if (School != null)
+                user.School = School;
+
+            if (SchoolYear != null)
+                user.SchoolYear = SchoolYear;
+
+            try
+            {
+                IFormCollection formcollection = await Request.ReadFormAsync();
+                IFormFile? file = formcollection.Files.GetFile("pfp");
+                if (file == null)
+                {
+                    await _userManager.UpdateAsync(user);
+                    return Ok(user);
+                }
+
+                Image image = Image.Load(file.OpenReadStream());
+
+                Picture picture = new Picture
+                {
+                    Id = 0,
+                    FileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName),
+                    MimeType = file.ContentType
+                };
+
+                image.Save(Directory.GetCurrentDirectory() + "/images/pfp/" + picture.FileName);
+
+                Picture? newPicture = await _pictureService.CreatePicture(picture);
+                if (newPicture == null) return StatusCode(StatusCodes.Status500InternalServerError);
+
+                user.FileName = newPicture.FileName;
+                user.MimeType = newPicture.MimeType;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+
+            await _userManager.UpdateAsync(user);
+
+            return Ok(new ProfileDisplayDTO(user));
         }
     }
 }

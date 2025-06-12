@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
+import { Profile } from '../models/profile';
 
 const domain: string ="https://localhost:7027"
 
@@ -58,5 +59,18 @@ export class UserService {
     localStorage.removeItem("token")
     localStorage.removeItem("profile")
     localStorage.removeItem("roles")
+  }
+
+  async editProfile(dto: FormData){
+    let token = localStorage.getItem("token");
+    let httpOptions = {
+        headers : new HttpHeaders({
+          'Authorization' : `Bearer ${token}`
+        })
+    };
+        
+    let x = await lastValueFrom(this.http.put<Profile>(domain + "/api/Users/EditProfile", dto, httpOptions))
+    console.log(x);
+    
   }
 }
