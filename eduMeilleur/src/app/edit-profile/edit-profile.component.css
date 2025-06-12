@@ -1,0 +1,16 @@
+.img-circle{
+   height: 200px;
+   max-width: 200px;
+   border-radius: 50%;
+   object-fit: cover;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+textarea{
+    resize: none;
+}

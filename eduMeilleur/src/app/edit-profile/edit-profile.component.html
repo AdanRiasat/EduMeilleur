@@ -1,0 +1,31 @@
+<div class="container">
+    <h3>{{username}}'s profile</h3>
+    <div class="row">
+        <div class="col-6">
+            <label for="bio">Add biography</label><br>
+            <textarea id="bio" name="bio" rows="5" cols="50" placeholder="About me"></textarea><br>
+            
+            <label for="username">Change username</label><br>
+            <input id="username" name="username" class="form-control" type="text">
+            <label for="email">Change email</label><br>
+            <input id="email" name="email" class="form-control" type="text"><br>
+
+            <label for="school">Change school</label>
+            <select id="school" class="form-control" name="school" [(ngModel)]="school">
+                <option value="" disabled selected hidden>Select your school</option>
+            </select><br>
+
+            <label for="schoolYear">Change School Year</label>
+            <select id="schoolYear" class="form-control" name="schoolYear" [(ngModel)]="schoolYear">
+                <option value="" disabled selected hidden>Select your school year</option>
+            </select><br>
+            <button>Save changes</button>
+        </div>
+        
+
+        <div class="col-6 text-center">
+            <h5>Change Profile Picture</h5>
+            <a><img class="img-circle" [src]='"https://localhost:7027/api/Users/GetProfilePicture/" + username' alt="Profile picture"></a>
+        </div>
+    </div>
+</div>

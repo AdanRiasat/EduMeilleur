@@ -99,16 +99,14 @@ namespace EduMeilleurAPI.Controllers
 
             if (user.FileName == null)
             {
-                //default.png
+                byte[] bytes = System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() + "/images/pfp/default.png");
+                return File(bytes, "image/png");
             }
             else
             {
                 byte[] bytes = System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() + "/images/pfp/" + user.FileName);
                 return File(bytes, user.MimeType);
             }
-
-
-            return Ok();
         }
     }
 }
