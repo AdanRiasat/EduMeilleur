@@ -12,25 +12,28 @@ import { RouterModule } from '@angular/router';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent implements OnInit{
-  userIsConnected: boolean = false
   profile: Profile | null = null
   username: string | undefined = ""
   bio: string | undefined = ""
+  email: string | undefined = ""
+  school: string | undefined = ""
+  schoolYear: string | undefined = ""
 
   timestamp: number = Date.now();
 
   constructor(public userService: UserService) {}
   
   ngOnInit() {
-     this.userIsConnected = localStorage.getItem("token") != null;
-     
      let profileStringData = localStorage.getItem("profile")
      if (profileStringData != null){
       this.profile = JSON.parse(profileStringData)
       this.username = this.profile?.username
       this.bio = this.profile?.bio
+      this.email = this.profile?.email
+      this.school = this.profile?.school
+      this.schoolYear = this.profile?.schoolYear
      }
- 
+     
   }
 
 

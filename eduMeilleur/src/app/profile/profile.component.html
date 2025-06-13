@@ -1,25 +1,52 @@
 <div class="container">
     <div class="row">
-        <div class="col-3">
-            <img id="pfp" [src]='"https://localhost:7027/api/Users/GetProfilePicture/" + username + "?t=" + timestamp' alt="profile picture">
-            <h4>{{username}}</h4>
+        <div class="col-3 text-center">
+            <img id="pfp" [src]='"https://localhost:7027/api/Users/GetProfilePicture/" + username + "?t=" + timestamp' alt="profile picture" class="mb-3">
 
-            <div *ngIf="userService.roles().includes('teacher')">
-                <a>Teacher</a>
+            <h4 class="fw-bold">{{username}}</h4>
+            <p class="text-muted mb-1">{{email}}</p>
+
+            <div *ngIf="userService.roles().includes('teacher')" class="badge bg-primary mb-1">Teacher</div>
+            <div *ngIf="userService.roles().includes('admin')" class="badge bg-danger mb-3">Admin</div>
+
+            <div class="card text-start">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0">About Me</h6>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{bio || "No bio yet."}}</p>
+                </div>
             </div>
 
-            <div *ngIf="userService.roles().includes('admin')">
-                <a>admin</a>
-            </div>
-
-            <h5>About me</h5>
-            <p>{{bio}}</p>
-            <button [routerLink]="['/profile', username]">Edit profile</button>
-
+            <button class="btn btn-outline-secondary mt-3" [routerLink]="['/profile', username]">Edit profile</button>
         </div>
 
+        
+
+
         <div class="col">
-            
+            <div class="row">
+
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            School
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            School Year
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <!--TODO bookmark area-->
+            </div>
         </div>
     </div>
     
