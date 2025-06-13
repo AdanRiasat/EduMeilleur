@@ -17,6 +17,8 @@ export class ProfileComponent implements OnInit{
   username: string | undefined = ""
   bio: string | undefined = ""
 
+  timestamp: number = Date.now();
+
   constructor(public userService: UserService) {}
   
   ngOnInit() {

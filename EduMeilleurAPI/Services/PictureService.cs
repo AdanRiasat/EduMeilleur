@@ -1,5 +1,6 @@
 ﻿using EduMeilleurAPI.Data;
 using EduMeilleurAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EduMeilleurAPI.Services
 {
@@ -23,6 +24,26 @@ namespace EduMeilleurAPI.Services
 
             _context.Picture.Add(picture);
             await _context.SaveChangesAsync();
+
+            return picture;
+        }
+
+        public async Task<Picture?> Delete(Picture picture)
+        {
+            if (!IsConstextValid()) return null;
+
+            _context.Picture.Remove(picture);
+            await _context.SaveChangesAsync();
+
+            return picture;
+        }
+
+        public async Task<Picture?> GetAsync(User user)
+        {
+            if (!IsConstextValid()) return null;
+
+            Picture? picture = await _context.Picture.Where(p => p.FileName == user.FileName).FirstOrDefaultAsync();
+            if (picture == null) return null;
 
             return picture;
         }

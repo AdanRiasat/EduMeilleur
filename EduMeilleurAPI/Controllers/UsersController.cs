@@ -122,17 +122,16 @@ namespace EduMeilleurAPI.Controllers
             User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             if (user == null) return NotFound();
 
-            string? Username = Request.Form["username"];
             string? Email = Request.Form["email"];
             string? Bio = Request.Form["bio"];
             string? School = Request.Form["school"];
             string? SchoolYear = Request.Form["schoolYear"];
 
-            if (Username == null || Email == null || Username == "" || Email == "") return BadRequest();
+            if (Email == null || Email == "") return BadRequest();
             
-            user.UserName = Username;
             user.Email = Email;
 
+            user.Bio = "";
             if (Bio != null)
                 user.Bio = Bio;
 
@@ -149,7 +148,14 @@ namespace EduMeilleurAPI.Controllers
                 if (file == null)
                 {
                     await _userManager.UpdateAsync(user);
-                    return Ok(user);
+                    return Ok(new ProfileDisplayDTO(user));
+                }
+
+                Picture? oldPicture = await _pictureService.GetAsync(user);
+                if (oldPicture != null)
+                {
+                    System.IO.File.Delete(Directory.GetCurrentDirectory() + "/images/pfp/" + oldPicture.FileName);
+                    await _pictureService.Delete(oldPicture);
                 }
 
                 Image image = Image.Load(file.OpenReadStream());

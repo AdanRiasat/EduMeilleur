@@ -71,6 +71,6 @@ export class UserService {
         
     let x = await lastValueFrom(this.http.put<Profile>(domain + "/api/Users/EditProfile", dto, httpOptions))
     console.log(x);
-    
+    localStorage.setItem("profile",JSON.stringify(x))
   }
 }

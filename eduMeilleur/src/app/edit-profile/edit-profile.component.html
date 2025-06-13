@@ -5,8 +5,6 @@
             <label for="bio">Add biography</label><br>
             <textarea id="bio" name="bio" rows="5" cols="50" placeholder="About me" [(ngModel)]="bio"></textarea><br>
             
-            <label for="username">Change username</label><br>
-            <input id="username" name="username" class="form-control" type="text" [(ngModel)]="username">
             <label for="email">Change email</label><br>
             <input id="email" name="email" class="form-control" type="text" [(ngModel)]="email"><br>
 
@@ -26,7 +24,7 @@
 
         <div class="col-6 text-center">
             <h5>Change Profile Picture</h5>
-            <a (click)="triggerFileInput()"><img #profileImage class="img-circle" [src]='"https://localhost:7027/api/Users/GetProfilePicture/" + username' alt="Profile picture"></a>
+            <a (click)="triggerFileInput()"><img #profileImage class="img-circle" [src]="imageSrc + '?t=' + timestamp" alt="Profile picture"></a>
 
             <input #fileInput type="file" accept="image/*" hidden (change)="onFileSelected($event)">
 
