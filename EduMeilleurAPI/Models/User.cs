@@ -14,5 +14,6 @@ namespace EduMeilleurAPI.Models
         public string? MimeType { get; set; }
 
         public virtual List<QuestionTeacher>? Questions { get; set; }
+        public virtual List<Feedback>? Feedbacks { get; set; }
     }
 }

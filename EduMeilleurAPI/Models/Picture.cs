@@ -8,5 +8,8 @@
 
         public int? QuestionTeacherId { get; set; }
         public virtual QuestionTeacher? QuestionTeacher { get; set; }
+
+        public int? FeedbackId { get; set; }
+        public virtual Feedback? Feedback { get; set; }
     }
 }

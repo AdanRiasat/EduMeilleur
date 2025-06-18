@@ -9,7 +9,23 @@
         <textarea id="messageTeacher" placeholder="Message" rows="5" name="messageTeacher" class="form-control" [(ngModel)]="messageTeacher"></textarea>
 
         <!--Teacher Files-->
-        <input #fileInputTeacher multiple type="file" class="form-control mb-3" name="attachments" accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.txt">
+        <input #fileInputTeacher multiple type="file" class="d-none" name="attachments" accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.txt" (change)="updateSelectedFiles()">
+        <button id="attachementsTeacher" class="btn btn-secondary" type="button" (click)="fileInputTeacher.click()">
+          📎 Attach files
+        </button>
+
+        <ul *ngIf="selectedFiles.length > 0" class="list-group mb-3">
+          <li *ngFor="let file of selectedFiles; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+            {{ file.name }}
+            <div class="d-flex align-items-center gap-2">
+            <span class="badge bg-secondary">
+              {{ (file.size / 1024).toFixed(1) }} KB
+            </span>
+            <button type="button" class="btn-close" (click)="removeFile(i)"></button>
+          </div>
+          </li>
+        </ul>
+
         <button class="btn btn-primary" (click)="postQuestion()">Send</button>
       </div>
 
