@@ -100,6 +100,7 @@ namespace EduMeilleurAPI.Data
 
 
         public DbSet<EduMeilleurAPI.Models.Picture> Picture { get; set; } = default!;
+        public DbSet<EduMeilleurAPI.Models.Attachment> Attachments { get; set; } = default!;
         public DbSet<EduMeilleurAPI.Models.Subject> Subject { get; set; } = default!;
         public DbSet<EduMeilleurAPI.Models.Notes> Notes { get; set; } = default!;
         public DbSet<EduMeilleurAPI.Models.QuestionTeacher> QuestionTeacher { get; set; } = default!;

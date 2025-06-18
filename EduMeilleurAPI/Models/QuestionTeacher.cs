@@ -12,5 +12,7 @@ namespace EduMeilleurAPI.Models
         public virtual User user { get; set; } = null!; 
         [JsonIgnore]
         public virtual List<Picture> Pictures { get; set; } = new List<Picture>();
+        [JsonIgnore]
+        public virtual List<Attachment> Attachments { get; set;} = new List<Attachment>();
     }
 }

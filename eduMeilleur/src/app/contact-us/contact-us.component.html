@@ -1,29 +1,42 @@
-<div class="container">
-    <h2>Need help from a real teacher?</h2>
-    <h4>Send us a message!</h4>
-    <div class="row">
-        <div class="col">
-            <input id="titleTeacher" type="text" name="titleTeacher" placeholder="Title" [(ngModel)]="titleTeacher"><br>
-            <textarea id="messageTeacher" placeholder="Message" rows="5"  cols="50" name="messageTeacher" [(ngModel)]="messageTeacher"></textarea><br>
-            <input #fileInputTeacher multiple type="file" name="image">
-            <button (click)="postQuestion()">Send</button>
-        </div>
-    </div>
-</div>
+<div class="container mt-5">
+  <div class="card p-4">
+    <h2 class="mb-1">Need help from a real teacher?</h2>
+    <p class="text-muted mb-4">Send us a message, and we'll get back to you.</p>
 
-<div class="container">
-    <h2>Give us feedback or business inquiries</h2>
     <div class="row">
-        <div class="col-6">
-            <input id="titleAdmin" type="text" name="titleAdmin" placeholder="Title"><br>
-            <textarea id="messageAdmin" placeholder="Message" rows="5"  cols="50" name="messageAdmin"></textarea><br>
-            <button>Send</button>
-        </div>
+      <div class="col-md-8">
+        <input id="titleTeacher" type="text" name="titleTeacher" placeholder="Title" class="form-control" [(ngModel)]="titleTeacher">
+        <textarea id="messageTeacher" placeholder="Message" rows="5" name="messageTeacher" class="form-control" [(ngModel)]="messageTeacher"></textarea>
 
-        <div class="col-6 text-center">
-            <h5>Also available at:</h5>
-            <a>JonhLittleFlower&#64;sigma.com</a><br>
-            <a>123-765-0921</a>
-        </div>
+        <!--Teacher Files-->
+        <input #fileInputTeacher multiple type="file" class="form-control mb-3" name="attachments" accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.txt">
+        <button class="btn btn-primary" (click)="postQuestion()">Send</button>
+      </div>
+
+      <div class="col-md-4 text-center d-flex flex-column justify-content-center">
+        <h5 class="mb-2">Also available at:</h5>
+        <p class="mb-1"><i class="bi bi-envelope-fill me-1"></i>Teacher1&#64;sigma.com</p>
+        <p><i class="bi bi-telephone-fill me-1"></i>773-765-0921</p>
+      </div>
     </div>
+  </div>
+
+  <div class="card p-4">
+    <h2 class="mb-1">Give us feedback or report bugs</h2>
+    <p class="text-muted mb-4">We appreciate your help improving the platform.</p>
+
+    <div class="row">
+      <div class="col-md-8">
+        <input id="titleAdmin" type="text" name="titleAdmin" placeholder="Title" class="form-control">
+        <textarea id="messageAdmin" placeholder="Message" rows="5" name="messageAdmin" class="form-control"></textarea>
+        <button class="btn btn-secondary">Send</button>
+      </div>
+
+      <div class="col-md-4 text-center d-flex flex-column justify-content-center">
+        <h5 class="mb-2">Also available at:</h5>
+        <p class="mb-1"><i class="bi bi-envelope-fill me-1"></i>JonhLittleFlower&#64;sigma.com</p>
+        <p><i class="bi bi-telephone-fill me-1"></i>123-765-0921</p>
+      </div>
+    </div>
+  </div>
 </div>

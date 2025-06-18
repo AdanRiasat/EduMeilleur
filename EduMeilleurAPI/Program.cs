@@ -90,6 +90,7 @@ builder.Services.AddScoped<QuestionService>();
 builder.Services.AddScoped<ExerciseService>();
 builder.Services.AddScoped<VideoService>();
 builder.Services.AddScoped<PictureService>();
+builder.Services.AddScoped<AttachmentService>();
 
 var app = builder.Build();
 

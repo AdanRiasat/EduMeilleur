@@ -1,3 +1,17 @@
-textarea{
+textarea {
     resize: none;
-}
+  }
+
+  .card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+  }
+
+  .form-control, textarea {
+    margin-bottom: 15px;
+  }
+
+  .btn {
+    width: 100%;
+  }

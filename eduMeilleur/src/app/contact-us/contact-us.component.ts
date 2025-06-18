@@ -34,6 +34,10 @@ export class ContactUsComponent {
       
     }
     this.contactService.postQuestion(formData)
+
+    this.titleTeacher = ""
+    this.messageTeacher = ""
+    this.fileInput = undefined
   }
 
 }
