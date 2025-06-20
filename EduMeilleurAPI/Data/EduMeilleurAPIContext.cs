@@ -107,5 +107,8 @@ namespace EduMeilleurAPI.Data
         public DbSet<EduMeilleurAPI.Models.QuestionTeacher> QuestionTeacher { get; set; } = default!;
         public DbSet<EduMeilleurAPI.Models.Exercise> Exercise { get; set; } = default!;
         public DbSet<EduMeilleurAPI.Models.Video> Video { get; set; } = default!;
+        public DbSet<EduMeilleurAPI.Models.Chat> Chat { get; set; } = default!;
+        public DbSet<EduMeilleurAPI.Models.ChatMessage> ChatMessages { get; set; } = default!;
+
     }
 }

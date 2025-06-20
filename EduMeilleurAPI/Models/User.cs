@@ -15,5 +15,7 @@ namespace EduMeilleurAPI.Models
 
         public virtual List<QuestionTeacher>? Questions { get; set; }
         public virtual List<Feedback>? Feedbacks { get; set; }
+        public virtual List<Chat>? Chats { get; set; }
+        
     }
 }
