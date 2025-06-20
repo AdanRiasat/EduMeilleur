@@ -14,26 +14,44 @@ export class ContactUsComponent {
 
   titleTeacher: string = ""
   messageTeacher: string = ""
+  titleAdmin: string = ""
+  messageAdmin: string = ""
 
-  @ViewChild("fileInputTeacher", {static: false}) fileInput ?: ElementRef
+  @ViewChild("fileInputTeacher", {static: false}) fileInputTeacher!: ElementRef<HTMLInputElement>
+  @ViewChild("fileInputAdmin", {static: false}) fileInputAdmin!: ElementRef<HTMLInputElement>
 
-  selectedFiles: File[] = []
+  teacherFiles: File[] = []
+  adminFiles: File[] = []
 
   constructor(public contactService: ContactService) {}
 
-  updateSelectedFiles(){
-    if (this.fileInput?.nativeElement.files){
-      for (let f of this.fileInput.nativeElement.files){
-        if (!this.selectedFiles.includes(f)){
-          this.selectedFiles.push(f)
+  updateTeacherFiles() {
+    this.updateSelectedFiles(this.fileInputTeacher, this.teacherFiles);
+  }
+
+  updateAdminFiles() {
+    this.updateSelectedFiles(this.fileInputAdmin, this.adminFiles);
+  }
+
+  updateSelectedFiles(input: ElementRef<HTMLInputElement>, fileList: File[]){
+    if (input.nativeElement.files){
+      for (let f of Array.from(input.nativeElement.files)){
+        if (!fileList.includes(f)){
+          fileList.push(f)
         }
       }
-      this.fileInput.nativeElement.value = "";
+      input.nativeElement.value = "";
     } 
   }
 
-  removeFile(index: number){
-    this.selectedFiles.splice(index, 1)
+  
+
+  removeTeacherFile(index: number) {
+    this.teacherFiles.splice(index, 1);
+  }
+
+  removeAdminFile(index: number) {
+    this.adminFiles.splice(index, 1);
   }
 
   async postQuestion(){
@@ -48,7 +66,7 @@ export class ContactUsComponent {
 
     
     let i = 1
-    for (let f of this.selectedFiles){
+    for (let f of this.teacherFiles){
       if (f != null){
         formData.append("file" + i, f, f.name)
       }
@@ -60,9 +78,39 @@ export class ContactUsComponent {
     //reset
     this.titleTeacher = ""
     this.messageTeacher = ""
-    this.selectedFiles = []
-    if (this.fileInput){
-      this.fileInput.nativeElement.value = "";
+    this.teacherFiles = []
+    if (this.fileInputTeacher){
+      this.fileInputTeacher.nativeElement.value = "";
+    } 
+  }
+
+  async postFeedback(){
+    if (this.titleAdmin == "" || this.messageAdmin == ""){
+      alert("hmmm sir you cant do that")
+      return
+    }
+
+    let formData = new FormData()
+    formData.append("title", this.titleAdmin)
+    formData.append("message", this.messageAdmin)
+
+    
+    let i = 1
+    for (let f of this.adminFiles){
+      if (f != null){
+        formData.append("file" + i, f, f.name)
+      }
+      i++
+    }
+
+    await this.contactService.postFeedback(formData)
+
+    //reset
+    this.titleTeacher = ""
+    this.messageTeacher = ""
+    this.adminFiles = []
+    if (this.fileInputTeacher){
+      this.fileInputTeacher.nativeElement.value = "";
     } 
   }
 

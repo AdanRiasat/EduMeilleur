@@ -16,6 +16,6 @@ textarea {
     width: 100%;
   }
 
-  #attachementsTeacher{
+  #attachementsTeacher, #attachementsAdmin{
     margin-bottom: 10px;
   }

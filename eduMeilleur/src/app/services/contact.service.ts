@@ -22,4 +22,16 @@ export class ContactService {
     let x = await lastValueFrom(this.http.post<any>(domain + "/api/Questions/PostQuestionTeacher", dto, httpOptions))
     console.log(x);
   }
+
+  async postFeedback(dto: FormData){
+    let token = localStorage.getItem("token");
+    let httpOptions = {
+        headers : new HttpHeaders({
+        'Authorization' : `Bearer ${token}`
+        })
+    };
+
+    let x = await lastValueFrom(this.http.post<any>(domain + "/api/Questions/PostFeedback", dto, httpOptions))
+    console.log(x);
+  }
 }

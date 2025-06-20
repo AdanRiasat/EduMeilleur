@@ -15,8 +15,6 @@ using EduMeilleurAPI.Models.DTO;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using SixLabors.ImageSharp;
-using Microsoft.AspNetCore.Razor.Language;
-using System.Net.Mail;
 
 namespace EduMeilleurAPI.Controllers
 {
@@ -49,8 +47,8 @@ namespace EduMeilleurAPI.Controllers
 
             if (Title == null || Message == null) return BadRequest();
 
-            var files = new List<Picture>();
-            var attachments = new List<Models.Attachment>();
+            var pictures = new List<Picture>();
+            var attachments = new List<Attachment>();
 
             QuestionTeacher question = new QuestionTeacher()
             {
@@ -65,69 +63,62 @@ namespace EduMeilleurAPI.Controllers
             try
             {
                 IFormCollection formcollection = await Request.ReadFormAsync();
-                for(int i = 1; i <= formcollection.Files.Count; i++)
-                {
-                    IFormFile? file = formcollection.Files.GetFile("file" + i);
-                    if (file != null)
-                    {
-                        var extension = Path.GetExtension(file.FileName).ToLower();
-                        var mimeType = file.ContentType;
-                        var safeFileName = Guid.NewGuid().ToString() + extension;
-                        var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", safeFileName);
-
-                        if (mimeType.StartsWith("image/"))
-                        {
-                            try
-                            {
-                                Image image = Image.Load(file.OpenReadStream());
-                                Picture picture = new Picture
-                                {
-                                    Id = 0,
-                                    FileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName),
-                                    MimeType = file.ContentType,
-                                    QuestionTeacher = question
-                                };
-                                files.Add(picture);
-                                image.Save(Directory.GetCurrentDirectory() + "/images/full/" + picture.FileName);
-                                picture.QuestionTeacher = question;
-                                await _pictureService.CreatePicture(picture);
-                            }
-                            catch
-                            {
-                                //log errors
-                            }
-                        }
-                        else
-                        {
-                            using (var stream = new FileStream(fullPath, FileMode.Create))
-                            {
-                                await file.CopyToAsync(stream);
-                            }
-
-                            var attachment = new Models.Attachment
-                            {
-                                Id = 0,
-                                Filename = safeFileName,
-                                MimeType = mimeType,
-                                QuestionTeacher = question
-                            };
-
-                            attachments.Add(attachment);
-                            await _attachmentService.CreateAttachment(attachment);
-                        }
-                    }
-                } 
+                await _questionService.SaveFilesAndAttachements(formcollection, pictures, attachments, question);
+                
             } 
             catch (Exception e)
             {
                 throw;
             }
 
-            newQuestion.Pictures = files;
+            newQuestion.Pictures = pictures;
             newQuestion.Attachments = attachments;
 
            
             return Ok(newQuestion);
+        }
+
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<QuestionTeacher>> PostFeedback()
+        {
+            User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            if (user == null) return NotFound();
+
+            string? Title = Request.Form["title"];
+            string? Message = Request.Form["message"];
+
+            if (Title == null || Message == null) return BadRequest();
+
+            var pictures = new List<Picture>();
+            var attachments = new List<Attachment>();
+
+            Feedback feedback = new Feedback()
+            {
+                Id = 0,
+                Title = Title,
+                Message = Message,
+                user = user
+            };
+
+            var newFeedback = await _questionService.CreateFeedback(feedback);
+
+            try
+            {
+                IFormCollection formcollection = await Request.ReadFormAsync();
+                await _questionService.SaveFilesAndAttachements(formcollection, pictures, attachments, feedback);
+
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+
+            newFeedback.Pictures = pictures;
+            newFeedback.Attachments = attachments;
+
+
+            return Ok(newFeedback);
         }
 
 
