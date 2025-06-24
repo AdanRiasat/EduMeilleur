@@ -22,6 +22,7 @@ export class AiComponent implements OnInit{
   currentChat: Chat | null = null
 
   isLoading: boolean = false
+  loadingId: number = -1
 
   constructor(public aiService: AiService, public sanitizer: DomSanitizer) {}
 
@@ -62,6 +63,7 @@ export class AiComponent implements OnInit{
 
     this.userMessage = ""
     this.isLoading = true
+    
 
     if (this.currentChat == null){
       this.currentChat = await this.aiService.postChat(text)
@@ -69,12 +71,14 @@ export class AiComponent implements OnInit{
     }
     
     if (this.currentChat != null){
+      this.loadingId = this.currentChat.id
       let botReply = await this.aiService.sendMessage(text, this.currentChat)
       this.messages.push(botReply)
       this.scrollToBottom()
     }
 
     this.isLoading = false
+    this.loadingId = -1
 
   }
 

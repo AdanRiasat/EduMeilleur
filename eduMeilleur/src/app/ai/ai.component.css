@@ -2,7 +2,26 @@
 :host {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 130px); /* Full viewport height */
+  height: calc(100vh - 120px); /* Full viewport height */
+}
+
+.ai-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .container-fluid {
@@ -84,6 +103,8 @@
   background-color: #0d6efd;
   color: white;
 }
+
+
 
 /* Loading animation */
 .typing-indicator {
