@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using EduMeilleurAPI.Models.DTO;
 
 namespace EduMeilleurAPI.Controllers
 {
@@ -41,6 +42,59 @@ namespace EduMeilleurAPI.Controllers
             if (response == null) return StatusCode(StatusCodes.Status500InternalServerError);
 
             return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateChat(CreateChatDTO dto)
+        {
+            User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            if (user == null) return NotFound();
+
+            Chat chat = new Chat()
+            {
+                Id = 0,
+                Title = GenerateTitle(dto.InitialMessage),
+                User = user,
+                Messages = new List<ChatMessage>()
+            };
+
+            var newChat = await _chatService.PostChat(chat);
+            if (newChat == null) return StatusCode(StatusCodes.Status500InternalServerError);
+
+            return Ok(newChat);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<Chat>>> GetChats()
+        {
+            User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            if (user == null) return NotFound();
+
+            var chats = await _chatService.GetChats(user);
+            if (chats == null) return StatusCode(StatusCodes.Status500InternalServerError);
+
+            return Ok(chats);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<ChatMessage>>> GetMessages(int id)
+        {
+            User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            if (user == null) return Unauthorized();
+
+            if (!user.Chats.Any(c => c.Id == id)) return BadRequest();
+
+            var messages = await _chatService.GetMessages(id);
+            if (messages == null) return StatusCode(StatusCodes.Status500InternalServerError);
+
+            return Ok(messages);
+        }
+
+        private string GenerateTitle(string message)
+        {
+            // Take the first sentence or up to 6 words, as a simple heuristic
+            var words = message.Split(new[] { ' ', '.', '?', '!' }, StringSplitOptions.RemoveEmptyEntries);
+            return string.Join(" ", words.Take(6)) + (words.Length > 6 ? "..." : "");
         }
 
     }

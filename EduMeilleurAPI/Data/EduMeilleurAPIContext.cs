@@ -22,10 +22,11 @@ namespace EduMeilleurAPI.Data
             base.OnModelCreating(builder);
 
             builder.Entity<IdentityRole>().HasData(
-                new IdentityRole { Id = "1", Name = "admin", NormalizedName = "ADMIN" },
+                new IdentityRole { Id = "1", Name = "admin", NormalizedName = "ADMIN"},
                 new IdentityRole { Id = "2", Name = "teacher", NormalizedName = "TEACHER" }
             );
             PasswordHasher<User> hasher = new PasswordHasher<User>();
+
             User u1 = new User
             {
                 Id = "11111111-1111-1111-1111-111111111111",
@@ -94,6 +95,12 @@ namespace EduMeilleurAPI.Data
                 new Video { Id = 1, Title = "hmmm I cant quite remember", Content = "vidExample.md", ChapterId = 1},
                 new Video { Id = 2, Title = "Favorite color?", Content = "vidExample.md", ChapterId = 1},
                 new Video { Id = 3, Title = "Sigma vs Alpha", Content = "vidExample.md", ChapterId = 2}
+            );
+
+
+            builder.Entity<Chat>().HasData(
+                new Chat { Id = 1, Title = "My first Chat", UserId = u1.Id },
+                new Chat { Id = 2, Title = "My second Chat", UserId = u1.Id }
             );
         }
 

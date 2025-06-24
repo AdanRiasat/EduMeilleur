@@ -1,5 +1,7 @@
 ﻿using EduMeilleurAPI.Data;
 using EduMeilleurAPI.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Text.Json;
 
@@ -31,8 +33,6 @@ namespace EduMeilleurAPI.Services
 
             string apiKey = _config["OpenRouter:ApiKey"];
 
-            chatMessage.TimeStamp = DateTime.UtcNow;
-            chatMessage.IsUser = true;
             _context.ChatMessages.Add(chatMessage);
             await _context.SaveChangesAsync();
 
@@ -41,7 +41,7 @@ namespace EduMeilleurAPI.Services
                 model = "deepseek/deepseek-r1-0528:free",
                 messages = new[]
                 {
-                    new { role = "user", content = chatMessage.Texte }
+                    new { role = "user", content = chatMessage.Text }
                 }
             };
 
@@ -67,7 +67,7 @@ namespace EduMeilleurAPI.Services
 
             var aiMessage = new ChatMessage
             {
-                Texte = aiText ?? "No response.",
+                Text = aiText ?? "No response.",
                 ChatId = chatMessage.ChatId,
                 TimeStamp = DateTime.UtcNow,
                 IsUser = false
@@ -77,6 +77,49 @@ namespace EduMeilleurAPI.Services
             await _context.SaveChangesAsync();
 
             return aiMessage;
+        }
+
+        public async Task<Chat?> PostChat(Chat chat)
+        {
+            if (!IsConstextValid()) return null;
+
+            _context.Chat.Add(chat);
+            await _context.SaveChangesAsync();
+
+            return chat;
+        }
+
+        public async Task<Chat?> DeleteChat(Chat chat)
+        {
+            if (IsConstextValid()) return null;
+
+            if (chat.Messages != null && chat.Messages.Count > 0)
+            {
+                foreach (ChatMessage message in chat.Messages)
+                {
+                    chat.Messages.Remove(message);
+                    _context.ChatMessages.Remove(message);
+                }
+            }
+
+            _context.Chat.Remove(chat);
+            await _context.SaveChangesAsync();
+
+            return chat;
+        }
+
+        public async Task<List<Chat>?> GetChats(User user)
+        {
+            if (!IsConstextValid()) return null;
+
+            return await _context.Chat.Where(c => c.User == user).ToListAsync();
+        }
+
+        public async Task<List<ChatMessage>?> GetMessages(int chatId)
+        {
+            if (!IsConstextValid()) return null;
+
+            return await _context.ChatMessages.Where(c => c.ChatId == chatId).ToListAsync();
         }
     }
 }

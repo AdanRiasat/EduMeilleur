@@ -7,6 +7,7 @@ namespace EduMeilleurAPI.Models
         public int Id { get; set; }
         public string Title { get; set; } = null!;
 
+        public string UserId { get; set; } = null!;
         [JsonIgnore]
         public virtual User User { get; set; } = null!;
 

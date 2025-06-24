@@ -106,11 +106,11 @@ export class ContactUsComponent {
     await this.contactService.postFeedback(formData)
 
     //reset
-    this.titleTeacher = ""
-    this.messageTeacher = ""
+    this.titleAdmin = ""
+    this.messageAdmin = ""
     this.adminFiles = []
-    if (this.fileInputTeacher){
-      this.fileInputTeacher.nativeElement.value = "";
+    if (this.fileInputAdmin){
+      this.fileInputAdmin.nativeElement.value = "";
     } 
   }
 
