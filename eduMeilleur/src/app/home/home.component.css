@@ -64,10 +64,18 @@ ngb-carousel img {
 }
 
 /* Image section */
-.img-fluid {
-  max-height: 300px;
-  border-radius: 10px;
+.teacher-img {
+  width: 150px;       
+  height: 150px;
   object-fit: cover;
+  border-radius: 8px; 
+}
+
+.doc-img {
+  width: 250px;       
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px; 
 }
 
 /* Buttons */
