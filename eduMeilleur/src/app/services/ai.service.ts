@@ -39,6 +39,11 @@ export class AiService {
     return x
   }
 
+  async deleteChat(id: number){
+    let x = await lastValueFrom(this.http.delete<any>(domain + "/api/Chats/DeleteChat/" + id))
+    console.log(x);
+  }
+
   async getMessages(chatId: number): Promise<ChatMessage[]>{
     let x = await lastValueFrom(this.http.get<ChatMessage[]>(domain + "/api/Chats/GetMessages/" + chatId))
     console.log(x);

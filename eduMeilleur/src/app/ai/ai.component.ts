@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { AiService } from '../services/ai.service';
 import { ChatMessage } from '../models/chatMessage';
 import { FormsModule } from '@angular/forms';
@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { marked } from 'marked';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Chat } from '../models/chat';
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-ai',
@@ -23,6 +24,8 @@ export class AiComponent implements OnInit{
 
   isLoading: boolean = false
   loadingId: number = -1
+  dropdownOpen: number | null = null
+  deleteId: number = -1
 
   constructor(public aiService: AiService, public sanitizer: DomSanitizer) {}
 
@@ -50,9 +53,35 @@ export class AiComponent implements OnInit{
     this.scrollToBottom()
   }
 
+  async deleteChat(){
+    await this.aiService.deleteChat(this.deleteId)
+    
+    for (let i = 0; i < this.chats.length; i++){
+      if (this.chats[i].id == this.deleteId){
+        this.chats.splice(i, 1)
+      }
+    }
+
+    if (this.currentChat?.id == this.deleteId) {
+      this.currentChat = null;
+      this.messages = [];
+    }
+
+    let modalElement = document.getElementById('deleteChatModal')
+    if (modalElement){
+      let modal = Modal.getInstance(modalElement)
+      modal?.hide()
+    }
+  }
+
   async sendMessage() {
     let text = this.userMessage.trim()
     console.log(text);
+
+    if (text == ""){
+      console.log("ummmmmm sirr");
+      return
+    }
 
     let userMsg: ChatMessage = {
       text: text,
@@ -82,6 +111,19 @@ export class AiComponent implements OnInit{
 
   }
 
+  toggleDropdown(id: number){
+    this.dropdownOpen = this.dropdownOpen === id ? null : id;
+  }
+
+  openDeleteModal(id: number){
+    this.deleteId = id
+    let modalElement = document.getElementById('deleteChatModal')
+    if (modalElement){
+      let modal = new Modal(modalElement)
+      modal.show()
+    }
+  }
+
   newChat(){
     this.currentChat = null
     this.messages = []
@@ -90,6 +132,14 @@ export class AiComponent implements OnInit{
   formatMessage(message: string): SafeHtml {
     let rawHtml: string = marked.parse(message) as string
     return this.sanitizer.bypassSecurityTrustHtml(rawHtml);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onOutsideClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.list-group-item')) {
+      this.dropdownOpen = null;
+    }
   }
 }
 

@@ -12,16 +12,10 @@
   overflow: hidden;
 }
 
-.chat-body {
-  flex: 1;
-  display: flex;
-  overflow: hidden;
-}
-
-.chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  min-height: 0;
+.side-bar {
+  height: 100vh;       /* Full screen height */
+  overflow-y: auto;    /* Enable vertical scrolling */
+  padding: 1rem;
 }
 
 .container-fluid {
@@ -151,3 +145,27 @@
   from { opacity: 0; transform: translateY(5px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/*  Delete menu    */
+
+.list-group-item .dropdown .btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #888;
+}
+
+.list-group-item .dropdown .btn:hover {
+  color: #000;
+}
+
+.dropdown-menu.show {
+  display: block;
+  min-width: 8rem;
+  position: absolute; 
+  right: 0; 
+  top: 100%; 
+  z-index: 1000;
+}
+
+

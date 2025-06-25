@@ -89,16 +89,21 @@ namespace EduMeilleurAPI.Services
             return chat;
         }
 
-        public async Task<Chat?> DeleteChat(Chat chat)
+        public async Task<Chat?> DeleteChat(int id)
         {
-            if (IsConstextValid()) return null;
+            if (!IsConstextValid()) return null;
+
+            Chat? chat = await _context.Chat.FindAsync(id);
+            if (chat == null) return null;
 
             if (chat.Messages != null && chat.Messages.Count > 0)
             {
-                foreach (ChatMessage message in chat.Messages)
+                List<ChatMessage> messages = chat.Messages.ToList();
+                foreach (ChatMessage message in messages)
                 {
                     chat.Messages.Remove(message);
                     _context.ChatMessages.Remove(message);
+                    await _context.SaveChangesAsync();
                 }
             }
 

@@ -64,6 +64,20 @@ namespace EduMeilleurAPI.Controllers
             return Ok(newChat);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteChat(int id)
+        {
+            User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            if (user == null) return NotFound();
+
+            if (!user.Chats.Any(c => c.Id == id)) return Unauthorized();
+
+            var oldChat = await _chatService.DeleteChat(id);
+            if (oldChat == null) return StatusCode(StatusCodes.Status500InternalServerError);
+
+            return Ok();
+        }
+
         [HttpGet]
         public async Task<ActionResult<List<Chat>>> GetChats()
         {
