@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid main-carousel">
   <!-- Hero Carousel -->
   <ngb-carousel>
     <ng-template ngbSlide>
@@ -30,7 +30,7 @@
 
   <!-- Second carousel (Swiper) -->
   <div class="container-fluid">
-    <div class="row">
+    <div class="row feature-section">
       <div class="col text-center">
         <h2>Find your subject</h2>
         <h4>We have notes, exercises and videos for each</h4>
@@ -44,24 +44,38 @@
   <div class="row feature-section align-items-center">
     <div class="col-lg-8">
       <h2>Explore</h2>
-      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorem natus enim iusto numquam quam eos mollitia modi error quia perspiciatis...</p>
+      <p>Dive into interactive activities, challenge yourself, and contribute to a growing knowledge base.</p>
       
       <div class="row">
-        <div class="col">
-          <div class="card">
-            <div class="card-body text-center">Find new exercises!</div>
+        <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0 text-center hover-card">
+          <div class="card-body">
+            <i class="bi bi-search h1 text-primary"></i>
+            <h5 class="card-title mt-3">Find New Exercises</h5>
+            <p class="card-text text-muted">Browse curated challenges to test your skills.</p>
           </div>
         </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-body text-center">Share your own exercises!</div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0 text-center hover-card">
+          <div class="card-body">
+            <i class="bi bi-upload h1 text-primary"></i>
+            <h5 class="card-title mt-3">Share Yours</h5>
+            <p class="card-text text-muted">Contribute exercises and help the community grow.</p>
           </div>
         </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-body text-center">Increase your IQ!</div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0 text-center hover-card">
+          <div class="card-body">
+            <i class="bi bi-lightbulb h1 text-primary"></i>
+            <h5 class="card-title mt-3">Train Your Brain</h5>
+            <p class="card-text text-muted">Build logic, memory, and problem-solving skills.</p>
           </div>
         </div>
+      </div>
       </div>
     
     </div>
@@ -106,7 +120,7 @@
   <div class="row feature-section text-center">
     <div class="col">
       <h2>Our AI-powered chatbot!</h2>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus eos vel architecto...</p>
+      <p>Let ÉduMeilleur AI answer your questions under a moments notice</p>
       <button [routerLink]="['/ai']">Try now</button>
     </div>
   </div>

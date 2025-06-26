@@ -16,6 +16,7 @@
   height: 100vh;       /* Full screen height */
   overflow-y: auto;    /* Enable vertical scrolling */
   padding: 1rem;
+  background-color: #e0f4ff;
 }
 
 .container-fluid {
@@ -77,6 +78,22 @@
 .user-message .message-time small {
   color: rgba(255, 255, 255, 0.8) !important;
 }
+
+/* Coloring */
+
+.btn:hover {
+  background-color: rgba(13, 110, 253, 0.5);;
+}
+
+.input-group .btn, .card-header{
+  background-color: #98c1d9;
+}
+
+.input-card{
+  background-color: #e0f4ff;
+}
+
+
 
 #scrollContainer{
   overflow-y: auto;

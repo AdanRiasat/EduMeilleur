@@ -1,10 +1,16 @@
 header {
   height: 70px;
-  background-color: white; /* or your preferred color */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* optional for subtle depth */
+  background-color: 	#98c1d9; /* or your preferred color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
   position: sticky;
   top: 0;
   z-index: 1000; /* make sure it stays on top */
+}
+
+.user-nav{
+  background-color: #82a8be;
+  height: 50px;
+  border-radius: 10px;
 }
 
 a{
@@ -12,13 +18,27 @@ a{
     color: inherit;
     cursor: pointer;
 }
+.row {
+  margin: 0;
+}
+
+.col.nav-bar {
+  padding: 0;
+}
 
 .nav-bar {
-  height: 100%;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: background-color 0.2s;
+  
+}
+
+.nav-bar:hover {
+  background-color: rgba(13, 110, 253, 0.3); 
+  border-radius: 0; 
 }
 
 .img-circle{
@@ -41,6 +61,12 @@ html, body {
   flex-direction: column;
 }
 
+main {
+  /*background-color: #f2f2f2;*/
+  /*background-color: 	hsl(195, 100%, 95%);*/
+  background-color: hsl(202, 46%, 91%);
+}
+
 /* Wrapper that contains header, main and footer */
 .layout-wrapper {
   display: flex;
@@ -55,7 +81,7 @@ main {
 
 /* Optional footer styling */
 footer {
-  background-color: #f8f9fa;
+  background-color: #98c1d9;
   padding: 10px 0;
   text-align: center;
   border-top: 1px solid #ddd;

@@ -3,14 +3,14 @@
     left: 10px;
 }
 
-.scroll-sidebar,
-.scroll-content {
+.scroll-sidebar {
   height: 100vh;       /* Full screen height */
   overflow-y: auto;    /* Enable vertical scrolling */
   padding: 1rem;
+  border-right: 1px solid #ddd; /* Optional: visual separation */
+  background-color: hsl(202, 46%, 91%);    /* Optional: subtle background */
 }
 
-.scroll-sidebar {
-  border-right: 1px solid #ddd; /* Optional: visual separation */
-  background-color: #f8f9fa;    /* Optional: subtle background */
+.scroll-content{
+  background-color: #f2f2f2;
 }
