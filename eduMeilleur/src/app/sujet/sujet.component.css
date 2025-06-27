@@ -4,6 +4,8 @@
 }
 
 .scroll-sidebar {
+  top: 70px;
+  position: sticky;
   height: 100vh;       /* Full screen height */
   overflow-y: auto;    /* Enable vertical scrolling */
   padding: 1rem;

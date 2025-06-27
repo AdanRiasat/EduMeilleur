@@ -61,15 +61,8 @@ export class UserService {
     localStorage.removeItem("roles")
   }
 
-  async editProfile(dto: FormData){
-    let token = localStorage.getItem("token");
-    let httpOptions = {
-        headers : new HttpHeaders({
-          'Authorization' : `Bearer ${token}`
-        })
-    };
-        
-    let x = await lastValueFrom(this.http.put<Profile>(domain + "/api/Users/EditProfile", dto, httpOptions))
+  async editProfile(dto: FormData){    
+    let x = await lastValueFrom(this.http.put<Profile>(domain + "/api/Users/EditProfile", dto))
     console.log(x);
     localStorage.setItem("profile",JSON.stringify(x))
   }

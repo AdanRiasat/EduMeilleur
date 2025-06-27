@@ -16,6 +16,15 @@ textarea {
     width: 100%;
   }
 
+  .btn-send{
+    background-color: #98c1d9;
+    transition: 0.2s;
+  }
+
+  .btn-send:hover{
+    background-color: rgba(13, 110, 253, 0.5);
+  }
+
   #attachementsTeacher, #attachementsAdmin{
     margin-bottom: 10px;
   }

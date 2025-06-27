@@ -1,34 +1,37 @@
-<div class="container">
-    <h3>{{username}}'s profile</h3>
-    <div class="row">
-        <div class="col-6">
-            <label for="bio">Add biography</label><br>
-            <textarea id="bio" name="bio" rows="5" cols="50" placeholder="About me" [(ngModel)]="bio"></textarea><br>
-            
-            <label for="email">Change email</label><br>
-            <input id="email" name="email" class="form-control" type="text" [(ngModel)]="email"><br>
+<div class="profile-container">
+  <h3>{{username}}'s Profile</h3>
 
-            <label for="school">Change school</label>
-            <select id="school" class="form-control" name="school" [(ngModel)]="school">
-                <option value="" disabled selected hidden>Select your school</option>
-            </select><br>
+  <div class="profile-grid">
+    <div class="profile-details">
+      <label for="bio">Biography</label>
+      <textarea id="bio" rows="5" placeholder="About me" [(ngModel)]="bio"></textarea>
 
-            <label for="schoolYear">Change School Year</label>
-            <select id="schoolYear" class="form-control" name="schoolYear" [(ngModel)]="schoolYear">
-                <option value="" disabled selected hidden>Select your school year</option>
-            </select><br>
-            <button>Cancel</button>
-            <button (click)="saveChanges()">Save changes</button>
-        </div>
-        
+      <label for="email">Email</label>
+      <input id="email" type="text" [(ngModel)]="email">
 
-        <div class="col-6 text-center">
-            <h5>Change Profile Picture</h5>
-            <a (click)="triggerFileInput()"><img #profileImage class="img-circle" [src]="imageSrc + '?t=' + timestamp" alt="Profile picture"></a>
+      <label for="school">School</label>
+      <select id="school" [(ngModel)]="school">
+        <option value="" disabled selected hidden>Select your school</option>
+      </select>
 
-            <input #fileInput type="file" accept="image/*" hidden (change)="onFileSelected($event)">
+      <label for="schoolYear">School Year</label>
+      <select id="schoolYear" [(ngModel)]="schoolYear">
+        <option value="" disabled selected hidden>Select your school year</option>
+      </select>
 
-
-        </div>
+      <div class="button-group">
+        <button class="cancel-btn" [routerLink]="['/profile']">Cancel</button>
+        <button class="save-btn" (click)="saveChanges()">Save changes</button>
+      </div>
     </div>
+
+    <div class="profile-picture">
+      <h5>Profile Picture</h5>
+      <a (click)="triggerFileInput()">
+        <img #profileImage class="img-circle" [src]="imageSrc + '?t=' + timestamp" alt="Profile picture">
+      </a>
+      <input #fileInput type="file" accept="image/*" hidden (change)="onFileSelected($event)">
+    </div>
+  </div>
 </div>
+

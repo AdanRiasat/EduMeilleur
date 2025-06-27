@@ -34,19 +34,14 @@
               <div class="col-8 text-end">
                 <div class="d-flex justify-content-end align-items-center gap-4">
                   
-                  <button (click)="disconnect()" class="btn btn-link p-0"><i class="bi bi-box-arrow-right" style="font-size: 1.5rem;"></i></button>
+                  <button (click)="openDisconnectModal()" class="btn btn-link p-0"><i class="bi bi-box-arrow-right" style="font-size: 1.5rem;"></i></button>
 
                   
                     <a (click)="profile()">
                       <img class="img-circle" src="assets/images/istockphoto-1419410282-612x612.jpg">
                     </a>
-                 
-                  
-
                 </div>
               </div>
-
-             
           </div>
         </nav>
       </div>
@@ -69,4 +64,26 @@
 
   </div>
 </footer>
+</div>
+
+<!-- Disconnect Confirmation Modal -->
+<div class="modal fade" id="disconnectModal" tabindex="-1" aria-labelledby="disconnectModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title" id="disconnectModalLabel">Disconnect</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body">
+        Are you sure you want to disconnect?
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="disconnect()">Disconnect</button>
+      </div>
+    </div>
+  </div>
 </div>

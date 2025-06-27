@@ -10,7 +10,7 @@
             <div *ngIf="userService.roles().includes('admin')" class="badge bg-danger mb-3">Admin</div>
 
             <div class="card text-start">
-                <div class="card-header bg-light">
+                <div class="card-header">
                     <h6 class="mb-0">About Me</h6>
                 </div>
                 <div class="card-body">
@@ -20,9 +20,6 @@
 
             <button class="btn btn-outline-secondary mt-3" [routerLink]="['/profile', username]">Edit profile</button>
         </div>
-
-        
-
 
         <div class="col">
             <div class="row">
