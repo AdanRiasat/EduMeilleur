@@ -22,9 +22,10 @@ button{
 }
 
 .container{
+   font-family: 'Segoe UI', sans-serif;
    margin: 40px auto;
-  padding: 30px;
-  background-color: #f8f9fa;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+   padding: 30px;
+   background-color: #f8f9fa;
+   border-radius: 10px;
+   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
