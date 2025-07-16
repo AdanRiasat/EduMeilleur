@@ -17,6 +17,11 @@ p {
 ngb-carousel img {
   max-height: 450px;
   object-fit: cover;
+  
+}
+
+.img-paragraph {
+  filter: blur(3px);
 }
 
 /* Carousel text overlay */
@@ -26,7 +31,6 @@ ngb-carousel img {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
-  text-align: center;
 }
 
 .paragraph-overlay {
