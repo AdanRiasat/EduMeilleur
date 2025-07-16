@@ -15,7 +15,7 @@
 
                     <div class="chapter-items">
                         <div *ngFor="let n of allItems">
-                            <div class="item" *ngIf="n.chapter == c" (click)="getCurrentItem(n.id, this.currentType)">
+                            <div class="item" [class.active]="n.id == currentItem?.id" *ngIf="n.chapter == c" (click)="getCurrentItem(n.id, this.currentType)">
                                 {{n.title}}
                             </div>
                         </div>

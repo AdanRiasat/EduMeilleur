@@ -63,6 +63,11 @@
   background-color: rgba(13, 110, 253, 0.5);
 }
 
+.item.active {
+  background-color: #98c1d9;
+  color: currentColor;
+}
+
 .item {
   cursor: pointer;
   background-color: white;

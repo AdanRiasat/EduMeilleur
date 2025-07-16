@@ -27,6 +27,11 @@
   padding-bottom: 1rem;
 }
 
+.chat-title {
+ margin: 5px;
+ border-radius: 5px; 
+}
+
 .chat-messages {
   flex: 1;
   overflow-y: auto;
@@ -111,7 +116,7 @@
 }
 
 .list-group-item:hover {
-  background-color: #f1f1f1;
+  background-color: rgba(13, 110, 253, 0.5);
 }
 
 .list-group-item.active {
