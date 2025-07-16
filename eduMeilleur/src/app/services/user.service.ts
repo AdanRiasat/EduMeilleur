@@ -16,6 +16,7 @@ export class UserService {
   token: Signal<string | null> = this.tokenSignal.asReadonly()
   roles: Signal<string[]> = this.rolesSignal.asReadonly()
 
+
   constructor(public http: HttpClient) { }
 
   async register(username: string, email: string, password: string, school: string, schoolYear: string){

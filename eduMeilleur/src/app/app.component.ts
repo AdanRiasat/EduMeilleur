@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, OnInit } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { UserService } from './services/user.service';
 import { Modal } from 'bootstrap';
+import { Profile } from './models/profile';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +14,26 @@ import { Modal } from 'bootstrap';
 })
 export class AppComponent{
   title = 'eduMeilleur';
-
+  
+  username: string | null = ""
   userIsConnected: boolean = false
 
-  constructor(public userService: UserService, public route: Router) {}
+  timestamp: number = Date.now();
+
+  constructor(public userService: UserService, public route: Router) {
+    effect(() => {
+      let token: string | null = userService.token(); 
+      if (token) {
+        let profileString: string | null = localStorage.getItem("profile");
+        if (profileString) {
+          let profile: Profile = JSON.parse(profileString);
+          this.username = profile.username;
+        }
+      } else {
+        this.username = null;
+      }
+    })
+  }
 
   profile(){
     this.userIsConnected = this.userService.token() != null

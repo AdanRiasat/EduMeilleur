@@ -1,6 +1,25 @@
-.title{
-    position: relative;
-    left: 10px;
+
+
+.sidebar-title {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+
+
+.sidebar-buttons button {
+  padding: 0.4rem 0.75rem;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: left;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.sidebar-buttons button:hover {
+  background-color: #deeef7;
 }
 
 .scroll-sidebar {
@@ -11,6 +30,45 @@
   padding: 1rem;
   border-right: 1px solid #ddd; /* Optional: visual separation */
   background-color: hsl(202, 46%, 91%);    /* Optional: subtle background */
+}
+
+.chapter-section {
+  margin-bottom: 1rem;
+}
+
+/* Chapter title */
+.chapter-title {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+/* Chapter items */
+.chapter-items {
+  padding-left: 1rem; /* Indentation for child items */
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.chapter-items a {
+  color: #333;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.item:hover {
+  background-color: rgba(13, 110, 253, 0.5);
+}
+
+.item {
+  cursor: pointer;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  transition: background-color 0.2s;
 }
 
 .scroll-content{

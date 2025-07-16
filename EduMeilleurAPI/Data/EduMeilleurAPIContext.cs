@@ -73,9 +73,9 @@ namespace EduMeilleurAPI.Data
             .HasForeignKey("SubjectId");
 
             builder.Entity<Chapter>().HasData(
-                new {Id = 1, Title = "1 the first one", SubjectId = 1},
-                new {Id = 2, Title = "2 the second one", SubjectId = 1},
-                new {Id = 3, Title = "3 the third one", SubjectId = 1}
+                new {Id = 1, Title = "the first one", SubjectId = 1},
+                new {Id = 2, Title = "the second one", SubjectId = 1},
+                new {Id = 3, Title = "the third one", SubjectId = 1}
             );
 
             builder.Entity<Notes>().HasData(

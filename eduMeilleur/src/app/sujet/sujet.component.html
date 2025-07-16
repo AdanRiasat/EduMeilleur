@@ -1,21 +1,29 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-2 scroll-sidebar">
-            <h3>{{sujet?.name}}</h3>
-            <button (click)="getAllItems('Notes')">Notes</button>
-            <button (click)="getAllItems('Exercises')">Exercises</button>
-            <button (click)="getAllItems('Videos')">Videos</button>
+            <h3 class="sidebar-title">{{sujet?.name}}</h3>
+            
+            <div class="sidebar-buttons">
+                <button (click)="getAllItems('Notes')">Notes</button>
+                <button (click)="getAllItems('Exercises')">Exercises</button>
+                <button (click)="getAllItems('Videos')">Videos</button>
+            </div>
 
-            <div class="row" *ngFor="let c of chapters">
-                <strong>{{c}}</strong>
-                <div *ngFor="let n of allItems">
-                    <div *ngIf="n.chapter == c">
-                        <div class="col title">
-                            <a (click)="getCurrentItem(n.id, this.currentType)">{{n.title}}</a>
+            <div class="chapters">
+                <div class="chapter-section" *ngFor="let c of chapters; let i = index">
+                    <strong class="chapter-section">{{i + 1}}. {{c}}</strong>
+
+                    <div class="chapter-items">
+                        <div *ngFor="let n of allItems">
+                            <div class="item" *ngIf="n.chapter == c" (click)="getCurrentItem(n.id, this.currentType)">
+                                {{n.title}}
+                            </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
+            
             
         </div>
 
