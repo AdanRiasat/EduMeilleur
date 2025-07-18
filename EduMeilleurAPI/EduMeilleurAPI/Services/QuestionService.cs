@@ -53,7 +53,7 @@ namespace EduMeilleurAPI.Services
                     var extension = Path.GetExtension(file.FileName).ToLower();
                     var mimeType = file.ContentType;
                     var safeFileName = Guid.NewGuid().ToString() + extension;
-                    var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", safeFileName);
+                    var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", safeFileName);
 
                     if (mimeType.StartsWith("image/"))
                     {
@@ -89,6 +89,12 @@ namespace EduMeilleurAPI.Services
                     }
                     else
                     {
+                        if (!Directory.Exists(uploadsPath))
+                        {
+                            Directory.CreateDirectory(uploadsPath);
+                        }
+                        var fullPath = Path.Combine(uploadsPath, safeFileName);
+
                         using (var stream = new FileStream(fullPath, FileMode.Create))
                         {
                             await file.CopyToAsync(stream);

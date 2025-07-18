@@ -14,6 +14,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.7" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.10" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -29,6 +30,7 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
+    <Folder Include="images\" />
   </ItemGroup>
 
 </Project>
