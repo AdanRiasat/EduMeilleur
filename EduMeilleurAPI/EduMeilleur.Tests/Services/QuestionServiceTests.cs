@@ -101,7 +101,9 @@ namespace EduMeilleur.Tests.Services
 
         [Theory]
         [InlineData("image/png", ".png", typeof(QuestionTeacher))]
+        [InlineData("image/png", ".png", typeof(Feedback))]
         [InlineData("application/pdf", ".pdf", typeof(Feedback))]
+        [InlineData("application/pdf", ".pdf", typeof(QuestionTeacher))]
         public async Task SaveValidFilesAndAttachmentsOK(string mimeType, string extension, Type targetType)
         {
             // Arrange
@@ -161,8 +163,6 @@ namespace EduMeilleur.Tests.Services
                 Assert.Empty(pictures);
                 Assert.Single(attachments);
             }
-
-
         }
     }
 }
