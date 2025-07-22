@@ -1,11 +1,12 @@
 ﻿using EduMeilleurAPI.Data;
 using EduMeilleurAPI.Models;
 using EduMeilleurAPI.Models.DTO;
+using EduMeilleurAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace EduMeilleurAPI.Services
 {
-    public class SubjectService
+    public class SubjectService : ISubjectService
     {
         private readonly EduMeilleurAPIContext _context;
 

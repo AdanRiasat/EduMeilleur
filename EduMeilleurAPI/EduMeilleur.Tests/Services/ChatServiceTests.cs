@@ -153,18 +153,21 @@ namespace EduMeilleur.Tests.Services
         }
 
         [Fact]
-        public async Task DeleteChatOK()
+        public async Task DeleteChatWithMessagesOK()
         {
             // Arrange
             var chatTitle = "chatToDelete";
             var chat = await CreateAndSaveChatAsync(chatTitle);
-            Assert.NotNull(await _context.Chat.Where(c => c.Title == chatTitle).FirstOrDefaultAsync());
+            var message = await CreateAndSaveMessageAsync("messageToDelete", DateTime.UtcNow, chat.Id);
+            Assert.NotNull(await _context.Chat.FindAsync(chat.Id));
+            Assert.NotNull(await _context.ChatMessages.FindAsync(message.Id));
 
             // Act
             await _chatService.DeleteChat(chat.Id);
-            
+
             // Assert
-            Assert.Null(await _context.Chat.Where(c => c.Title == chatTitle).FirstOrDefaultAsync());
+            Assert.Null(await _context.Chat.FindAsync(chat.Id));
+            Assert.Null(await _context.ChatMessages.FindAsync(message.Id));
         }
 
         [Fact]

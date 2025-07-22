@@ -9,6 +9,7 @@ using EduMeilleurAPI.Data;
 using EduMeilleurAPI.Models;
 using EduMeilleurAPI.Services;
 using EduMeilleurAPI.Models.DTO;
+using EduMeilleurAPI.Services.Interfaces;
 
 namespace EduMeilleurAPI.Controllers
 {
@@ -16,9 +17,9 @@ namespace EduMeilleurAPI.Controllers
     [ApiController]
     public class SubjectsController : ControllerBase
     {
-        private readonly SubjectService _subjectService;
+        private readonly ISubjectService _subjectService;
 
-        public SubjectsController(SubjectService subjectService)
+        public SubjectsController(ISubjectService subjectService)
         {
             _subjectService = subjectService;
         }
@@ -37,7 +38,7 @@ namespace EduMeilleurAPI.Controllers
         public async Task<ActionResult<SubjectDisplayDTO>> GetSubject(int id)
         {
             Subject? subject = await _subjectService.GetAsync(id);
-            if (subject == null) return StatusCode(StatusCodes.Status500InternalServerError);
+            if (subject == null) return NotFound();
 
             return Ok(new SubjectDisplayDTO(subject));
         }

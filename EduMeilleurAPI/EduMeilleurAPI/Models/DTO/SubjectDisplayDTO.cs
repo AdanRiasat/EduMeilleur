@@ -20,5 +20,7 @@
                 Chapters.Add(item.Title);
             }
         }
+
+        public SubjectDisplayDTO() { } // for tests
     }
 }
