@@ -1,10 +1,11 @@
 ﻿using EduMeilleurAPI.Data;
 using EduMeilleurAPI.Models;
+using EduMeilleurAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace EduMeilleurAPI.Services
 {
-    public class PictureService
+    public class PictureService : IPictureService
     {
         public readonly EduMeilleurAPIContext _context;
 

@@ -1,6 +1,7 @@
 ﻿using EduMeilleurAPI.Models;
 using EduMeilleurAPI.Models.DTO;
 using EduMeilleurAPI.Services;
+using EduMeilleurAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,9 +21,9 @@ namespace EduMeilleurAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
-        private readonly PictureService _pictureService;
+        private readonly IPictureService _pictureService;
 
-        public UsersController(UserManager<User> userManager, PictureService pictureService)
+        public UsersController(UserManager<User> userManager, IPictureService pictureService)
         {
             _userManager = userManager;
             _pictureService = pictureService;
@@ -30,7 +31,7 @@ namespace EduMeilleurAPI.Controllers
 
         [HttpPost]
         public async Task<ActionResult> Register(RegisterDTO register)
-        {
+         {
             User user = new User()
             {
                 UserName = register.Username,
@@ -42,8 +43,12 @@ namespace EduMeilleurAPI.Controllers
 
             if (!identityResult.Succeeded)
             {
-                return StatusCode(StatusCodes.Status400BadRequest,
-                    new { Message = "La création de l'utilisateur a échoué." });
+                var firstError = identityResult.Errors.FirstOrDefault();
+
+                return StatusCode(StatusCodes.Status400BadRequest, new
+                {
+                    Message = firstError?.Code ?? "An unknown error occurred."
+                });
             }
 
             return Ok(await GenerateLoginResponse(user));

@@ -1,5 +1,6 @@
 ﻿using EduMeilleurAPI.Data;
 using EduMeilleurAPI.Models;
+using EduMeilleurAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using SixLabors.ImageSharp;
 
@@ -8,10 +9,10 @@ namespace EduMeilleurAPI.Services
     public class QuestionService
     {
         private readonly EduMeilleurAPIContext _context;
-        private readonly PictureService _pictureService;
+        private readonly IPictureService _pictureService;
         private readonly AttachmentService _attachmentService;
 
-        public QuestionService(EduMeilleurAPIContext context, PictureService pictureService, AttachmentService attachmentService)
+        public QuestionService(EduMeilleurAPIContext context, IPictureService pictureService, AttachmentService attachmentService)
         {
             _context = context;
             _pictureService = pictureService;

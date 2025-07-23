@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using EduMeilleurAPI.Services;
 using System.Security.Claims;
+using EduMeilleurAPI.Services.Interfaces;
 
 
 
@@ -86,12 +87,12 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddHttpClient<ChatService>();
 
-builder.Services.AddScoped<SubjectService>();
+builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<NotesService>();
 builder.Services.AddScoped<QuestionService>();
 builder.Services.AddScoped<ExerciseService>();
 builder.Services.AddScoped<VideoService>();
-builder.Services.AddScoped<PictureService>();
+builder.Services.AddScoped<IPictureService, PictureService>();
 builder.Services.AddScoped<AttachmentService>();
 builder.Services.AddScoped<ChatService>();
 
