@@ -10,13 +10,20 @@
       <input id="email" type="text" [(ngModel)]="email">
 
       <label for="school">School</label>
-      <select id="school" [(ngModel)]="school">
-        <option value="" disabled selected hidden>Select your school</option>
+      <select id="school" name="school" [(ngModel)]="school">
+        <option value="">No school selected</option>
+        <option value="1">Antoine-Brossard</option>
+        <option value="2">Lucille-Teasdale</option>
       </select>
 
       <label for="schoolYear">School Year</label>
       <select id="schoolYear" [(ngModel)]="schoolYear">
-        <option value="" disabled selected hidden>Select your school year</option>
+        <option value="">No school year selected</option>
+        <option value="1">Secondaire 1</option>
+        <option value="2">Secondaire 2</option>
+        <option value="3">Secondaire 3</option>
+        <option value="4">Secondaire 4</option>
+        <option value="5">Secondaire 5</option>
       </select>
 
       <div class="button-group">
@@ -28,7 +35,7 @@
     <div class="profile-picture">
       <h5>Profile Picture</h5>
       <a (click)="triggerFileInput()">
-        <img #profileImage class="img-circle" [src]="imageSrc + '?t=' + timestamp" alt="Profile picture">
+        <img #profileImage class="img-circle" [src]='"https://localhost:7027/api/Users/GetProfilePicture/" + username + "?t=" + timestamp' alt="Profile picture">
       </a>
       <input #fileInput type="file" accept="image/*" hidden (change)="onFileSelected($event)">
     </div>

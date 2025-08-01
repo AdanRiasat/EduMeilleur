@@ -22,22 +22,40 @@ namespace EduMeilleurAPI.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly IPictureService _pictureService;
+        private readonly SchoolService _schoolService;
 
-        public UsersController(UserManager<User> userManager, IPictureService pictureService)
+        public UsersController(UserManager<User> userManager, IPictureService pictureService, SchoolService schoolService)
         {
             _userManager = userManager;
             _pictureService = pictureService;
+            _schoolService = schoolService;
         }
 
         [HttpPost]
         public async Task<ActionResult> Register(RegisterDTO register)
-         {
-            User user = new User()
+        {
+            User user = new User
             {
                 UserName = register.Username,
                 Email = register.Email,
-                IQPoints = 0
+                IQPoints = 0,
             };
+
+            var isIdValid = await _schoolService.IsSchoolIdValid(register.SchoolId);
+            if (isIdValid == null) return StatusCode(StatusCodes.Status500InternalServerError);
+
+            if ((bool)isIdValid)
+            {
+                var school = await _schoolService.GetSchool((int)register.SchoolId);
+                if (school == null) return StatusCode(StatusCodes.Status500InternalServerError);
+
+                user.School = school;
+            }
+
+            if (register.SchoolYear >= 1 && register.SchoolYear <= 5)
+            {
+                user.SchoolYear = register.SchoolYear;
+            }
 
             IdentityResult identityResult = await _userManager.CreateAsync(user, register.Password);
 
@@ -127,24 +145,44 @@ namespace EduMeilleurAPI.Controllers
             User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             if (user == null) return NotFound();
 
-            string? Email = Request.Form["email"];
-            string? Bio = Request.Form["bio"];
-            string? School = Request.Form["school"];
-            string? SchoolYear = Request.Form["schoolYear"];
+            string? email = Request.Form["email"];
+            string? bio = Request.Form["bio"];
+            string? schoolId = Request.Form["school"];
+            string? schoolYear = Request.Form["schoolYear"];
 
-            if (Email == null || Email == "") return BadRequest();
+            if (email == null || email == "") return BadRequest();
             
-            user.Email = Email;
+            user.Email = email;
 
-            user.Bio = "";
-            if (Bio != null)
-                user.Bio = Bio;
+            
+            if (bio != null)
+            {
+                user.Bio = bio;
+            } 
+            else
+            {
+                user.Bio = "";
+            }
+                
 
-            if (School != null)
-                user.School = School;
+            if (schoolId != null && schoolId != "")
+            {
+                user.School = await _schoolService.GetSchool(int.Parse(schoolId));
+            }
+            else
+            {
+                user.School = null;
+            }
+               
 
-            if (SchoolYear != null)
-                user.SchoolYear = SchoolYear;
+            if (schoolYear != null && schoolYear != "")
+            {
+                user.SchoolYear = int.Parse(schoolYear);
+            }
+            else {
+                user.SchoolYear = null;
+            }
+                
 
             try
             {

@@ -33,7 +33,8 @@ namespace EduMeilleurAPI.Data
                 UserName = "admin",
                 Email = "bobibou@mail.com",
                 NormalizedUserName = "ADMIN",
-                NormalizedEmail = "BOBIBOU@MAIL.COM"
+                NormalizedEmail = "BOBIBOU@MAIL.COM",
+                School = null
             };
             User u2 = new User
             {
@@ -41,7 +42,8 @@ namespace EduMeilleurAPI.Data
                 UserName = "teacher1",
                 Email = "bobibo@mail.com",
                 NormalizedUserName = "TEACHER1",
-                NormalizedEmail = "BOBIBO@MAIL.COM"
+                NormalizedEmail = "BOBIBO@MAIL.COM",
+                School = null
             };
             u1.PasswordHash = hasher.HashPassword(u1, "alloo"); //change later, please
             builder.Entity<User>().HasData(u1);
@@ -102,9 +104,12 @@ namespace EduMeilleurAPI.Data
                 new Chat { Id = 1, Title = "My first Chat", UserId = u1.Id },
                 new Chat { Id = 2, Title = "My second Chat", UserId = u1.Id }
             );
+
+            builder.Entity<School>().HasData(
+                new School { Id = 1, Name = "Antoine-Brossard"},
+                new School { Id = 2, Name = "Lucille-Teasdale"}
+            );
         }
-
-
 
         public DbSet<EduMeilleurAPI.Models.Picture> Picture { get; set; } = default!;
         public DbSet<EduMeilleurAPI.Models.Feedback> Feedbacks { get; set; } = default!;
@@ -117,6 +122,7 @@ namespace EduMeilleurAPI.Data
         public DbSet<EduMeilleurAPI.Models.Chat> Chat { get; set; } = default!;
         public DbSet<EduMeilleurAPI.Models.Chapter> Chapters { get; set; } = default!;
         public DbSet<EduMeilleurAPI.Models.ChatMessage> ChatMessages { get; set; } = default!;
+        public DbSet<EduMeilleurAPI.Models.School> Schools { get; set; }
 
     }
 }

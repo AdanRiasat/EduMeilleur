@@ -19,7 +19,6 @@ export class EditProfileComponent implements OnInit {
   bio: string = ""
   email: string = ""
 
-  imageSrc: string = ""
   timestamp: number = Date.now();
 
 
@@ -38,13 +37,11 @@ export class EditProfileComponent implements OnInit {
       this.profile = JSON.parse(profileStringData)
       console.log(this.profile);
       this.username = this.profile!!.username
-      this.bio = this.profile!!.bio
+      this.bio = this.profile!!.bio ?? ""
       this.email = this.profile!!.email
-      this.school = this.profile!!.school
-      this.schoolYear = this.profile!!.schoolYear
+      this.school = this.profile!!.schoolId.toString() ?? ""
+      this.schoolYear = this.profile!!.schoolYear.toString() ?? ""
     }
-
-    this.imageSrc = "https://localhost:7027/api/Users/GetProfilePicture/" + this.username
   }
   
 
@@ -78,7 +75,7 @@ export class EditProfileComponent implements OnInit {
     formData.append("email", this.email)
     formData.append("bio", this.bio)
     formData.append("school", this.school)
-    formData.append("schoolYear", this.schoolYear)
+    formData.append("schoolYear", this.schoolYear.toString())
 
     await this.userService.editProfile(formData)
     this.route.navigate(['/profile'])

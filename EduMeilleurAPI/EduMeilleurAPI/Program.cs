@@ -95,6 +95,8 @@ builder.Services.AddScoped<VideoService>();
 builder.Services.AddScoped<IPictureService, PictureService>();
 builder.Services.AddScoped<AttachmentService>();
 builder.Services.AddScoped<ChatService>();
+builder.Services.AddScoped<SchoolService>();
+
 
 var app = builder.Build();
 

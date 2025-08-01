@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { parse } from 'marked';
 
 @Component({
   selector: 'app-sign-up',
@@ -22,7 +23,7 @@ export class SignUpComponent {
 
   async register(){
     if (this.password == this.confirmPassword && this.password != ""){
-      await this.userService.register(this.username, this.email, this.password, this.school, this.schoolYear)
+      await this.userService.register(this.username, this.email, this.password, parseFloat(this.school), parseFloat(this.schoolYear))
     } else {
       alert("Passwords do not match")
     }

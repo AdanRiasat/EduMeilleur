@@ -3,7 +3,8 @@ export class Profile{
         public username: string,
         public bio: string,
         public school: string,
-        public schoolYear: string,
+        public schoolId: number,
+        public schoolYear: number,
         public iQPoints: number,
         public email: string
     ) {}

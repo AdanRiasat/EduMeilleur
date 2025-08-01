@@ -26,15 +26,21 @@
 
                 <div class="col">
                     <div class="card">
-                        <div class="card-body text-center">
+                        <div class="card-body text-center" *ngIf="school == '' || school == undefined">
                             School
+                        </div>
+                        <div class="card-body text-center" *ngIf="school != '' && school != undefined">
+                            {{school}}
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card">
-                        <div class="card-body text-center">
+                        <div class="card-body text-center" *ngIf="schoolYear == undefined">
                             School Year
+                        </div>
+                        <div class="card-body text-center" *ngIf="schoolYear != undefined">
+                            Secondaire {{schoolYear}}
                         </div>
                     </div>
                 </div>

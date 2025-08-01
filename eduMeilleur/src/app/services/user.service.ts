@@ -19,12 +19,12 @@ export class UserService {
 
   constructor(public http: HttpClient) { }
 
-  async register(username: string, email: string, password: string, school: string, schoolYear: string){
+  async register(username: string, email: string, password: string, schoolId: number, schoolYear: number){
     let dto = {
       username: username,
       email: email,
       password: password,
-      school: school,
+      schoolId: schoolId,
       schoolYear: schoolYear
     }
 
