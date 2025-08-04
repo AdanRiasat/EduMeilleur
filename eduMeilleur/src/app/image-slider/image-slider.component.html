@@ -1,7 +1,12 @@
+<!--TODO fix the hover bug-->
 <swiper-container
   loop="true"
-  slides-per-view="5"
-  space-between="20"
+  [breakpoints]="{
+    '320': { 'slidesPerView': 1, 'spaceBetween': 10 },
+    '640': { 'slidesPerView': 2, 'spaceBetween': 15 },
+    '1024': { 'slidesPerView': 4, 'spaceBetween': 20 },
+    '1440': { 'slidesPerView': 5, 'spaceBetween': 20 }
+  }"
   class="sujet-swiper"
 >
   <swiper-slide *ngFor="let s of sujets">

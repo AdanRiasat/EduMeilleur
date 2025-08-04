@@ -53,6 +53,7 @@ export class ContactUsComponent {
     this.adminFiles.splice(index, 1);
   }
 
+  //TODO Error messages and handling
   async postQuestion(){
     if (this.titleTeacher == "" || this.messageTeacher == ""){
       alert("hmmm sir you cant do that")

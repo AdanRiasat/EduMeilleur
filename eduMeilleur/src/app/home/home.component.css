@@ -111,3 +111,13 @@ button:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
+
+@media (max-width: 768px){
+  h2, .description{
+    text-align: center;
+  }
+  button{
+    display: block;
+    margin: 0 auto;
+  }
+}
