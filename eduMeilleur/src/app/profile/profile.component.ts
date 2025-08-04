@@ -3,6 +3,7 @@ import { Profile } from '../models/profile';
 import { UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { SpinnerService } from '../services/spinner.service';
 
 @Component({
   selector: 'app-profile',
@@ -21,9 +22,10 @@ export class ProfileComponent implements OnInit{
 
   timestamp: number = Date.now();
 
-  constructor(public userService: UserService) {}
+  constructor(public userService: UserService, public spinner: SpinnerService) {}
   
   ngOnInit() {
+    this.spinner.hide()
      let profileStringData = localStorage.getItem("profile")
      if (profileStringData != null){
       this.profile = JSON.parse(profileStringData)
@@ -35,7 +37,4 @@ export class ProfileComponent implements OnInit{
      }
      
   }
-
-
-  
 }

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { Router, RouterModule } from '@angular/router';
+import { SpinnerService } from '../services/spinner.service';
 
 @Component({
   selector: 'app-login',
@@ -17,9 +18,10 @@ export class LoginComponent {
 
   errors: { [key: string]: string} = {}
 
-  constructor(public userService: UserService, public router: Router) {}
+  constructor(public userService: UserService, public router: Router, public spinner: SpinnerService) {}
 
   async login() {
+    this.spinner.show()
     this.errors = {}
     let isInputEmpty: boolean = false
 
@@ -32,7 +34,10 @@ export class LoginComponent {
       this.errors["password"] = "Password field is empty"
     }
 
-    if (isInputEmpty) return
+    if (isInputEmpty) {
+      this.spinner.hide()
+      return
+    }
 
     try {
       await this.userService.login(this.username, this.password)
@@ -48,5 +53,6 @@ export class LoginComponent {
 
     this.username = ""
     this.password = ""
+    this.spinner.hide()
   }
 }

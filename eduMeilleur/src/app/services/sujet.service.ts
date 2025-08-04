@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { DisplaySujet } from '../models/displaySujet';
 import { Item } from '../models/Item';
+import { SpinnerService } from './spinner.service';
 
 const domain: string ="https://localhost:7027"
 
@@ -11,10 +12,12 @@ const domain: string ="https://localhost:7027"
 })
 export class SujetService {
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient, public spinner: SpinnerService) { }
 
   async getSujets(): Promise<DisplaySujet[]>{
+    this.spinner.show()
     let x = await lastValueFrom(this.http.get<DisplaySujet[]>(domain + "/api/Subjects/GetSubjects"))
+    this.spinner.hide()
     console.log(x);
     
     return x

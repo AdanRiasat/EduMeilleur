@@ -4,6 +4,7 @@ import { UserService } from '../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { parse } from 'marked';
 import { CommonModule } from '@angular/common';
+import { SpinnerService } from '../services/spinner.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -22,9 +23,10 @@ export class SignUpComponent {
 
   errors: { [key: string]: string} = {}
 
-  constructor(public userService: UserService, public route: Router) {}
+  constructor(public userService: UserService, public route: Router, public spinner: SpinnerService) {}
 
   async register(){
+    this.spinner.show()
     this.errors = {};
     let isInputEmpty: boolean = false
 
@@ -43,13 +45,16 @@ export class SignUpComponent {
       isInputEmpty = true
     }
 
-    if (isInputEmpty) return
+    if (isInputEmpty){
+      this.spinner.hide()
+      return
+    }
 
     try {
       await this.userService.register(this.username, this.email, this.password, parseFloat(this.school), parseFloat(this.schoolYear))
 
       if (localStorage.getItem("token") != null){
-      this.route.navigate(['/profile'])
+        this.route.navigate(['/profile'])
       }
 
     } catch (error: any) {
@@ -85,6 +90,8 @@ export class SignUpComponent {
     } else {
       this.errors["general"] = "An unexpected error occurred.";
     }
+
+    this.spinner.hide()
   }
  
   }

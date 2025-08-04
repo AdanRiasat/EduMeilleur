@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ContactService } from '../services/contact.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SpinnerService } from '../services/spinner.service';
 
 @Component({
   selector: 'app-contact-us',
@@ -23,7 +24,7 @@ export class ContactUsComponent {
   teacherFiles: File[] = []
   adminFiles: File[] = []
 
-  constructor(public contactService: ContactService) {}
+  constructor(public contactService: ContactService, public spinner: SpinnerService) {}
 
   updateTeacherFiles() {
     this.updateSelectedFiles(this.fileInputTeacher, this.teacherFiles);
@@ -44,8 +45,6 @@ export class ContactUsComponent {
     } 
   }
 
-  
-
   removeTeacherFile(index: number) {
     this.teacherFiles.splice(index, 1);
   }
@@ -59,6 +58,8 @@ export class ContactUsComponent {
       alert("hmmm sir you cant do that")
       return
     }
+
+    this.spinner.show()
 
     let formData = new FormData()
     formData.append("title", this.titleTeacher)
@@ -76,6 +77,7 @@ export class ContactUsComponent {
     await this.contactService.postQuestion(formData)
 
     //reset
+    this.spinner.hide()
     this.titleTeacher = ""
     this.messageTeacher = ""
     this.teacherFiles = []
@@ -89,6 +91,8 @@ export class ContactUsComponent {
       alert("hmmm sir you cant do that")
       return
     }
+
+    this.spinner.show()
 
     let formData = new FormData()
     formData.append("title", this.titleAdmin)
@@ -106,6 +110,7 @@ export class ContactUsComponent {
     await this.contactService.postFeedback(formData)
 
     //reset
+    this.spinner.hide()
     this.titleAdmin = ""
     this.messageAdmin = ""
     this.adminFiles = []

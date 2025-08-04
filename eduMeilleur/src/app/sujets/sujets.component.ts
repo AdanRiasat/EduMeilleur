@@ -3,6 +3,7 @@ import { DisplaySujet } from '../models/displaySujet';
 import { SujetService } from '../services/sujet.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { SpinnerService } from '../services/spinner.service';
 
 @Component({
   selector: 'app-sujets',
@@ -15,7 +16,7 @@ export class SujetsComponent implements OnInit{
   sujets: DisplaySujet[] = []
   displaySujets: DisplaySujet[] = []
 
-  constructor(public sujetService: SujetService) {}
+  constructor(public sujetService: SujetService, public spinner: SpinnerService) {}
 
   async ngOnInit(){
     await this.getSujets()
@@ -23,7 +24,7 @@ export class SujetsComponent implements OnInit{
   }
 
   async getSujets(){
-     this.sujets = await this.sujetService.getSujets()
+    this.sujets = await this.sujetService.getSujets()
   }
 
   sort(type: string){

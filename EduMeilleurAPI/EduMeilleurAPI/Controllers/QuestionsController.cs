@@ -15,6 +15,7 @@ using EduMeilleurAPI.Models.DTO;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using SixLabors.ImageSharp;
+using EduMeilleurAPI.Services.Interfaces;
 
 namespace EduMeilleurAPI.Controllers
 {
@@ -24,10 +25,10 @@ namespace EduMeilleurAPI.Controllers
     {
         private readonly QuestionService _questionService;
         private readonly UserManager<User> _userManager;
-        private readonly PictureService _pictureService;
+        private readonly IPictureService _pictureService;
         private readonly AttachmentService _attachmentService;
 
-        public QuestionsController(QuestionService questionService, UserManager<User> userManager, PictureService pictureService, AttachmentService attachmentService)
+        public QuestionsController(QuestionService questionService, UserManager<User> userManager, IPictureService pictureService, AttachmentService attachmentService)
         {
             _questionService = questionService;
             _userManager = userManager;

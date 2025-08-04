@@ -4,11 +4,12 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { UserService } from './services/user.service';
 import { Modal } from 'bootstrap';
 import { Profile } from './models/profile';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, CommonModule],
+  imports: [RouterOutlet, RouterModule, CommonModule, NgxSpinnerModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
