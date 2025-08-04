@@ -16,8 +16,8 @@ export class ProfileComponent implements OnInit{
   username: string | undefined = ""
   bio: string | undefined = ""
   email: string | undefined = ""
-  school: string | undefined = ""
-  schoolYear: number | undefined
+  school: string | undefined | null = ""
+  schoolYear: number | undefined | null
 
   timestamp: number = Date.now();
 

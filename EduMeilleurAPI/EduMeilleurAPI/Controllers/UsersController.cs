@@ -57,16 +57,37 @@ namespace EduMeilleurAPI.Controllers
                 user.SchoolYear = register.SchoolYear;
             }
 
+            var errors = new List<IdentityError>();
+
+            foreach (var validator in _userManager.UserValidators)
+            {
+                var result = await validator.ValidateAsync(_userManager, user);
+                if (!result.Succeeded)
+                    errors.AddRange(result.Errors);
+            }
+
+            foreach (var validator in _userManager.PasswordValidators)
+            {
+                var result = await validator.ValidateAsync(_userManager, user, register.Password);
+                if (!result.Succeeded)
+                    errors.AddRange(result.Errors);
+            }
+
+            if (errors.Count > 0)
+                return BadRequest(errors.Select(e => new { e.Code, e.Description }));
+
             IdentityResult identityResult = await _userManager.CreateAsync(user, register.Password);
 
             if (!identityResult.Succeeded)
-            {
-                var firstError = identityResult.Errors.FirstOrDefault();
+                errors.AddRange(identityResult.Errors);
 
-                return StatusCode(StatusCodes.Status400BadRequest, new
+            if (errors.Count > 0)
+            {
+                return BadRequest(identityResult.Errors.Select(e => new
                 {
-                    Message = firstError?.Code ?? "An unknown error occurred."
-                });
+                    Code = e.Code,
+                    Description = e.Description
+                }));
             }
 
             return Ok(await GenerateLoginResponse(user));
@@ -172,9 +193,10 @@ namespace EduMeilleurAPI.Controllers
             else
             {
                 user.School = null;
+                user.SchoolId = null;
             }
                
-
+            //TODO bug where schoolyear gets set to null somehow
             if (schoolYear != null && schoolYear != "")
             {
                 user.SchoolYear = int.Parse(schoolYear);

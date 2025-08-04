@@ -4,17 +4,27 @@
 
         <div class="row">
             <div class="col">
-                <input id="username" class="form-control" type="text" name="username" [(ngModel)]="username" placeholder="Username"><br>
-                <input id="email" class="form-control" type="text" name="email" [(ngModel)]="email" placeholder="Email"><br>
-                <input id="password" class="form-control" type="text" name="password" [(ngModel)]="password" placeholder="Password"><br>
-                <input id="confirmPassword" class="form-control" type="text" name="confirmPassword" [(ngModel)]="confirmPassword" placeholder="Confirm Password"><br>
+                <input id="username" class="form-control" type="text" name="username" [(ngModel)]="username" placeholder="Username" required><br>
+                <div *ngIf="errors['username']" class="text-danger">{{errors['username']}}</div>
 
+                <input id="email" class="form-control" type="text" name="email" [(ngModel)]="email" placeholder="Email"><br>
+                <div *ngIf="errors['email']" class="text-danger">{{errors['email']}}</div>
+
+                <input id="password" class="form-control" type="password" name="password" [(ngModel)]="password" placeholder="Password"><br>
+                <div *ngIf="errors['password']" class="text-danger">{{errors['password']}}</div>
+                <div *ngIf="errors['confirmPassword']" class="text-danger">{{errors['confirmPassword']}}</div>
+
+                <input id="confirmPassword" class="form-control" type="password" name="confirmPassword" [(ngModel)]="confirmPassword" placeholder="Confirm Password"><br>
+                <div *ngIf="errors['confirmPassword']" class="text-danger">{{errors['confirmPassword']}}</div>
+
+                <label for="school" class="optional"></label>
                 <select id="school" class="form-control" name="school" [(ngModel)]="school">
                     <option value="" disabled selected hidden>Select your school</option>
                     <option value="1">Antoine-Brossard</option>
                     <option value="2">Lucille-Teasdale</option>
                 </select><br>
 
+                <label for="schoolYear" class="optional"></label>
                 <select id="schoolYear" class="form-control" name="schoolYear" [(ngModel)]="schoolYear">
                     <option value="" disabled selected hidden>Select your school year</option>
                     <option value="1">Secondaire 1</option>

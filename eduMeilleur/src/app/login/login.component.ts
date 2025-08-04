@@ -15,14 +15,38 @@ export class LoginComponent {
   username: string = ""
   password: string = ""
 
+  errors: { [key: string]: string} = {}
+
   constructor(public userService: UserService, public router: Router) {}
 
   async login() {
-    await this.userService.login(this.username, this.password)
-    if (this.userService.token() != null){
-      console.log(this.userService.token());
-      
-      this.router.navigate(['/profile']);
+    this.errors = {}
+    let isInputEmpty: boolean = false
+
+    if (this.username == ""){
+      this.errors["username"] = "Username field is empty"
+      isInputEmpty = true
     }
+
+    if (this.password == ""){
+      this.errors["password"] = "Password field is empty"
+    }
+
+    if (isInputEmpty) return
+
+    try {
+      await this.userService.login(this.username, this.password)
+
+      if (this.userService.token() != null){
+        console.log(this.userService.token());
+        this.router.navigate(['/profile']);
+      }
+    } catch (error: any){
+      console.log(error);
+      this.errors["badRequest"] = error.error.message
+    }
+
+    this.username = ""
+    this.password = ""
   }
 }

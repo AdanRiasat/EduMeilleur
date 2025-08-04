@@ -23,8 +23,7 @@ namespace EduMeilleurAPI.Models.DTO
             {
                 School = user.School.Name;
                 SchoolId = user.School.Id;
-            }
-                
+            }    
 
             if (user.SchoolYear != null)
                 SchoolYear = user.SchoolYear;

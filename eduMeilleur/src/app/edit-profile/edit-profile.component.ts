@@ -35,16 +35,24 @@ export class EditProfileComponent implements OnInit {
     let profileStringData = localStorage.getItem("profile")  
     if (profileStringData != null){
       this.profile = JSON.parse(profileStringData)
-      console.log(this.profile);
       this.username = this.profile!!.username
       this.bio = this.profile!!.bio ?? ""
       this.email = this.profile!!.email
-      this.school = this.profile!!.schoolId.toString() ?? ""
-      this.schoolYear = this.profile!!.schoolYear.toString() ?? ""
+
+      if (this.profile?.schoolId == null){
+        this.school == ""
+      } else {
+        this.school = this.profile.schoolId.toString()
+      }
+
+      if (this.profile?.schoolYear == null){
+        this.schoolYear == ""
+      } else {
+        this.schoolYear = this.profile.schoolYear.toString()
+      }
     }
   }
   
-
   triggerFileInput(): void {
     if (this.fileInput != undefined)
       this.fileInput.nativeElement.click();
