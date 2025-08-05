@@ -407,6 +407,7 @@ FodyWeavers.xsd
 # App secrets
 appsettings.json
 appsettings.*.json
+!appsettings.example.json
 
 # JWT or encryption keys in Program.cs or elsewhere
 *.Development.json
