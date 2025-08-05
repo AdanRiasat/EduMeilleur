@@ -22,9 +22,9 @@ namespace EduMeilleurAPI.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly IPictureService _pictureService;
-        private readonly SchoolService _schoolService;
+        private readonly ISchoolService _schoolService;
 
-        public UsersController(UserManager<User> userManager, IPictureService pictureService, SchoolService schoolService)
+        public UsersController(UserManager<User> userManager, IPictureService pictureService, ISchoolService schoolService)
         {
             _userManager = userManager;
             _pictureService = pictureService;
