@@ -1,5 +1,4 @@
-﻿using Azure.Identity;
-using EduMeilleurAPI.Controllers;
+﻿using EduMeilleurAPI.Controllers;
 using EduMeilleurAPI.Models;
 using EduMeilleurAPI.Models.DTO;
 using EduMeilleurAPI.Services;

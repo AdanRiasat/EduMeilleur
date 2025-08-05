@@ -13,7 +13,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
 using Moq.Protected;
-using Microsoft.Identity.Client;
 
 namespace EduMeilleur.Tests.Services
 {
@@ -48,7 +47,20 @@ namespace EduMeilleur.Tests.Services
                 .UseInMemoryDatabase(databaseName: "TestDB_" + Guid.NewGuid())
                 .Options;
 
-            return new EduMeilleurAPIContext(options);
+            var inMemorySettings = new Dictionary<string, string> {
+                {"Jwt:Key", "FakeKeyForTestssssssssssss 12312312333232232323"},
+                {"Jwt:Issuer", "https://localhost:7027"},
+                {"Jwt:Audience", "http://localhost:4200"},
+                {"Admin:Password", "alloo123" },
+                {"Admin:Email", "hellooo@gmail.com" },
+                {"Teacher:Password", "alloo123" }
+            };
+
+            IConfiguration config = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemorySettings)
+                .Build();
+
+            return new EduMeilleurAPIContext(options, config);
         }
 
         private async Task<Chat> CreateAndSaveChatAsync(string title)

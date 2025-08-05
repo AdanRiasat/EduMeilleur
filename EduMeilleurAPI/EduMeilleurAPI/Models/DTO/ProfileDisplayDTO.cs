@@ -1,5 +1,4 @@
-﻿using Azure.Identity;
-
+﻿
 namespace EduMeilleurAPI.Models.DTO
 {
     public class ProfileDisplayDTO

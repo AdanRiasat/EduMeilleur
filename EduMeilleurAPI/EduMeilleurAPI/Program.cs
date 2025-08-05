@@ -21,7 +21,7 @@ builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
 builder.Services.AddDbContext<EduMeilleurAPIContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("EduMeilleurAPIContext") ?? throw new InvalidOperationException("Connection string 'EduMeilleurAPIContext' not found."));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("EduMeilleurAPIContext") ?? throw new InvalidOperationException("Connection string 'EduMeilleurAPIContext' not found."));
     options.UseLazyLoadingProxies(); 
 });
 

@@ -8,9 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using EduMeilleurAPI.Data;
 using EduMeilleurAPI.Models;
 using EduMeilleurAPI.Services;
-using EduMeilleurAPI.Migrations;
 using EduMeilleurAPI.Models.DTO;
-using static Azure.Core.HttpHeader;
 
 namespace EduMeilleurAPI.Controllers
 {

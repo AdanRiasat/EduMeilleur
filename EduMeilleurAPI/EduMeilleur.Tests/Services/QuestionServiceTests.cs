@@ -3,6 +3,7 @@ using EduMeilleurAPI.Models;
 using EduMeilleurAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 using Moq;
 using System;
@@ -44,7 +45,20 @@ namespace EduMeilleur.Tests.Services
                 .UseInMemoryDatabase(databaseName: "TestDB_" + Guid.NewGuid())
                 .Options;
 
-            return new EduMeilleurAPIContext(options);
+            var inMemorySettings = new Dictionary<string, string> {
+                {"Jwt:Key", "FakeKeyForTestssssssssssss 12312312333232232323"},
+                {"Jwt:Issuer", "https://localhost:7027"},
+                {"Jwt:Audience", "http://localhost:4200"},
+                {"Admin:Password", "alloo123" },
+                {"Admin:Email", "hellooo@gmail.com" },
+                {"Teacher:Password", "alloo123" }
+            };
+
+            IConfiguration config = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemorySettings)
+                .Build();
+
+            return new EduMeilleurAPIContext(options, config);
         }
 
         [Fact]
