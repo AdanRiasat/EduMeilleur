@@ -6,6 +6,7 @@ using EduMeilleurAPI.Services;
 using EduMeilleurAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using Moq;
 using System;
@@ -23,7 +24,7 @@ namespace EduMeilleur.Tests.Controllers
         private readonly Mock<IPictureService> _mockPictureService;
         private readonly Mock<ISchoolService> _mockSchoolService;
         private readonly UsersController _controller;
-
+       
 
         public UsersControllerTests()
         {
@@ -34,7 +35,17 @@ namespace EduMeilleur.Tests.Controllers
             _mockUserManager = new Mock<UserManager<User>>(
                 store.Object, null, null, null, null, null, null, null, null);
 
-            _controller = new UsersController(_mockUserManager.Object, _mockPictureService.Object, _mockSchoolService.Object);
+            var inMemorySettings = new Dictionary<string, string> {
+                {"Jwt:Key", "FakeKeyForTestssssssssssss 12312312333232232323"},
+                {"Jwt:Issuer", "https://localhost:7027"},
+                {"Jwt:Audience", "http://localhost:4200"}
+            };
+
+            IConfiguration config = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemorySettings)
+                .Build();
+
+            _controller = new UsersController(_mockUserManager.Object, _mockPictureService.Object, _mockSchoolService.Object, config);
         }
 
         private async Task<RegisterDTO> ArrangeNewUser(string username, string password, string email, int? schoolId = null, int? schoolYear = null)

@@ -11,8 +11,9 @@ using System.Security.Claims;
 using EduMeilleurAPI.Services.Interfaces;
 
 
-
 var builder = WebApplication.CreateBuilder(args);
+
+var jwtKey = builder.Configuration["Jwt:Key"];
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
@@ -38,11 +39,11 @@ builder.Services.AddAuthentication(options =>
     {
         ValidateAudience = true,
         ValidateIssuer = true,
-        ValidAudience = "http://localhost:4200", // Audience : Client
-        ValidIssuer = "https://localhost:7027", // ⛔ Issuer : Serveur -> HTTPS VÉRIFIEZ le PORT de votre serveur dans launchsettings.json !
+        ValidAudience = builder.Configuration["JWT:Audience"], // Audience : Client
+        ValidIssuer = builder.Configuration["JWT:Issuer"], // ⛔ Issuer : Serveur -> HTTPS VÉRIFIEZ le PORT de votre serveur dans launchsettings.json !
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-            .GetBytes("LooOOongue Phrase SiNoN Ça ne Marchera PaAaAAAaAas !")), // Clé pour déchiffrer les tokens
+            .GetBytes(jwtKey)), // Clé pour déchiffrer les tokens
 
         ClockSkew = TimeSpan.Zero
     };

@@ -23,12 +23,14 @@ namespace EduMeilleurAPI.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IPictureService _pictureService;
         private readonly ISchoolService _schoolService;
+        private readonly IConfiguration _config;
 
-        public UsersController(UserManager<User> userManager, IPictureService pictureService, ISchoolService schoolService)
+        public UsersController(UserManager<User> userManager, IPictureService pictureService, ISchoolService schoolService, IConfiguration config)
         {
             _userManager = userManager;
             _pictureService = pictureService;
             _schoolService = schoolService;
+            _config = config;
         }
 
         [HttpPost]
@@ -123,7 +125,7 @@ namespace EduMeilleurAPI.Controllers
             authClaims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
 
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8
-                .GetBytes("LooOOongue Phrase SiNoN Ça ne Marchera PaAaAAAaAas !")); // Phrase identique dans Program.cs
+                .GetBytes(_config["JWT:Key"])); // Phrase identique dans Program.cs
             JwtSecurityToken token = new JwtSecurityToken(
                 issuer: "https://localhost:7027",
                 audience: "http://localhost:4200",

@@ -403,3 +403,35 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# App secrets
+appsettings.json
+appsettings.*.json
+
+# JWT or encryption keys in Program.cs or elsewhere
+*.Development.json
+secrets.json
+
+# If you keep uploads/images locally (like profile pics)
+images/pfp/
+
+# User-specific or local dev configs
+*.local.json
+
+# Angular build output
+/dist/
+/out-tsc/
+/.angular/
+
+# Local environment files
+src/environments/environment.ts
+src/environments/environment.*.ts
+
+# User-uploaded files
+/images/full/
+images/pfp/*
+!images/pfp/default.png
+/uploads/
+
+# EF Migrations
+Migrations/

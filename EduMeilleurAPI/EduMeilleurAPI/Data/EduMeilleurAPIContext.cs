@@ -12,9 +12,12 @@ namespace EduMeilleurAPI.Data
 {
     public class EduMeilleurAPIContext : IdentityDbContext<User>
     {
-        public EduMeilleurAPIContext (DbContextOptions<EduMeilleurAPIContext> options)
+        private readonly IConfiguration _config;
+
+        public EduMeilleurAPIContext (DbContextOptions<EduMeilleurAPIContext> options, IConfiguration config)
             : base(options)
         {
+            _config = config;
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -31,7 +34,7 @@ namespace EduMeilleurAPI.Data
             {
                 Id = "11111111-1111-1111-1111-111111111111",
                 UserName = "admin",
-                Email = "bobibou@mail.com",
+                Email = _config["Admin:Email"],
                 NormalizedUserName = "ADMIN",
                 NormalizedEmail = "BOBIBOU@MAIL.COM",
                 School = null
@@ -45,10 +48,10 @@ namespace EduMeilleurAPI.Data
                 NormalizedEmail = "BOBIBO@MAIL.COM",
                 School = null
             };
-            u1.PasswordHash = hasher.HashPassword(u1, "alloo"); //change later, please
+            u1.PasswordHash = hasher.HashPassword(u1, _config["Admin:Password"]); 
             builder.Entity<User>().HasData(u1);
 
-            u2.PasswordHash = hasher.HashPassword(u2, "alloo"); //change later, please
+            u2.PasswordHash = hasher.HashPassword(u2, _config["Teacher:Password"]); 
             builder.Entity<User>().HasData(u2);
 
             builder.Entity<IdentityUserRole<string>>().HasData(
