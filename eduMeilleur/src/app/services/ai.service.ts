@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { ChatMessage } from '../models/chatMessage';
 import { Chat } from '../models/chat';
+import { environment } from '../../environments/environment';
 
-const domain: string ="https://localhost:7027"
+const domain: string = environment.apiUrl
 
 @Injectable({
   providedIn: 'root'

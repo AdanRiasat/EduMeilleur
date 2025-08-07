@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { last, lastValueFrom } from 'rxjs';
+import { environment } from '../../environments/environment';
 
-const domain: string ="https://localhost:7027"
+const domain: string = environment.apiUrl
 
 @Injectable({
   providedIn: 'root'

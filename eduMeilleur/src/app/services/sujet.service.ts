@@ -4,8 +4,12 @@ import { lastValueFrom } from 'rxjs';
 import { DisplaySujet } from '../models/displaySujet';
 import { Item } from '../models/Item';
 import { SpinnerService } from './spinner.service';
+import { environment } from '../../environments/environment';
 
-const domain: string ="https://localhost:7027"
+
+const domain: string = environment.apiUrl
+console.log(domain);
+
 
 @Injectable({
   providedIn: 'root'
