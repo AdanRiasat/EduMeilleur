@@ -31,12 +31,17 @@ Will be fully published soon.
 
 ## 🚀 Features
 
-- Notes, exercises, and videos served with markdown files sent by the backend.
-- 2 carrousels on the home page, one with a swipe functionality and the other with arrows.
-- Loading screen during API calls with ngx-spinner.
-- Chatbot uses an OpenRouter API key.
-- Users can send images and attachments along side their question on the Contact us page.
-- Website will be fully translated in english and french (not implemented yet)
+- Notes, exercises, and videos served with markdown files provided by the backend.
+
+- Two carousels on the home page: one with swipe functionality and the other with navigation arrows.
+
+- Loading screen during API calls using ngx-spinner.
+
+- Chatbot powered by an OpenRouter API key.
+
+- Users can send images and attachments along with their questions on the Contact Us page.
+
+- Website will be fully translated into English and French (translation not yet implemented).
 
 ## 🛠️ Tech Stack
 
@@ -47,13 +52,11 @@ Will be fully published soon.
 
 ## 📚 Lessons Learned
 
-First time working on a full stacked Web app from scratch, it feels very different compared to working on an existing project and only working on some of the functionnalities. 
+This was my first experience developing a full-stack web application entirely from scratch. Setting up the backend, frontend, dependencies, and database was a significant initial challenge, but it laid the foundation for rapid feature development.
 
-The start of the project felt strange, there were so many things to do, so many functionalities that I was able to add very quickly because there was nothing done, but it also took a while to get everything setup initialy: The backend, frontend, Nuget packages, database, etc. 
+I learned the importance of considering performance, code quality (DRY principles), and security from the start. Factors that aren’t as heavily emphasized in school projects but are critical when you’re fully responsible for the product.
 
-Through out the project I found myself doubting and rethinking about a lot of things, like is this the best way to do this? Or is this the standard way of doing it? I had to always be thinking of performance, cleanliness of the code (DRY code) and security. You dont really think about these things as much during school projects since all im focused on is getting all the points, getting the best grade possible, but here everything matters because its my own project and im responsible for it.
-
-Theres also the size of the project, there always seems to be no end for things I need to add and improve. I can defenitly see why you're supposed to have whole team working on this sort of project.
+The project’s scope quickly grew, showing me how large-scale applications require continuous iteration and why such work is often distributed across entire teams.
 
 ## 📝TODO
 
