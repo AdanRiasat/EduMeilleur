@@ -26,8 +26,8 @@
           <p class="paragraph-overlay">
             Join our team and help shape the future of student learning. We’re looking for passionate individuals to help write notes, create exercises, and even produce educational videos.
             If you're interested in contributing to our platform and making a difference, contact us at:<br>
-            📧 <i>JonhLittleFlower&#64;sigma.com</i><br>
-            📞 123-765-092
+            📧 <i>{{global.adminEmail}}</i><br>
+            <!--📞 123-765-092-->
           </p>
         </div>
       </div>
@@ -109,21 +109,10 @@
   <div class="col-lg-9 text-center">
     <h3>Our wonderful team of teachers</h3>
     <!--Teacher images placeholder-->
-    <div class="row text-center">
-      <div class="col">
-        <img class="teacher-img" src="assets/images/dream.png" alt="image of teacher">
-      </div>
-      <div class="col">
-        <img class="teacher-img" src="assets/images/amirBabygurl.png" alt="image of teacher">
-      </div>
-      <div class="col">
-        <img class="teacher-img" src="assets/images/adan.jpg" alt="image of teacher">
-      </div>
-      <div class="col">
-        <img class="teacher-img" src="assets/images/ken.jpg" alt="image of teacher">
-      </div>
-      <div class="col">
-        <img class="teacher-img" src="assets/images/anouar.jpg" alt="image of teacher">
+    <div class="row text-center ">
+      <div class="col" *ngFor="let t of teachersNames">
+        <img class="teacher-img" [src]='domain + "/api/Users/GetProfilePicture/" + t + "?t=" + timestamp' alt="image of teacher">
+        <p>{{t}}</p>
       </div>
     </div>
   </div>

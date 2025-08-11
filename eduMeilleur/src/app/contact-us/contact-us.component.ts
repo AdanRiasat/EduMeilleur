@@ -3,6 +3,7 @@ import { ContactService } from '../services/contact.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SpinnerService } from '../services/spinner.service';
+import { GlobalService } from '../services/global.service';
 
 @Component({
   selector: 'app-contact-us',
@@ -24,7 +25,7 @@ export class ContactUsComponent {
   teacherFiles: File[] = []
   adminFiles: File[] = []
 
-  constructor(public contactService: ContactService, public spinner: SpinnerService) {}
+  constructor(public contactService: ContactService, public spinner: SpinnerService, public global: GlobalService) {}
 
   updateTeacherFiles() {
     this.updateSelectedFiles(this.fileInputTeacher, this.teacherFiles);

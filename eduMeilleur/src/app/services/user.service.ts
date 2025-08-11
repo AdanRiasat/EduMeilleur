@@ -21,6 +21,13 @@ export class UserService {
 
   constructor(public http: HttpClient) { }
 
+  async getTeachers(){
+    let x = await lastValueFrom(this.http.get<string[]>(domain + "/api/Users/GetTeachers"))
+    console.log(x);
+    
+    return(x)
+  }
+
   async register(username: string, email: string, password: string, schoolId: number, schoolYear: number){
     let dto = {
       username: username,

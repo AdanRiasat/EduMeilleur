@@ -68,6 +68,7 @@ builder.Services.Configure<IdentityOptions>(options => //modify later
     options.Password.RequireUppercase = false;
     options.Password.RequireNonAlphanumeric = false;
     options.User.RequireUniqueEmail = true;
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/ ";
 });
 
 // Add services to the container.
@@ -98,7 +99,6 @@ builder.Services.AddScoped<IPictureService, PictureService>();
 builder.Services.AddScoped<AttachmentService>();
 builder.Services.AddScoped<ChatService>();
 builder.Services.AddScoped<ISchoolService, SchoolService>();
-
 
 var app = builder.Build();
 

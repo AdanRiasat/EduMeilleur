@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using SixLabors.ImageSharp;
@@ -247,9 +248,23 @@ namespace EduMeilleurAPI.Controllers
                 throw;
             }
 
-            await _userManager.UpdateAsync(user);
+            var result = await _userManager.UpdateAsync(user);
 
             return Ok(new ProfileDisplayDTO(user));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetTeachers()
+        {
+            var teachers = await _userManager.GetUsersInRoleAsync("teacher");
+            var teachersNames = new List<string>();
+
+            foreach (var teacher in teachers)
+            {
+                teachersNames.Add(teacher.UserName);
+            }
+
+            return Ok(teachersNames);
         }
     }
 }

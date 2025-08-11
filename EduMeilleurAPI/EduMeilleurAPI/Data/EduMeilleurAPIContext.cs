@@ -36,27 +36,80 @@ namespace EduMeilleurAPI.Data
                 UserName = "admin",
                 Email = _config["Admin:Email"],
                 NormalizedUserName = "ADMIN",
-                NormalizedEmail = "BOBIBOU@MAIL.COM",
+                NormalizedEmail = _config["Admin:Email"].ToUpper(),
                 School = null
             };
             User u2 = new User
             {
                 Id = "11111111-1111-1111-1111-111111111112",
-                UserName = "teacher1",
+                UserName = "Robert Lebois",
                 Email = "bobibo@mail.com",
-                NormalizedUserName = "TEACHER1",
+                NormalizedUserName = "ROBERT LEBOIS",
                 NormalizedEmail = "BOBIBO@MAIL.COM",
                 School = null
             };
+            User u3 = new User
+            {
+                Id = "11111111-1111-1111-1111-111111111113",
+                UserName = "Jerome Laplante",
+                Email = "hmmm@mail.com",
+                NormalizedUserName = "JEROME LAPLANTE",
+                NormalizedEmail = "HMMM@MAIL.COM",
+                School = null
+            };
+            User u4 = new User
+            {
+                Id = "11111111-1111-1111-1111-111111111114",
+                UserName = "Emily Tremblay",
+                Email = "teacher3@mail.com",
+                NormalizedUserName = "EMILY TREMBLAY",
+                NormalizedEmail = "TEACHER3@MAIL.COM",
+                School = null
+            };
+            User u5 = new User
+            {
+                Id = "11111111-1111-1111-1111-111111111115",
+                UserName = "Tyrone Rochelieu",
+                Email = "teacher4@mail.com",
+                NormalizedUserName = "TYRONE ROCHELIEU",
+                NormalizedEmail = "teacher4@MAIL.COM",
+                School = null
+            };
+            User u6 = new User
+            {
+                Id = "11111111-1111-1111-1111-111111111116",
+                UserName = "Sarah Laide",
+                Email = "teacher5@mail.com",
+                NormalizedUserName = "SARAH LAIDE",
+                NormalizedEmail = "teacher5@MAIL.COM",
+                School = null
+            };
+
             u1.PasswordHash = hasher.HashPassword(u1, _config["Admin:Password"]); 
             builder.Entity<User>().HasData(u1);
 
             u2.PasswordHash = hasher.HashPassword(u2, _config["Teacher:Password"]); 
             builder.Entity<User>().HasData(u2);
 
+            u3.PasswordHash = hasher.HashPassword(u3, _config["Teacher2:Password"]);
+            builder.Entity<User>().HasData(u3);
+
+            u4.PasswordHash = hasher.HashPassword(u4, _config["Teacher3:Password"]);
+            builder.Entity<User>().HasData(u4);
+
+            u5.PasswordHash = hasher.HashPassword(u5, _config["Teacher4:Password"]);
+            builder.Entity<User>().HasData(u5);
+
+            u6.PasswordHash = hasher.HashPassword(u6, _config["Teacher5:Password"]);
+            builder.Entity<User>().HasData(u6);
+
             builder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string> { UserId = u1.Id, RoleId = "1" },
-                new IdentityUserRole<string> { UserId = u2.Id, RoleId = "2"}
+                new IdentityUserRole<string> { UserId = u2.Id, RoleId = "2"},
+                new IdentityUserRole<string> { UserId = u3.Id, RoleId = "2"},
+                new IdentityUserRole<string> { UserId = u4.Id, RoleId = "2"},
+                new IdentityUserRole<string> { UserId = u5.Id, RoleId = "2"},
+                new IdentityUserRole<string> { UserId = u6.Id, RoleId = "2"}
             );
 
             builder.Entity<Subject>().HasData(
