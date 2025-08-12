@@ -8,12 +8,14 @@ import { RouterModule } from '@angular/router';
 import { GlobalService } from '../services/global.service';
 import { UserService } from '../services/user.service';
 import { environment } from '../../environments/environment';
+import { ModalComponent } from '../modal/modal.component';
+import { Modal } from 'bootstrap';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgbCarouselModule, CommonModule, ImageSliderComponent, RouterModule],
+  imports: [NgbCarouselModule, CommonModule, ImageSliderComponent, RouterModule, ModalComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

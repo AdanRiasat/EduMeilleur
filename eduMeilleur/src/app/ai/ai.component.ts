@@ -7,11 +7,12 @@ import { marked } from 'marked';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Chat } from '../models/chat';
 import { Modal } from 'bootstrap';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-ai',
   standalone: true,
-  imports: [FormsModule, CommonModule, DatePipe],
+  imports: [FormsModule, CommonModule, DatePipe, ModalComponent],
   templateUrl: './ai.component.html',
   styleUrl: './ai.component.css'
 })

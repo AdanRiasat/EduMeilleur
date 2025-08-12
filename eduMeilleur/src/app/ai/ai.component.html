@@ -132,6 +132,14 @@
 </div>
 
 <!-- Delete Confirmation Modal -->
+ <app-modal
+  modalId="deleteChatModal"
+  title="Delete Chat"
+  body="Are you sure you want to delete this chat?"
+  confirmText="Delete"
+  (confirmed)="deleteChat()">
+</app-modal>
+
 <div class="modal fade" id="deleteChatModal" tabindex="-1" aria-labelledby="deleteChatModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">

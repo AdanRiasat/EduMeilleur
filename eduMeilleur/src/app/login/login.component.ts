@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { Router, RouterModule } from '@angular/router';
 import { SpinnerService } from '../services/spinner.service';
+import { Modal } from 'bootstrap';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule,CommonModule, RouterModule],
+  imports: [FormsModule,CommonModule, RouterModule, ModalComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -48,6 +50,12 @@ export class LoginComponent {
       }
     } catch (error: any){
       console.log(error);
+      
+      if (error.status === 0){
+        this.openErrorModal()
+        this.spinner.hide()
+        return
+      }
       this.errors["badRequest"] = error.error.message
     }
 
@@ -55,4 +63,12 @@ export class LoginComponent {
     this.password = ""
     this.spinner.hide()
   }
+
+  openErrorModal(){
+      let modalElement = document.getElementById('error500Modal')
+      if (modalElement){
+        let modal = new Modal(modalElement)
+        modal.show()
+      }
+    }
 }
