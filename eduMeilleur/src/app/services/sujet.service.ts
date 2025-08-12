@@ -21,14 +21,12 @@ export class SujetService {
   async getSujets(): Promise<DisplaySujet[]>{
     this.spinner.show()
 
-    try {
-      let x = await lastValueFrom(this.http.get<DisplaySujet[]>(domain + "/api/Subjects/GetSubjects"))
-      return x
-    } catch (e: any){
-      return []
-    } finally {
-      this.spinner.hide()
-    }
+    let x = await lastValueFrom(this.http.get<DisplaySujet[]>(domain + "/api/Subjects/GetSubjects"))
+    console.log(x);
+
+    this.spinner.hide()
+
+    return x
   }
 
   async getSujet(id: number): Promise<DisplaySujet>{

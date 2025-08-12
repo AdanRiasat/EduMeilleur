@@ -8,6 +8,9 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Chat } from '../models/chat';
 import { Modal } from 'bootstrap';
 import { ModalComponent } from '../modal/modal.component';
+import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
+import { SpinnerService } from '../services/spinner.service';
 
 @Component({
   selector: 'app-ai',
@@ -28,12 +31,16 @@ export class AiComponent implements OnInit{
   dropdownOpen: number | null = null
   deleteId: number = -1
 
-  constructor(public aiService: AiService, public sanitizer: DomSanitizer) {}
+  userIsConnected: boolean = false
+
+  constructor(public aiService: AiService, public sanitizer: DomSanitizer, public userService: UserService, public route: Router, public spinner: SpinnerService) {}
 
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
   
   async ngOnInit(){
+    this.spinner.show()
     await this.getChats()
+    this.spinner.hide()
   }
 
   scrollToBottom() {
@@ -44,8 +51,14 @@ export class AiComponent implements OnInit{
   } catch (err) {}
 }
 
-  async getChats(){
-    this.chats = await this.aiService.getChats()
+  async getChats(){    
+    try {
+      this.chats = await this.aiService.getChats()
+    } catch (error: any) {
+      if (error.status === 0){
+        this.openErrorModal()
+      }
+    }
   }
 
   async getMessages(chat: Chat){
@@ -76,6 +89,12 @@ export class AiComponent implements OnInit{
   }
 
   async sendMessage() {
+    this.userIsConnected = this.userService.token() != null
+    if (!this.userIsConnected){
+      this.openConnectionModal()
+      return
+    }
+
     let text = this.userMessage.trim()
     console.log(text);
 
@@ -116,15 +135,6 @@ export class AiComponent implements OnInit{
     this.dropdownOpen = this.dropdownOpen === id ? null : id;
   }
 
-  openDeleteModal(id: number){
-    this.deleteId = id
-    let modalElement = document.getElementById('deleteChatModal')
-    if (modalElement){
-      let modal = new Modal(modalElement)
-      modal.show()
-    }
-  }
-
   newChat(){
     this.currentChat = null
     this.messages = []
@@ -141,6 +151,37 @@ export class AiComponent implements OnInit{
     if (!target.closest('.list-group-item')) {
       this.dropdownOpen = null;
     }
+  }
+
+  // TODO Refactor the 3 modal functions into 1
+  openDeleteModal(id: number){
+    this.deleteId = id
+    let modalElement = document.getElementById('deleteChatModal')
+    if (modalElement){
+      let modal = new Modal(modalElement)
+      modal.show()
+    }
+  }
+
+  openErrorModal(){
+      let modalElement = document.getElementById('error500Modal')
+      if (modalElement){
+        let modal = Modal.getInstance(modalElement) || new Modal(modalElement);
+        modal.show()
+      }
+      this.spinner.hide()
+  }
+
+  openConnectionModal(){
+    let modalElement = document.getElementById('errorConnectionModal')
+    if (modalElement){
+      let modal = Modal.getInstance(modalElement) || new Modal(modalElement);
+      modal.show()
+    }
+  }
+
+  redirectLogin(){
+    this.route.navigate(['/login'])
   }
 }
 

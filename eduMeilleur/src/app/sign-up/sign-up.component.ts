@@ -5,11 +5,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { parse } from 'marked';
 import { CommonModule } from '@angular/common';
 import { SpinnerService } from '../services/spinner.service';
+import { ModalComponent } from '../modal/modal.component';
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, ModalComponent],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css'
 })
@@ -59,6 +61,12 @@ export class SignUpComponent {
 
     } catch (error: any) {
     if (error.error) {
+      console.log(error);
+      if (error.status === 0){
+        this.openErrorModal()
+        this.spinner.hide()
+        return
+      }
       for (let e of error.error) {
         switch (e.code) {
           case "DuplicateUserName":
@@ -89,11 +97,20 @@ export class SignUpComponent {
       }
     } else {
       this.errors["general"] = "An unexpected error occurred.";
+      
     }
-
-    this.spinner.hide()
+    } finally{
+      this.spinner.hide()
   }
  
   }
+
+  openErrorModal(){
+        let modalElement = document.getElementById('error500Modal')
+        if (modalElement){
+          let modal = new Modal(modalElement)
+          modal.show()
+        }
+    }
 
 }

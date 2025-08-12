@@ -5,6 +5,7 @@ import { SujetService } from '../services/sujet.service';
 import { RouterModule } from '@angular/router';
 import { Modal } from 'bootstrap';
 import { ModalComponent } from '../modal/modal.component';
+import { SpinnerService } from '../services/spinner.service';
 
 @Component({
   selector: 'app-image-slider',
@@ -17,11 +18,12 @@ import { ModalComponent } from '../modal/modal.component';
 export class ImageSliderComponent implements OnInit{
    sujets: DisplaySujet[] = []
   
-  constructor(public sujetService: SujetService){}
+  constructor(public sujetService: SujetService, public spinner: SpinnerService){}
 
   async ngOnInit() {
-    this.sujets = await this.sujetService.getSujets()
-    if (this.sujets.length == 0){
+    try {
+      this.sujets = await this.sujetService.getSujets()
+    } catch{
       this.openErrorModal()
     }
   }
@@ -31,6 +33,7 @@ export class ImageSliderComponent implements OnInit{
     if (modalElement){
       let modal = new Modal(modalElement)
       modal.show()
+      this.spinner.hide()
     }
   }
 }

@@ -4,11 +4,13 @@ import { SujetService } from '../services/sujet.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SpinnerService } from '../services/spinner.service';
+import { Modal } from 'bootstrap';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-sujets',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule,RouterModule, ModalComponent],
   templateUrl: './sujets.component.html',
   styleUrl: './sujets.component.css'
 })
@@ -24,7 +26,12 @@ export class SujetsComponent implements OnInit{
   }
 
   async getSujets(){
-    this.sujets = await this.sujetService.getSujets()
+    try {
+      this.sujets = await this.sujetService.getSujets()
+    } catch{
+      this.openErrorModal()
+    }
+    
   }
 
   sort(type: string){
@@ -39,6 +46,15 @@ export class SujetsComponent implements OnInit{
       if (s.type == type){
         this.displaySujets.push(s)
       }
+    }
+  }
+
+  openErrorModal(){
+    let modalElement = document.getElementById("error500Modal")
+    if (modalElement){
+      let modal = new Modal(modalElement)
+      modal.show()
+      this.spinner.hide()
     }
   }
 }

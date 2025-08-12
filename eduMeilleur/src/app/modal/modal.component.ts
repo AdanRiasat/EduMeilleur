@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-modal',
@@ -18,5 +19,11 @@ export class ModalComponent {
 
   confirm() {
     this.confirmed.emit();
+
+    let modalElement = document.getElementById(this.modalId)
+    if (modalElement){
+      let modal = Modal.getInstance(modalElement) || new Modal(modalElement);
+      modal.hide()
+    }
   }
 }

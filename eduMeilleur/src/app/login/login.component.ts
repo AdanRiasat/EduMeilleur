@@ -53,7 +53,6 @@ export class LoginComponent {
       
       if (error.status === 0){
         this.openErrorModal()
-        this.spinner.hide()
         return
       }
       this.errors["badRequest"] = error.error.message
@@ -69,6 +68,7 @@ export class LoginComponent {
       if (modalElement){
         let modal = new Modal(modalElement)
         modal.show()
+        this.spinner.hide()
       }
-    }
+  }
 }
