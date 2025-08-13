@@ -1,6 +1,6 @@
 # EduMeilleur
 
-[Short tagline or slogan]
+Pour devenir meilleur, utilisez ÉduMeilleur
 
 ## 📘 Description
 
@@ -64,11 +64,9 @@ The project’s scope quickly grew, showing me how large-scale applications requ
 - Create real notes 
 - Add error messages to edit-profile
 - Make more tests on the backend
-- Replace hardcoded teacher pfps with real ones dynamicaly
 - Add logo
 - Explore page
 - Improve nav-bar design
-- Fix infinite loading screen when server is off
 - Translate website to english and french
 - Disconnect user when token is expired
 - Add multiple sign up options
