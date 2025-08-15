@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-3 text-center">
-            <img id="pfp" [src]='"https://localhost:7027/api/Users/GetProfilePicture/" + username + "?t=" + timestamp' alt="profile picture" class="mb-3">
+            <img id="pfp" [src]='global.pfpSrc + username + "?t=" + timestamp' alt="profile picture" class="mb-3">
 
             <h4 class="fw-bold">{{username}}</h4>
             <p class="text-muted mb-1">{{email}}</p>

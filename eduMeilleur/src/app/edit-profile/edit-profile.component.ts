@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { Profile } from '../models/profile';
 import { SpinnerService } from '../services/spinner.service';
+import { GlobalService } from '../services/global.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -22,6 +23,7 @@ export class EditProfileComponent implements OnInit {
 
   timestamp: number = Date.now();
 
+
   file: File | null = null
 
   profile: Profile | null = null
@@ -29,7 +31,7 @@ export class EditProfileComponent implements OnInit {
   @ViewChild('profileImage', {static: false}) profileImage ?: ElementRef<HTMLImageElement>
   @ViewChild('fileInput', {static: false}) fileInput ?: ElementRef<HTMLInputElement>
 
-  constructor(public route: Router, public userService: UserService, public spinner: SpinnerService) {}
+  constructor(public route: Router, public userService: UserService, public spinner: SpinnerService, public global: GlobalService) {}
   
   ngOnInit() {
     let profileStringData = localStorage.getItem("profile")  

@@ -35,7 +35,7 @@
     <div class="profile-picture">
       <h5>Profile Picture</h5>
       <a (click)="triggerFileInput()">
-        <img #profileImage class="img-circle" [src]='"https://localhost:7027/api/Users/GetProfilePicture/" + username + "?t=" + timestamp' alt="Profile picture">
+        <img #profileImage class="img-circle" [src]='global.pfpSrc + username + "?t=" + timestamp' alt="Profile picture">
       </a>
       <input #fileInput type="file" accept="image/*" hidden (change)="onFileSelected($event)">
     </div>

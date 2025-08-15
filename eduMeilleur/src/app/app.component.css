@@ -43,15 +43,18 @@ a{
 
 .img-circle{
    height: 40px;
-   max-width: 40px;
+   width: 40px;
    border-radius: 50%;
    object-fit: cover;
+   cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
+
+
 
 #lang {
   font-weight: 500;
 }
-
 
 
 html, body {

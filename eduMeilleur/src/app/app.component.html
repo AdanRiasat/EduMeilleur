@@ -38,7 +38,7 @@
 
                   
                     <a (click)="profile()">
-                      <img class="img-circle" *ngIf="username != null" [src]='"https://localhost:7027/api/Users/GetProfilePicture/" + username + "?t=" + timestamp'>
+                      <img class="img-circle" *ngIf="username != null" [src]='global.pfpSrc + username + "?t=" + timestamp'>
                       <img class="img-circle" *ngIf="username == null" src="assets/images/notLoggedIn.png">
                     </a>
                 </div>
