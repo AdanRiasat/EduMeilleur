@@ -1,4 +1,5 @@
-﻿using EduMeilleurAPI.Models;
+﻿using EduMeilleurAPI.Migrations;
+using EduMeilleurAPI.Models;
 using EduMeilleurAPI.Models.DTO;
 using EduMeilleurAPI.Services;
 using EduMeilleurAPI.Services.Interfaces;
@@ -13,6 +14,7 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pag
 using SixLabors.ImageSharp;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace EduMeilleurAPI.Controllers
@@ -105,7 +107,7 @@ namespace EduMeilleurAPI.Controllers
 
             if (user != null && await _userManager.CheckPasswordAsync(user, login.Password))
             {
-                return Ok(await GenerateLoginResponse(user));
+                return await GenerateLoginResponse(user);
             }
             else
             {
@@ -128,20 +130,44 @@ namespace EduMeilleurAPI.Controllers
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8
                 .GetBytes(_config["JWT:Key"])); // Phrase identique dans Program.cs
             JwtSecurityToken token = new JwtSecurityToken(
-                issuer: "https://localhost:7027",
-                audience: "http://localhost:4200",
+                issuer: _config["JWT:Issuer"],
+                audience: _config["JWT:Audience"],
                 claims: authClaims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
                 );
+
+            user.RefreshToken = GenerateRefreshToken();
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(14);
+            await _userManager.UpdateAsync(user);
 
             return Ok(new
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token),
                 validTo = token.ValidTo,
                 profile = new ProfileDisplayDTO(user),
+                refreshToken = user.RefreshToken,
                 Roles = roles
             });
+        }
+
+        private string GenerateRefreshToken()
+        {
+            var randomBytes = new byte[64];
+            var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomBytes);
+            return Convert.ToBase64String(randomBytes);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RefreshExpiredToken(RefreshRequestDTO refreshRequest)
+        {
+            User? user = await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshRequest.RefreshToken);
+
+            if (user == null || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+                return Unauthorized();
+
+            return await GenerateLoginResponse(user);
         }
 
         [HttpGet("{username}")]

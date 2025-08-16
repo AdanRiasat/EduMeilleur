@@ -8,6 +8,10 @@ namespace EduMeilleurAPI.Models
         public int IQPoints { get; set; }
         public int? SchoolYear { get; set; }
 
+        //RefreshToken
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiryTime { get; set; }
+
         //Pfp
         public string? FileName { get; set; }
         public string? MimeType { get; set; }
