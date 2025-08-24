@@ -131,28 +131,25 @@ namespace EduMeilleurAPI.Data
             .HasForeignKey("SubjectId");
 
             builder.Entity<Chapter>().HasData(
-                new {Id = 1, Title = "the first one", SubjectId = 1},
-                new {Id = 2, Title = "the second one", SubjectId = 1},
-                new {Id = 3, Title = "the third one", SubjectId = 1}
+                new {Id = 1, Title = "Vectors", SubjectId = 2}
             );
 
             builder.Entity<Notes>().HasData(
-                new Notes { Id = 1, Title = "1.1 sigma time with me", Content = "test.md", ChapterId = 1,},
-                new Notes {Id = 2, Title = "1.2 erm what the skibidi", Content = "test.md", ChapterId = 1 },
-                new Notes { Id = 3, Title = "1* REVISION on skibidi", Content = "test.md", ChapterId = 1 },
-                new Notes { Id = 4, Title = "2.1 is he bothering you?", Content = "test.md", ChapterId = 2,}
+                new Notes { Id = 1, Title = "1.1 Introduction to Vectors", Content = "SN5_IntroVectors_EN.md", ChapterId = 1,},
+                new Notes {Id = 2, Title = "1.2 Components and Orientation", Content = "SN5_ComponentsandOrientation_EN.md", ChapterId = 1 }
+                //new Notes { Id = 3, Title = "1* REVISION on skibidi", Content = "test.md", ChapterId = 1 },
             );
             
             builder.Entity<Exercise>().HasData(
-                new Exercise {Id = 1, Title = "Pythagore with friends", Content = "testExerc.md", ChapterId = 1},
-                new Exercise { Id = 2, Title = "Find the function", Content = "testExerc.md", ChapterId = 1},
-                new Exercise { Id = 3, Title = "Simplification", Content = "testExerc.md", ChapterId = 1 }
+                //new Exercise {Id = 1, Title = "Pythagore with friends", Content = "testExerc.md", ChapterId = 1},
+                //new Exercise { Id = 2, Title = "Find the function", Content = "testExerc.md", ChapterId = 1},
+                //new Exercise { Id = 3, Title = "Simplification", Content = "testExerc.md", ChapterId = 1 }
             );
 
             builder.Entity<Video>().HasData(
-                new Video { Id = 1, Title = "hmmm I cant quite remember", Content = "vidExample.md", ChapterId = 1},
-                new Video { Id = 2, Title = "Favorite color?", Content = "vidExample.md", ChapterId = 1},
-                new Video { Id = 3, Title = "Sigma vs Alpha", Content = "vidExample.md", ChapterId = 2}
+                //new Video { Id = 1, Title = "hmmm I cant quite remember", Content = "vidExample.md", ChapterId = 1},
+                //new Video { Id = 2, Title = "Favorite color?", Content = "vidExample.md", ChapterId = 1},
+                //new Video { Id = 3, Title = "Sigma vs Alpha", Content = "vidExample.md", ChapterId = 2}
             );
 
 
@@ -164,6 +161,11 @@ namespace EduMeilleurAPI.Data
             builder.Entity<School>().HasData(
                 new School { Id = 1, Name = "Antoine-Brossard"},
                 new School { Id = 2, Name = "Lucille-Teasdale"}
+            );
+
+            builder.Entity<Picture>().HasData( //TODO use SQL script for md images
+                new Picture { Id = 21, FileName = "graph_plainVector.png", MimeType = "image/png" },
+                new Picture { Id = 22, FileName = "graph_vectorComponentsTriangle.png", MimeType = "image/png" }
             );
         }
 
