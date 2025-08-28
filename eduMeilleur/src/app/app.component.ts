@@ -6,6 +6,7 @@ import { Modal } from 'bootstrap';
 import { Profile } from './models/profile';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ModalComponent } from './modal/modal.component';
+import { GlobalService } from './services/global.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,7 @@ export class AppComponent{
 
   timestamp: number = Date.now();
 
-  constructor(public userService: UserService, public route: Router) {
+  constructor(public userService: UserService, public route: Router, public global: GlobalService) {
     effect(() => {
       let token: string | null = userService.token(); 
       if (token) {

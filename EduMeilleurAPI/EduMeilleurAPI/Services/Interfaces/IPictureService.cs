@@ -9,6 +9,6 @@ namespace EduMeilleurAPI.Services.Interfaces
 
         Task<Picture?> Delete(Picture picture);
 
-        Task<Picture?> GetAsync(User user);
+        Task<Picture?> GetAsync(User? user = null, int? id = null);
     }
 }

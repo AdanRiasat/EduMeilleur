@@ -113,16 +113,16 @@ namespace EduMeilleurAPI.Data
             );
 
             builder.Entity<Subject>().HasData(
-                new Subject { Id = 1, Name = "SN4", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Math" },
-                new Subject { Id = 2, Name = "SN5", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Math" },
-                new Subject { Id = 3, Name = "CST4", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Math" },
-                new Subject { Id = 4, Name = "CST5", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Math" },
-                new Subject { Id = 5, Name = "TS4", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Math" },
-                new Subject { Id = 6, Name = "TS5", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Math" },
-                new Subject { Id = 7, Name = "ST", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Science" },
-                new Subject { Id = 8, Name = "STE", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Science" },
-                new Subject { Id = 9, Name = "Chimie", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Science" },
-                new Subject { Id = 10, Name = "Physique", Description = "hello my name is jonh and this is a placeholder because im a pretty little flower and I like to swim yes I really do", Type = "Science" }
+                new Subject { Id = 1, Name = "SN4", Description = "Introduction to advanced math concepts, focusing on functions, trigonometry, and problem-solving for science pathways.", Type = "Math" },
+                new Subject { Id = 2, Name = "SN5", Description = "Prepares students for post-secondary science programs with calculus basics, advanced algebra, and physics applications.", Type = "Math" },
+                new Subject { Id = 3, Name = "CST4", Description = "Practical mathematics for daily life: statistics, financial math, geometry, and measurement.", Type = "Math" },
+                new Subject { Id = 4, Name = "CST5", Description = "Continues CST4 with emphasis on budgeting, probability, and applied problem-solving.", Type = "Math" },
+                new Subject { Id = 5, Name = "TS4", Description = "Math for technical and science careers: algebra, systems of equations, and basic trigonometry.", Type = "Math" },
+                new Subject { Id = 6, Name = "TS5", Description = "Expands on TS4 with more complex functions, analytic geometry, and preparation for college science programs.", Type = "Math" },
+                new Subject { Id = 7, Name = "ST", Description = "General science covering biology, chemistry, and physics fundamentals through hands-on experiments.", Type = "Science" },
+                new Subject { Id = 8, Name = "STE", Description = "Science and technology with enriched content for students aiming at advanced science or technical studies.", Type = "Science" },
+                new Subject { Id = 9, Name = "Chimie", Description = "Study of matter, chemical reactions, stoichiometry, and laboratory techniques.", Type = "Science" },
+                new Subject { Id = 10, Name = "Physique", Description = "Exploration of motion, forces, energy, and waves, with emphasis on practical experiments.", Type = "Science" }
             );
 
             builder.Entity<Chapter>()
@@ -131,28 +131,25 @@ namespace EduMeilleurAPI.Data
             .HasForeignKey("SubjectId");
 
             builder.Entity<Chapter>().HasData(
-                new {Id = 1, Title = "the first one", SubjectId = 1},
-                new {Id = 2, Title = "the second one", SubjectId = 1},
-                new {Id = 3, Title = "the third one", SubjectId = 1}
+                new {Id = 1, Title = "Vectors", SubjectId = 2}
             );
 
             builder.Entity<Notes>().HasData(
-                new Notes { Id = 1, Title = "1.1 sigma time with me", Content = "test.md", ChapterId = 1,},
-                new Notes {Id = 2, Title = "1.2 erm what the skibidi", Content = "test.md", ChapterId = 1 },
-                new Notes { Id = 3, Title = "1* REVISION on skibidi", Content = "test.md", ChapterId = 1 },
-                new Notes { Id = 4, Title = "2.1 is he bothering you?", Content = "test.md", ChapterId = 2,}
+                new Notes { Id = 1, Title = "1.1 Introduction to Vectors", Content = "SN5_IntroVectors_EN.md", ChapterId = 1,},
+                new Notes {Id = 2, Title = "1.2 Components and Orientation", Content = "SN5_ComponentsandOrientation_EN.md", ChapterId = 1 }
+                //new Notes { Id = 3, Title = "1* REVISION on skibidi", Content = "test.md", ChapterId = 1 },
             );
             
             builder.Entity<Exercise>().HasData(
-                new Exercise {Id = 1, Title = "Pythagore with friends", Content = "testExerc.md", ChapterId = 1},
-                new Exercise { Id = 2, Title = "Find the function", Content = "testExerc.md", ChapterId = 1},
-                new Exercise { Id = 3, Title = "Simplification", Content = "testExerc.md", ChapterId = 1 }
+                //new Exercise {Id = 1, Title = "Pythagore with friends", Content = "testExerc.md", ChapterId = 1},
+                //new Exercise { Id = 2, Title = "Find the function", Content = "testExerc.md", ChapterId = 1},
+                //new Exercise { Id = 3, Title = "Simplification", Content = "testExerc.md", ChapterId = 1 }
             );
 
             builder.Entity<Video>().HasData(
-                new Video { Id = 1, Title = "hmmm I cant quite remember", Content = "vidExample.md", ChapterId = 1},
-                new Video { Id = 2, Title = "Favorite color?", Content = "vidExample.md", ChapterId = 1},
-                new Video { Id = 3, Title = "Sigma vs Alpha", Content = "vidExample.md", ChapterId = 2}
+                //new Video { Id = 1, Title = "hmmm I cant quite remember", Content = "vidExample.md", ChapterId = 1},
+                //new Video { Id = 2, Title = "Favorite color?", Content = "vidExample.md", ChapterId = 1},
+                //new Video { Id = 3, Title = "Sigma vs Alpha", Content = "vidExample.md", ChapterId = 2}
             );
 
 
@@ -164,6 +161,11 @@ namespace EduMeilleurAPI.Data
             builder.Entity<School>().HasData(
                 new School { Id = 1, Name = "Antoine-Brossard"},
                 new School { Id = 2, Name = "Lucille-Teasdale"}
+            );
+
+            builder.Entity<Picture>().HasData( //TODO use SQL script for md images
+                new Picture { Id = 21, FileName = "graph_plainVector.png", MimeType = "image/png" },
+                new Picture { Id = 22, FileName = "graph_vectorComponentsTriangle.png", MimeType = "image/png" }
             );
         }
 

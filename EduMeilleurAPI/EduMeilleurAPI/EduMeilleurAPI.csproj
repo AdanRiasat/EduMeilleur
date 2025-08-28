@@ -11,10 +11,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="images\full\**" />
     <Compile Remove="NewFolder\**" />
+    <Content Remove="images\full\**" />
     <Content Remove="NewFolder\**" />
+    <EmbeddedResource Remove="images\full\**" />
     <EmbeddedResource Remove="NewFolder\**" />
+    <None Remove="images\full\**" />
     <None Remove="NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="images\notes\graph_plainVector.png" />
+    <Content Include="images\notes\graph_vectorComponentsTriangle.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,11 +44,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="images\full\" />
     <Folder Include="uploads\" />
     <Folder Include="wwwroot\Videos\" />
     <Folder Include="wwwroot\Notes\" />
-    <Folder Include="images\full\" />
     <Folder Include="images\pfp\" />
     <Folder Include="RawSQL\" />
   </ItemGroup>

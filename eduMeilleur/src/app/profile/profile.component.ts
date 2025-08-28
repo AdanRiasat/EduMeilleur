@@ -4,6 +4,7 @@ import { UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SpinnerService } from '../services/spinner.service';
+import { GlobalService } from '../services/global.service';
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +23,7 @@ export class ProfileComponent implements OnInit{
 
   timestamp: number = Date.now();
 
-  constructor(public userService: UserService, public spinner: SpinnerService) {}
+  constructor(public userService: UserService, public spinner: SpinnerService, public global: GlobalService) {}
   
   ngOnInit() {
     this.spinner.hide()

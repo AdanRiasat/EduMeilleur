@@ -5,7 +5,10 @@ import { DisplaySujet } from '../models/displaySujet';
 import { Item } from '../models/Item';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { marked } from 'marked';
+import { MarkdownService } from '../services/markdown.service';
+import katex from 'katex';
+
+
 
 @Component({
   selector: 'app-sujet',
@@ -24,7 +27,7 @@ export class SujetComponent implements OnInit{
   currentItem: Item | null = null
   currentType: string = ""
 
-  constructor(public sujetService: SujetService, public route: ActivatedRoute, public sanitizer: DomSanitizer){}
+  constructor(public sujetService: SujetService, public route: ActivatedRoute, public sanitizer: DomSanitizer, public markdown: MarkdownService){}
 
   async ngOnInit() {
     let sujetIdStringData: string | null = this.route.snapshot.paramMap.get("id")
@@ -47,7 +50,12 @@ export class SujetComponent implements OnInit{
   }
 
   formatMessage(message: string): SafeHtml {
-      const rawHtml: string = marked.parse(message) as string
-      return this.sanitizer.bypassSecurityTrustHtml(rawHtml);
+      let cleanMessage = message.replace(/\\r\\n/g, "\n");
+      let rawHtml: string = this.markdown.parse(cleanMessage);
+      console.log(rawHtml);
+      
+      return this.sanitizer.bypassSecurityTrustHtml(rawHtml)
   }
 }
+
+

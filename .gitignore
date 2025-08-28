@@ -429,10 +429,11 @@ src/environments/environment.ts
 src/environments/environment.*.ts
 
 # User-uploaded files
-/images/full/
 images/pfp/*
 !images/pfp/default.png
+!images/notes/*
 /uploads/
+
 
 # EF Migrations
 Migrations/

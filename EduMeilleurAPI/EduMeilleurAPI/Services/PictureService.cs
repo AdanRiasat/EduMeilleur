@@ -39,11 +39,19 @@ namespace EduMeilleurAPI.Services
             return picture;
         }
 
-        public async Task<Picture?> GetAsync(User user)
+        public async Task<Picture?> GetAsync(User? user = null, int? id = null)
         {
             if (!IsConstextValid()) return null;
+            Picture? picture = null;
 
-            Picture? picture = await _context.Picture.Where(p => p.FileName == user.FileName).FirstOrDefaultAsync();
+            if (user == null && id != null)
+            {
+                picture = await _context.Picture.Where(p => p.Id == id).FirstOrDefaultAsync();
+                if (picture == null) return null;
+                return picture;
+            }
+
+            picture = await _context.Picture.Where(p => p.FileName == user.FileName).FirstOrDefaultAsync();
             if (picture == null) return null;
 
             return picture;
