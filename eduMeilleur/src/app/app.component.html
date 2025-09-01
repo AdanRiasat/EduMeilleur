@@ -7,15 +7,19 @@
         <a [routerLink]="['']">ÉduMeilleur</a>
       </div>
 
-      <div class="col">
+      <div class="col-6">
         <nav>
-            <div class="row align-items-center text-center" style="height: 60px;">
-              <div [routerLink]="['/sujets']" class="col nav-bar"><a>Sujets</a></div>
-              <div [routerLink]="['/ai']" class="col nav-bar"><a>AI</a></div>
-              <div class="col nav-bar"><a>Explore</a></div>
-              <div [routerLink]="['/contactUs']" class="col nav-bar"><a>Contacter Nous</a></div>
+            <div id="main-pages" class="row align-items-center text-center" style="height: 60px;">
+              <div [routerLink]="['/sujets']" class="col-auto nav-bar"><a>Sujets</a></div>
+              <div [routerLink]="['/ai']" class="col-auto nav-bar"><a>Chatbot</a></div>
+              <div class="col-auto nav-bar"><a>Explore</a></div>
+              <div [routerLink]="['/contactUs']" class="col-auto nav-bar"><a>Contacter Nous</a></div>
             </div>
         </nav>
+      </div>
+
+      <div class="col">
+
       </div>
       
     

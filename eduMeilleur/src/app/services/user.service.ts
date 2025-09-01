@@ -50,7 +50,8 @@ export class UserService {
     let x = await lastValueFrom(this.http.post<any>(domain + "/api/Users/Register", dto))
     console.log(x);
 
-    this.updateSignals(x)
+    this.updateSignals(x.value)
+    console.log(this.token());
   }
 
   async login(username: string, password: string){
@@ -63,6 +64,7 @@ export class UserService {
     console.log(x);
 
     this.updateSignals(x)
+    
   }
 
   async logout(){
