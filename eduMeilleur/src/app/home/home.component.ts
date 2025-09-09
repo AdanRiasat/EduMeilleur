@@ -30,4 +30,14 @@ export class HomeComponent implements OnInit  {
   async ngOnInit() {
    this.teachersNames = await this.userService.getTeachers()
   }
+
+  ngAfterViewInit() {
+  const video: HTMLVideoElement | null = document.querySelector('.hero-video');
+  if (video) {
+    video.muted = true; // ensure muted
+    video.play().catch(err => {
+      console.log('Autoplay blocked:', err);
+    });
+  }
+}
 }

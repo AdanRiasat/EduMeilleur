@@ -60,16 +60,64 @@
   <router-outlet></router-outlet>
 </main>
 
-<footer>
-  <div class="container-fluid">
-    <div class="row align-items-center">
-      <div class="col text-center">
-        this is my footer, do you like it?
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+
+      <!-- Brand / About -->
+      <div class="col-md-4 mb-4">
+        <h5 class="footer-logo">ÉduMeilleur</h5>
+        <p class="footer-text">
+          Free educational platform for secondary school students.  
+          Notes, exercises, and videos for every chapter.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-md-2 mb-4">
+        <h6 class="footer-heading">Quick Links</h6>
+        <ul class="list-unstyled">
+          <li><a routerLink="/sujets">Subjects</a></li>
+          <li><a routerLink="/about">About Us</a></li>
+          <li><a routerLink="/volunteer">Volunteer</a></li>
+          <li><a routerLink="/contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div class="col-md-2 mb-4">
+        <h6 class="footer-heading">Resources</h6>
+        <ul class="list-unstyled">
+          <li><a href="#">Exercises</a></li>
+          <li><a href="#">Videos</a></li>
+          <li><a href="#">Notes</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact / Social -->
+      <div class="col-md-4 mb-4">
+        <h6 class="footer-heading">Get in Touch</h6>
+        <p class="footer-text">
+          📧 {{global.adminEmail}}<br>
+          Brossard, QC
+        </p>
+        <div class="social-icons">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-twitter"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="#"><i class="bi bi-linkedin"></i></a>
+        </div>
       </div>
     </div>
 
+    <!-- Bottom bar -->
+    <div class="footer-bottom text-center">
+      <p class="mb-0">© 2025 ÉduMeilleur. All rights reserved.</p>
+    </div>
   </div>
 </footer>
+
 </div>
 
 <!-- Disconnect Confirmation Modal -->

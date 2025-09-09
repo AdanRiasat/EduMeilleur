@@ -42,8 +42,6 @@ a{
   border-radius: 0; 
 }
 
-
-
 .img-circle{
    height: 40px;
    width: 40px;
@@ -68,8 +66,6 @@ html, body {
 }
 
 main {
-  /*background-color: #f2f2f2;*/
-  /*background-color: 	hsl(195, 100%, 95%);*/
   background-color: hsl(202, 46%, 91%);
 }
 
@@ -85,11 +81,59 @@ main {
   flex-grow: 1;
 }
 
-/* Optional footer styling */
-footer {
-  background-color: #98c1d9;
-  padding: 10px 0;
-  text-align: center;
-  border-top: 1px solid #ddd;
+/* Footer */
+.footer {
+  background: #0d1b2a;
+  color: #fff;
+  padding: 3rem 0 1.5rem;
 }
+
+.footer-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.footer-heading {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.footer-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+.footer a {
+  color: #bbb;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer a:hover {
+  color: #00c6ff;
+}
+
+.social-icons a {
+  font-size: 1.25rem;
+  margin-right: 0.75rem;
+  color: #bbb;
+  transition: color 0.2s;
+}
+
+.social-icons a:hover {
+  color: #00c6ff;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin-top: 2rem;
+  padding-top: 1rem;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
 
