@@ -1,6 +1,7 @@
 header {
   height: 70px;
-  background-color: 	#98c1d9; /* or your preferred color */
+  background-image: linear-gradient(to right, #98c1d9, #5fa8d3, #457b9d);
+  /*background-color: 	#98c1d9; */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
   position: sticky;
   top: 0;

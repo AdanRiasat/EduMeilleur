@@ -65,7 +65,6 @@
   <div class="container">
     <div class="row">
 
-      <!-- Brand / About -->
       <div class="col-md-4 mb-4">
         <h5 class="footer-logo">ÉduMeilleur</h5>
         <p class="footer-text">
@@ -74,24 +73,21 @@
         </p>
       </div>
 
-      <!-- Quick Links -->
       <div class="col-md-2 mb-4">
         <h6 class="footer-heading">Quick Links</h6>
         <ul class="list-unstyled">
           <li><a routerLink="/sujets">Subjects</a></li>
-          <li><a routerLink="/about">About Us</a></li>
-          <li><a routerLink="/volunteer">Volunteer</a></li>
-          <li><a routerLink="/contact">Contact</a></li>
+          <li><a routerLink="/ai">Chatbot</a></li>
+          <li><a>Explore</a></li>
+          <li><a routerLink="/contactUs">Contact</a></li>
         </ul>
       </div>
 
       <!-- Resources -->
       <div class="col-md-2 mb-4">
-        <h6 class="footer-heading">Resources</h6>
+        <h6 class="footer-heading">Existing resources</h6>
         <ul class="list-unstyled">
-          <li><a href="#">Exercises</a></li>
-          <li><a href="#">Videos</a></li>
-          <li><a href="#">Notes</a></li>
+          <li><a [routerLink]="['/sujets', '2']">SN5</a></li>
         </ul>
       </div>
 
