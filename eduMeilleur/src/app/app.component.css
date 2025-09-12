@@ -1,23 +1,22 @@
 header {
   height: 70px;
-  background-image: linear-gradient(to right, #98c1d9, #5fa8d3, #457b9d);
-  /*background-color: 	#98c1d9; */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  background-image: var(--primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000; /* make sure it stays on top */
 }
 
-.user-nav{
+.user-nav {
   background-color: #82a8be;
   height: 50px;
   border-radius: 10px;
 }
 
-a{
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
+a {
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
 }
 .row {
   margin: 0;
@@ -28,6 +27,8 @@ a{
 }
 
 .nav-bar {
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   height: 70px;
   display: flex;
   align-items: center;
@@ -35,31 +36,32 @@ a{
   justify-content: center;
   cursor: pointer;
   transition: background-color 0.2s;
-  
 }
 
 .nav-bar:hover {
-  background-color: rgba(13, 110, 253, 0.3); 
-  border-radius: 0; 
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #f8f9fa;
+  border-radius: 0;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 }
 
-.img-circle{
-   height: 40px;
-   width: 40px;
-   border-radius: 50%;
-   object-fit: cover;
-   cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+.img-circle {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
-
-
 
 #lang {
   font-weight: 500;
 }
 
-
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   display: flex;
@@ -130,11 +132,9 @@ main {
 }
 
 .footer-bottom {
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin-top: 2rem;
   padding-top: 1rem;
   font-size: 0.9rem;
   opacity: 0.7;
 }
-
-

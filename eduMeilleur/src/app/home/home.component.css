@@ -1,6 +1,6 @@
 /*Hero section*/
 .hero-section {
-  position: relative; /* make stacking work */
+  position: relative;
   height: calc(100vh - 70px);
   overflow: hidden;
   display: flex;
@@ -14,7 +14,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 0; /* background */
+  z-index: 0;
 }
 
 .hero-section::before {
@@ -24,13 +24,13 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.35);
-  z-index: 1; /* overlay on top of video */
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1;
 }
 
 .hero-content {
   position: relative;
-  z-index: 2; /* text above overlay + video */
+  z-index: 2;
   padding: 3rem;
 }
 
@@ -42,7 +42,6 @@
   font-size: 1.5rem;
   opacity: 0.9;
 }
-
 
 /* Main carousel */
 
@@ -62,7 +61,7 @@ ngb-carousel img {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6));
   border-radius: 12px;
   z-index: 1;
 }
@@ -84,7 +83,7 @@ ngb-carousel img {
   border-radius: 10px;
   font-size: 1.1rem;
   line-height: 1.6;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .carousel-caption {
@@ -92,7 +91,7 @@ ngb-carousel img {
   bottom: auto;
   top: 15%;
   text-align: center;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   padding: 0.75rem 1rem;
   border-radius: 6px;
 }
@@ -101,9 +100,8 @@ ngb-carousel img {
   font-size: 2rem;
   font-weight: bold;
   margin: 0;
-  text-shadow: 0px 3px 6px rgba(0,0,0,0.4);
+  text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.4);
 }
-
 
 /* Feature blocks */
 .feature-box {
@@ -123,17 +121,17 @@ ngb-carousel img {
 
 /* Image section */
 .teacher-img {
-  width: 150px;       
+  width: 150px;
   height: 150px;
   object-fit: cover;
-  border-radius: 8px; 
+  border-radius: 8px;
 }
 
 .doc-img {
-  width: 250px;       
+  width: 250px;
   height: 250px;
   object-fit: cover;
-  border-radius: 8px; 
+  border-radius: 8px;
 }
 
 /* Buttons */
@@ -144,17 +142,28 @@ button {
   border: none;
   border-radius: 6px;
   font-weight: 500;
-  transition: background-color 0.3s ;
+  transition: background-color 0.3s;
 }
 
 button:hover {
   background-color: rgba(13, 110, 253, 0.5);
 }
 
-/* Explore */
+/* Sections */
 .feature-section {
   padding: 4rem 2rem;
-  background-color: #e0f4ff;
+  background-image: var(--sectionBlue);
+}
+
+.feature-section h2,
+.feature-section2 h2,
+.feature-section h1 {
+  color: #212529;
+}
+
+.feature-section p,
+.feature-section2 p {
+  color: #495057;
 }
 
 #explore-cta {
@@ -165,7 +174,7 @@ button:hover {
   margin-left: 0;
   margin-right: 0;
   padding: 4rem 2rem;
-  background-color: #f7f9fc;
+  background-image: var(--sectionWhite);
 }
 
 .card-title {
@@ -181,67 +190,68 @@ button:hover {
 }
 
 /* AI Chatbot */
-    .ai {
-      padding: 4rem 2rem;
-      text-align: center;
-      background: linear-gradient(135deg, #e0f4ff, #f9fbfd);
-    }
-    .ai h2 {
-      margin-bottom: 1rem;
-    }
-    .chatbox {
-      max-width: 600px;
-      margin: 2rem auto;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-      display: flex;
-      flex-direction: column;
-      height: 400px;
-      overflow: hidden;
-    }
-    .chat-messages {
-      flex: 1;
-      padding: 1rem;
-      overflow-y: auto;
-    }
-    .message {
-      margin-bottom: 1rem;
-      padding: 0.75rem 1rem;
-      border-radius: 12px;
-      max-width: 80%;
-    }
-    .user {
-      background: #007bff;
-      color: white;
-      margin-left: auto;
-      text-align: right;
-    }
-    .ai-msg {
-      background: #f1f5f9;
-      color: #333;
-      margin-right: auto;
-      text-align: left;
-    }
-    .chat-input {
-      display: flex;
-      border-top: 1px solid #ddd;
-    }
-    .chat-input input {
-      flex: 1;
-      padding: 0.75rem;
-      border: none;
-      outline: none;
-    }
-    .chat-input button {
-      border-radius: 0;
-    }
+.ai {
+  padding: 4rem 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #e0f4ff, #f9fbfd);
+}
+.ai h2 {
+  margin-bottom: 1rem;
+}
+.chatbox {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  overflow: hidden;
+}
+.chat-messages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}
+.message {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  max-width: 80%;
+}
+.user {
+  background: #007bff;
+  color: white;
+  margin-left: auto;
+  text-align: right;
+}
+.ai-msg {
+  background: #f1f5f9;
+  color: #333;
+  margin-right: auto;
+  text-align: left;
+}
+.chat-input {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+.chat-input input {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  outline: none;
+}
+.chat-input button {
+  border-radius: 0;
+}
 
-@media (max-width: 768px){
-  h2, .description{
+@media (max-width: 768px) {
+  h2,
+  .description {
     text-align: center;
   }
-  button{
+  button {
     display: block;
     margin: 0 auto;
   }

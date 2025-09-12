@@ -3,32 +3,35 @@
 }
 
 textarea {
-    resize: none;
-  }
+  resize: none;
+}
 
-  .card {
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    margin-bottom: 30px;
-  }
+.card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
 
-  .form-control, textarea {
-    margin-bottom: 15px;
-  }
+.form-control,
+textarea {
+  margin-bottom: 15px;
+}
 
-  .btn {
-    width: 100%;
-  }
+.btn {
+  color: white;
+  width: 100%;
+}
 
-  .btn-send{
-    background-color: #98c1d9;
-    transition: 0.2s;
-  }
+.btn-send {
+  background-color: var(--button);
+  transition: 0.2s;
+}
 
-  .btn-send:hover{
-    background-color: rgba(13, 110, 253, 0.5);
-  }
+.btn-send:hover {
+  background-color: var(--btnHover);
+}
 
-  #attachementsTeacher, #attachementsAdmin{
-    margin-bottom: 10px;
-  }
+#attachementsTeacher,
+#attachementsAdmin {
+  margin-bottom: 10px;
+}

@@ -4,28 +4,30 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SpinnerService } from '../services/spinner.service';
 import { GlobalService } from '../services/global.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-contact-us',
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './contact-us.component.html',
-  styleUrl: './contact-us.component.css'
+  styleUrl: './contact-us.component.css',
 })
 export class ContactUsComponent {
+  titleTeacher: string = '';
+  messageTeacher: string = '';
+  titleAdmin: string = '';
+  messageAdmin: string = '';
 
-  titleTeacher: string = ""
-  messageTeacher: string = ""
-  titleAdmin: string = ""
-  messageAdmin: string = ""
+  userIsConnected: boolean = false;
 
-  @ViewChild("fileInputTeacher", {static: false}) fileInputTeacher!: ElementRef<HTMLInputElement>
-  @ViewChild("fileInputAdmin", {static: false}) fileInputAdmin!: ElementRef<HTMLInputElement>
+  @ViewChild('fileInputTeacher', { static: false }) fileInputTeacher!: ElementRef<HTMLInputElement>;
+  @ViewChild('fileInputAdmin', { static: false }) fileInputAdmin!: ElementRef<HTMLInputElement>;
 
-  teacherFiles: File[] = []
-  adminFiles: File[] = []
+  teacherFiles: File[] = [];
+  adminFiles: File[] = [];
 
-  constructor(public contactService: ContactService, public spinner: SpinnerService, public global: GlobalService) {}
+  constructor(public contactService: ContactService, public spinner: SpinnerService, public global: GlobalService, public userService: UserService) {}
 
   updateTeacherFiles() {
     this.updateSelectedFiles(this.fileInputTeacher, this.teacherFiles);
@@ -35,15 +37,15 @@ export class ContactUsComponent {
     this.updateSelectedFiles(this.fileInputAdmin, this.adminFiles);
   }
 
-  updateSelectedFiles(input: ElementRef<HTMLInputElement>, fileList: File[]){
-    if (input.nativeElement.files){
-      for (let f of Array.from(input.nativeElement.files)){
-        if (!fileList.includes(f)){
-          fileList.push(f)
+  updateSelectedFiles(input: ElementRef<HTMLInputElement>, fileList: File[]) {
+    if (input.nativeElement.files) {
+      for (let f of Array.from(input.nativeElement.files)) {
+        if (!fileList.includes(f)) {
+          fileList.push(f);
         }
       }
-      input.nativeElement.value = "";
-    } 
+      input.nativeElement.value = '';
+    }
   }
 
   removeTeacherFile(index: number) {
@@ -55,71 +57,73 @@ export class ContactUsComponent {
   }
 
   //TODO Error messages and handling
-  async postQuestion(){
-    if (this.titleTeacher == "" || this.messageTeacher == ""){
-      alert("hmmm sir you cant do that")
-      return
+  async postQuestion() {
+    this.userIsConnected = this.userService.token() != null;
+    if (!this.userIsConnected) {
+      //herreeeee
+      return;
     }
 
-    this.spinner.show()
+    if (this.titleTeacher == '' || this.messageTeacher == '') {
+      alert('hmmm sir you cant do that');
+      return;
+    }
 
-    let formData = new FormData()
-    formData.append("title", this.titleTeacher)
-    formData.append("message", this.messageTeacher)
+    this.spinner.show();
 
-    
-    let i = 1
-    for (let f of this.teacherFiles){
-      if (f != null){
-        formData.append("file" + i, f, f.name)
+    let formData = new FormData();
+    formData.append('title', this.titleTeacher);
+    formData.append('message', this.messageTeacher);
+
+    let i = 1;
+    for (let f of this.teacherFiles) {
+      if (f != null) {
+        formData.append('file' + i, f, f.name);
       }
-      i++
+      i++;
     }
 
-    await this.contactService.postQuestion(formData)
+    await this.contactService.postQuestion(formData);
 
     //reset
-    this.spinner.hide()
-    this.titleTeacher = ""
-    this.messageTeacher = ""
-    this.teacherFiles = []
-    if (this.fileInputTeacher){
-      this.fileInputTeacher.nativeElement.value = "";
-    } 
+    this.spinner.hide();
+    this.titleTeacher = '';
+    this.messageTeacher = '';
+    this.teacherFiles = [];
+    if (this.fileInputTeacher) {
+      this.fileInputTeacher.nativeElement.value = '';
+    }
   }
 
-  async postFeedback(){
-    if (this.titleAdmin == "" || this.messageAdmin == ""){
-      alert("hmmm sir you cant do that")
-      return
+  async postFeedback() {
+    if (this.titleAdmin == '' || this.messageAdmin == '') {
+      alert('hmmm sir you cant do that');
+      return;
     }
 
-    this.spinner.show()
+    this.spinner.show();
 
-    let formData = new FormData()
-    formData.append("title", this.titleAdmin)
-    formData.append("message", this.messageAdmin)
+    let formData = new FormData();
+    formData.append('title', this.titleAdmin);
+    formData.append('message', this.messageAdmin);
 
-    
-    let i = 1
-    for (let f of this.adminFiles){
-      if (f != null){
-        formData.append("file" + i, f, f.name)
+    let i = 1;
+    for (let f of this.adminFiles) {
+      if (f != null) {
+        formData.append('file' + i, f, f.name);
       }
-      i++
+      i++;
     }
 
-    await this.contactService.postFeedback(formData)
+    await this.contactService.postFeedback(formData);
 
     //reset
-    this.spinner.hide()
-    this.titleAdmin = ""
-    this.messageAdmin = ""
-    this.adminFiles = []
-    if (this.fileInputAdmin){
-      this.fileInputAdmin.nativeElement.value = "";
-    } 
+    this.spinner.hide();
+    this.titleAdmin = '';
+    this.messageAdmin = '';
+    this.adminFiles = [];
+    if (this.fileInputAdmin) {
+      this.fileInputAdmin.nativeElement.value = '';
+    }
   }
-
 }
-

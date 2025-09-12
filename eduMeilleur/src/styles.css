@@ -1,3 +1,13 @@
+:root {
+  --primary: linear-gradient(to right, #98c1d9, #5fa8d3, #457b9d);
+  --secondary: white;
+  --sectionBlue: linear-gradient(to top, #f0faff, #e0f4ff, #c0e0f5);
+  --sectionWhite: linear-gradient(to top, #ffffff, #f7f9fc, #e8ecf1);
+
+  --button: #5fa8d3;
+  --btnHover: #4a94c0;
+}
+
 body {
-    font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
