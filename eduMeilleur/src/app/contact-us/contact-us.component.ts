@@ -5,11 +5,14 @@ import { CommonModule } from '@angular/common';
 import { SpinnerService } from '../services/spinner.service';
 import { GlobalService } from '../services/global.service';
 import { UserService } from '../services/user.service';
+import { ModalService } from '../services/modal.service';
+import { Router } from '@angular/router';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-contact-us',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, ModalComponent],
   templateUrl: './contact-us.component.html',
   styleUrl: './contact-us.component.css',
 })
@@ -27,7 +30,7 @@ export class ContactUsComponent {
   teacherFiles: File[] = [];
   adminFiles: File[] = [];
 
-  constructor(public contactService: ContactService, public spinner: SpinnerService, public global: GlobalService, public userService: UserService) {}
+  constructor(public contactService: ContactService, public spinner: SpinnerService, public global: GlobalService, public userService: UserService, public modalService: ModalService, public route: Router) {}
 
   updateTeacherFiles() {
     this.updateSelectedFiles(this.fileInputTeacher, this.teacherFiles);
@@ -60,12 +63,12 @@ export class ContactUsComponent {
   async postQuestion() {
     this.userIsConnected = this.userService.token() != null;
     if (!this.userIsConnected) {
-      //herreeeee
+      this.modalService.OpenModal('errorConnectionModal');
       return;
     }
 
-    if (this.titleTeacher == '' || this.messageTeacher == '') {
-      alert('hmmm sir you cant do that');
+    if (this.titleAdmin == '' || this.messageAdmin == '') {
+      this.modalService.OpenModal('errorEmptyModal');
       return;
     }
 
@@ -96,8 +99,14 @@ export class ContactUsComponent {
   }
 
   async postFeedback() {
+    this.userIsConnected = this.userService.token() != null;
+    if (!this.userIsConnected) {
+      this.modalService.OpenModal('errorConnectionModal');
+      return;
+    }
+
     if (this.titleAdmin == '' || this.messageAdmin == '') {
-      alert('hmmm sir you cant do that');
+      this.modalService.OpenModal('errorEmptyModal');
       return;
     }
 
@@ -125,5 +134,9 @@ export class ContactUsComponent {
     if (this.fileInputAdmin) {
       this.fileInputAdmin.nativeElement.value = '';
     }
+  }
+
+  redirectLogin() {
+    this.route.navigate(['/login']);
   }
 }

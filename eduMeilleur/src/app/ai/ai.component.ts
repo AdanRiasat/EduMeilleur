@@ -11,68 +11,68 @@ import { ModalComponent } from '../modal/modal.component';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { SpinnerService } from '../services/spinner.service';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-ai',
   standalone: true,
   imports: [FormsModule, CommonModule, DatePipe, ModalComponent],
   templateUrl: './ai.component.html',
-  styleUrl: './ai.component.css'
+  styleUrl: './ai.component.css',
 })
-export class AiComponent implements OnInit{
+export class AiComponent implements OnInit {
+  userMessage: string = '';
+  messages: ChatMessage[] = [];
+  chats: Chat[] = [];
+  currentChat: Chat | null = null;
 
-  userMessage: string = ""
-  messages: ChatMessage[] = []
-  chats: Chat[] = []
-  currentChat: Chat | null = null
+  isLoading: boolean = false;
+  loadingId: number = -1;
+  dropdownOpen: number | null = null;
+  deleteId: number = -1;
 
-  isLoading: boolean = false
-  loadingId: number = -1
-  dropdownOpen: number | null = null
-  deleteId: number = -1
+  userIsConnected: boolean = false;
 
-  userIsConnected: boolean = false
-
-  constructor(public aiService: AiService, public sanitizer: DomSanitizer, public userService: UserService, public route: Router, public spinner: SpinnerService) {}
+  constructor(public aiService: AiService, public sanitizer: DomSanitizer, public userService: UserService, public route: Router, public spinner: SpinnerService, public modalSerice: ModalService) {}
 
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
-  
-  async ngOnInit(){
-    this.spinner.show()
-    await this.getChats()
-    this.spinner.hide()
+
+  async ngOnInit() {
+    this.spinner.show();
+    await this.getChats();
+    this.spinner.hide();
   }
 
   scrollToBottom() {
-  try {
-    setTimeout(() => {
-      this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
-    }, 50);
-  } catch (err) {}
-}
-
-  async getChats(){    
     try {
-      this.chats = await this.aiService.getChats()
+      setTimeout(() => {
+        this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
+      }, 50);
+    } catch (err) {}
+  }
+
+  async getChats() {
+    try {
+      this.chats = await this.aiService.getChats();
     } catch (error: any) {
-      if (error.status === 0){
-        this.openErrorModal()
+      if (error.status === 0) {
+        this.modalSerice.OpenModal('error500Modal');
       }
     }
   }
 
-  async getMessages(chat: Chat){
-    this.currentChat = chat
-    this.messages = await this.aiService.getMessages(chat.id)
-    this.scrollToBottom()
+  async getMessages(chat: Chat) {
+    this.currentChat = chat;
+    this.messages = await this.aiService.getMessages(chat.id);
+    this.scrollToBottom();
   }
 
-  async deleteChat(){
-    await this.aiService.deleteChat(this.deleteId)
-    
-    for (let i = 0; i < this.chats.length; i++){
-      if (this.chats[i].id == this.deleteId){
-        this.chats.splice(i, 1)
+  async deleteChat() {
+    await this.aiService.deleteChat(this.deleteId);
+
+    for (let i = 0; i < this.chats.length; i++) {
+      if (this.chats[i].id == this.deleteId) {
+        this.chats.splice(i, 1);
       }
     }
 
@@ -81,67 +81,65 @@ export class AiComponent implements OnInit{
       this.messages = [];
     }
 
-    let modalElement = document.getElementById('deleteChatModal')
-    if (modalElement){
-      let modal = Modal.getInstance(modalElement)
-      modal?.hide()
+    let modalElement = document.getElementById('deleteChatModal');
+    if (modalElement) {
+      let modal = Modal.getInstance(modalElement);
+      modal?.hide();
     }
   }
 
   async sendMessage() {
-    this.userIsConnected = this.userService.token() != null
-    if (!this.userIsConnected){
-      this.openConnectionModal()
-      return
+    this.userIsConnected = this.userService.token() != null;
+    if (!this.userIsConnected) {
+      this.modalSerice.OpenModal('errorConnectionModal');
+      return;
     }
 
-    let text = this.userMessage.trim()
+    let text = this.userMessage.trim();
     console.log(text);
 
-    if (text == ""){
-      console.log("ummmmmm sirr");
-      return
+    if (text == '') {
+      console.log('ummmmmm sirr');
+      return;
     }
 
     let userMsg: ChatMessage = {
       text: text,
       isUser: true,
       timeStamp: new Date(),
-    }
-    this.messages.push(userMsg)
+    };
+    this.messages.push(userMsg);
 
-    this.userMessage = ""
-    this.isLoading = true
-    
+    this.userMessage = '';
+    this.isLoading = true;
 
-    if (this.currentChat == null){
-      this.currentChat = await this.aiService.postChat(text)
-      await this.getChats()
-    }
-    
-    if (this.currentChat != null){
-      this.loadingId = this.currentChat.id
-      let botReply = await this.aiService.sendMessage(text, this.currentChat)
-      this.messages.push(botReply)
-      this.scrollToBottom()
+    if (this.currentChat == null) {
+      this.currentChat = await this.aiService.postChat(text);
+      await this.getChats();
     }
 
-    this.isLoading = false
-    this.loadingId = -1
+    if (this.currentChat != null) {
+      this.loadingId = this.currentChat.id;
+      let botReply = await this.aiService.sendMessage(text, this.currentChat);
+      this.messages.push(botReply);
+      this.scrollToBottom();
+    }
 
+    this.isLoading = false;
+    this.loadingId = -1;
   }
 
-  toggleDropdown(id: number){
+  toggleDropdown(id: number) {
     this.dropdownOpen = this.dropdownOpen === id ? null : id;
   }
 
-  newChat(){
-    this.currentChat = null
-    this.messages = []
+  newChat() {
+    this.currentChat = null;
+    this.messages = [];
   }
 
   formatMessage(message: string): SafeHtml {
-    let rawHtml: string = marked.parse(message) as string
+    let rawHtml: string = marked.parse(message) as string;
     return this.sanitizer.bypassSecurityTrustHtml(rawHtml);
   }
 
@@ -153,35 +151,12 @@ export class AiComponent implements OnInit{
     }
   }
 
-  // TODO Refactor the 3 modal functions into 1
-  openDeleteModal(id: number){
-    this.deleteId = id
-    let modalElement = document.getElementById('deleteChatModal')
-    if (modalElement){
-      let modal = new Modal(modalElement)
-      modal.show()
-    }
+  openDeleteModal(id: number) {
+    this.deleteId = id;
+    this.modalSerice.OpenModal('deleteChatModal');
   }
 
-  openErrorModal(){
-      let modalElement = document.getElementById('error500Modal')
-      if (modalElement){
-        let modal = Modal.getInstance(modalElement) || new Modal(modalElement);
-        modal.show()
-      }
-      this.spinner.hide()
-  }
-
-  openConnectionModal(){
-    let modalElement = document.getElementById('errorConnectionModal')
-    if (modalElement){
-      let modal = Modal.getInstance(modalElement) || new Modal(modalElement);
-      modal.show()
-    }
-  }
-
-  redirectLogin(){
-    this.route.navigate(['/login'])
+  redirectLogin() {
+    this.route.navigate(['/login']);
   }
 }
-

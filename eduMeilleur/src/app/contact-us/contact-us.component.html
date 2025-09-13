@@ -67,3 +67,7 @@
     </div>
   </div>
 </div>
+
+<app-modal modalId="errorConnectionModal" title="Must be logged in" body="Please log in or create an account" cancelText="Cancel" confirmText="Log in" (confirmed)="redirectLogin()"></app-modal>
+
+<app-modal modalId="errorEmptyModal" title="Empty Fields" body="Please enter a title and a message" cancelText="Cancel" confirmText="Ok"></app-modal>
