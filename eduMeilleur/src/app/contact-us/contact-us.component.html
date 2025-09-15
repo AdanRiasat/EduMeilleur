@@ -5,24 +5,20 @@
 
     <div class="row">
       <div class="col-md-8">
-        <input id="titleTeacher" type="text" name="titleTeacher" placeholder="Title" class="form-control" [(ngModel)]="titleTeacher">
+        <input id="titleTeacher" type="text" name="titleTeacher" placeholder="Title" class="form-control" [(ngModel)]="titleTeacher" />
         <textarea id="messageTeacher" placeholder="Message" rows="5" name="messageTeacher" class="form-control" [(ngModel)]="messageTeacher"></textarea>
 
         <!--Teacher Files-->
-        <input #fileInputTeacher multiple type="file" class="d-none" name="attachments" accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.txt" (change)="updateTeacherFiles()">
-        <button id="attachementsTeacher" class="btn btn-secondary" type="button" (click)="fileInputTeacher.click()">
-          📎 Attach files
-        </button>
+        <input #fileInputTeacher multiple type="file" class="d-none" name="attachments" accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.txt" (change)="updateTeacherFiles()" />
+        <button id="attachementsTeacher" class="btn btn-secondary" type="button" (click)="fileInputTeacher.click()">📎 Attach files</button>
 
         <ul *ngIf="teacherFiles.length > 0" class="list-group mb-3">
           <li *ngFor="let file of teacherFiles; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
             {{ file.name }}
             <div class="d-flex align-items-center gap-2">
-            <span class="badge bg-secondary">
-              {{ (file.size / 1024).toFixed(1) }} KB
-            </span>
-            <button type="button" class="btn-close" (click)="removeTeacherFile(i)"></button>
-          </div>
+              <span class="badge bg-secondary"> {{ (file.size / 1024).toFixed(1) }} KB </span>
+              <button type="button" class="btn-close" (click)="removeTeacherFile(i)"></button>
+            </div>
           </li>
         </ul>
 
@@ -31,8 +27,8 @@
 
       <div class="col-md-4 text-center d-flex flex-column justify-content-center">
         <h5 class="mb-2">Also available at:</h5>
-        <p class="mb-1"><i class="bi bi-envelope-fill me-1"></i>{{global.teacherEmail}}</p>
-        <p><i class="bi bi-telephone-fill me-1"></i>{{global.teacherNumber}}</p>
+        <p class="mb-1"><i class="bi bi-envelope-fill me-1"></i>{{ global.teacherEmail }}</p>
+        <p><i class="bi bi-telephone-fill me-1"></i>{{ global.teacherNumber }}</p>
       </div>
     </div>
   </div>
@@ -43,24 +39,20 @@
 
     <div class="row">
       <div class="col-md-8">
-        <input id="titleAdmin" type="text" name="titleAdmin" placeholder="Title" class="form-control" [(ngModel)]="titleAdmin">
+        <input id="titleAdmin" type="text" name="titleAdmin" placeholder="Title" class="form-control" [(ngModel)]="titleAdmin" />
         <textarea id="messageAdmin" placeholder="Message" rows="5" name="messageAdmin" class="form-control" [(ngModel)]="messageAdmin"></textarea>
 
         <!--Admin Files-->
-        <input #fileInputAdmin multiple type="file" class="d-none" name="attachments" accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.txt" (change)="updateAdminFiles()">
-        <button id="attachementsAdmin" class="btn btn-secondary" type="button" (click)="fileInputAdmin.click()">
-          📎 Attach files
-        </button>
+        <input #fileInputAdmin multiple type="file" class="d-none" name="attachments" accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.txt" (change)="updateAdminFiles()" />
+        <button id="attachementsAdmin" class="btn btn-secondary" type="button" (click)="fileInputAdmin.click()">📎 Attach files</button>
 
         <ul *ngIf="adminFiles.length > 0" class="list-group mb-3">
           <li *ngFor="let file of adminFiles; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
             {{ file.name }}
             <div class="d-flex align-items-center gap-2">
-            <span class="badge bg-secondary">
-              {{ (file.size / 1024).toFixed(1) }} KB
-            </span>
-            <button type="button" class="btn-close" (click)="removeAdminFile(i)"></button>
-          </div>
+              <span class="badge bg-secondary"> {{ (file.size / 1024).toFixed(1) }} KB </span>
+              <button type="button" class="btn-close" (click)="removeAdminFile(i)"></button>
+            </div>
           </li>
         </ul>
 
@@ -69,9 +61,13 @@
 
       <div class="col-md-4 text-center d-flex flex-column justify-content-center">
         <h5 class="mb-2">Also available at:</h5>
-        <p class="mb-1"><i class="bi bi-envelope-fill me-1"></i>{{global.adminEmail}}</p>
-        <p><i class="bi bi-telephone-fill me-1"></i>{{global.adminNumber}}</p>
+        <p class="mb-1"><i class="bi bi-envelope-fill me-1"></i>{{ global.adminEmail }}</p>
+        <p><i class="bi bi-telephone-fill me-1"></i>{{ global.adminNumber }}</p>
       </div>
     </div>
   </div>
 </div>
+
+<app-modal modalId="errorConnectionModal" title="Must be logged in" body="Please log in or create an account" cancelText="Cancel" confirmText="Log in" (confirmed)="redirectLogin()"></app-modal>
+
+<app-modal modalId="errorEmptyModal" title="Empty Fields" body="Please enter a title and a message" cancelText="Cancel" confirmText="Ok"></app-modal>

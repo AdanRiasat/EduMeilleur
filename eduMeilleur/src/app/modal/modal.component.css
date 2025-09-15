@@ -1,0 +1,10 @@
+.action-btn {
+  background-color: var(--button);
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.action-btn:hover {
+  background-color: var(--btnHover); /* Darker blue */
+  color: white;
+}

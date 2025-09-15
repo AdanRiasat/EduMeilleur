@@ -1,16 +1,35 @@
+<!-- Hero Section -->
+<div class="container-fluid hero-section text-white">
+  <video autoplay muted loop playsinline webkit-playsinline class="hero-video">
+    <source src="assets/videos/tempHero4.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="row hero-content">
+    <div class="col">
+      <h1 class="display-4 fw-bold">
+        Pour devenir meilleur,<br />
+        utilisez ÉduMeilleur
+      </h1>
+      <p class="lead mt-3">Notes, exercises, and videos for every chapter of each subject.</p>
+      <a [routerLink]="['/sujets']" class="btn btn-light btn-lg mt-4">Get Started</a>
+    </div>
+  </div>
+</div>
+
+<!-- Main Carousel -->
 <div class="container-fluid main-carousel">
-  <!-- Hero Carousel -->
   <ngb-carousel>
     <ng-template ngbSlide>
       <div class="position-relative">
-        <img src="assets/images/TempAboutUs.jpg" class="d-block w-100 img-paragraph" alt="Slide 1">
+        <img src="assets/images/TempAboutUs.jpg" class="d-block w-100 img-paragraph" alt="Slide 1" />
         <div class="carousel-caption">
-          <h3>About us</h3>
+          <h2>About us</h2>
         </div>
         <div class="centered-content">
-          <p class="paragraph-overlay">ÉduMeilleur is an educational platform designed for secondary school students. We provide notes, exercises, and videos for every chapter of each subject.
-             You can also get direct help from our teachers — simply send us your questions, and we'll get back to you as soon as possible.<br> All content on ÉduMeilleur is completely free. We do not make a profit from this site;
-              it exists solely to help students overcome challenges, improve their grades, and expand their knowledge.
+          <p class="paragraph-overlay">
+            ÉduMeilleur is an educational platform designed for secondary school students. We provide notes, exercises, and videos for every chapter of each subject. You can also get direct help from our teachers — simply send us your questions, and we'll get back to you as soon as possible.<br />
+            All content on ÉduMeilleur is completely free. We do not make a profit from this site; it exists solely to help students overcome challenges, improve their grades, and expand their knowledge.
           </p>
         </div>
       </div>
@@ -18,115 +37,134 @@
 
     <ng-template ngbSlide>
       <div class="position-relative">
-        <img src="assets/images/tempInterview.jpg" class="d-block w-100 img-paragraph" alt="Slide 2">
+        <img src="assets/images/tempInterview.jpg" class="d-block w-100 img-paragraph" alt="Slide 2" />
         <div class="carousel-caption">
-          <h3>We're Looking for Volunteers!</h3>
+          <h2>We're Looking for Volunteers!</h2>
         </div>
         <div class="centered-content">
           <p class="paragraph-overlay">
-            Join our team and help shape the future of student learning. We’re looking for passionate individuals to help write notes, create exercises, and even produce educational videos.
-            If you're interested in contributing to our platform and making a difference, contact us at:<br>
-            📧 <i>{{global.adminEmail}}</i><br>
+            Join our team and help shape the future of student learning. We’re looking for passionate individuals to help write notes, create exercises, and even produce educational videos. If you're interested in contributing to our platform and making a difference, contact us at:<br />
+            📧 <i>{{ global.adminEmail }}</i
+            ><br />
             <!--📞 123-765-092-->
           </p>
         </div>
       </div>
-      
     </ng-template>
 
     <ng-template ngbSlide>
-      <img src="assets/images/pexels-souvenirpixels-414612.jpg" class="d-block w-100" alt="Slide 3">
+      <img src="assets/images/pexels-souvenirpixels-414612.jpg" class="d-block w-100" alt="Slide 3" />
       <div class="carousel-caption">
-        <h3>Third Slide</h3>
+        <h2>Third Slide</h2>
       </div>
     </ng-template>
   </ngb-carousel>
+</div>
 
-  <!-- Second carousel (Swiper) -->
-  <div class="container-fluid">
-    <div class="row feature-section">
-      <div class="col text-center">
-        <h2>Find your subject</h2>
-        <h4>We have notes, exercises and videos for each</h4>
-        <app-image-slider></app-image-slider>
-      </div>
+<!-- Second carousel (Swiper) -->
+<div class="container-fluid">
+  <div class="row feature-section">
+    <div class="col text-center">
+      <h1>Find your subject</h1>
+      <h4>We have notes, exercises and videos for each</h4>
+      <app-image-slider></app-image-slider>
     </div>
   </div>
-  
+</div>
 
-  <!-- Explore Section -->
-  <div class="row feature-section align-items-center">
+<!--Explore-->
+<div class="feature-section2">
+  <div class="row align-items-center">
     <div class="col-lg-8">
       <h2>Explore</h2>
       <p class="description">Dive into interactive activities, challenge yourself, and contribute to a growing knowledge base.</p>
-      
+
       <div class="row">
-        <div class="col-md-4 mb-2 mb-lg-0">
-        <div class="card h-100 shadow-sm border-0 text-center hover-card">
-          <div class="card-body">
-            <i class="bi bi-search h1 text-primary"></i>
-            <h5 class="card-title mt-3">Find New Exercises</h5>
-            <p class="card-text text-muted">Browse curated challenges to test your skills.</p>
+        <div class="col-md-4 mb-3">
+          <div class="card h-100 shadow-sm border-0 text-center hover-card">
+            <div class="card-body">
+              <i class="bi bi-search h1 text-primary"></i>
+              <h5 class="card-title mt-3">Find New Exercises</h5>
+              <p class="card-text text-muted">Browse curated challenges to test your skills.</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="col-md-4 mb-2 mb-lg-0">
-        <div class="card h-100 shadow-sm border-0 text-center hover-card">
-          <div class="card-body">
-            <i class="bi bi-upload h1 text-primary"></i>
-            <h5 class="card-title mt-3">Share Yours</h5>
-            <p class="card-text text-muted">Contribute exercises and help the community grow.</p>
+        <div class="col-md-4 mb-3">
+          <div class="card h-100 shadow-sm border-0 text-center hover-card">
+            <div class="card-body">
+              <i class="bi bi-upload h1 text-primary"></i>
+              <h5 class="card-title mt-3">Share Yours</h5>
+              <p class="card-text text-muted">Contribute exercises and help the community grow.</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="col-md-4 mb-2 mb-lg-0">
-        <div class="card h-100 shadow-sm border-0 text-center hover-card">
-          <div class="card-body">
-            <i class="bi bi-lightbulb h1 text-primary"></i>
-            <h5 class="card-title mt-3">Train Your Brain</h5>
-            <p class="card-text text-muted">Build logic, memory, and problem-solving skills.</p>
+        <div class="col-md-4 mb-3">
+          <div class="card h-100 shadow-sm border-0 text-center hover-card">
+            <div class="card-body">
+              <i class="bi bi-lightbulb h1 text-primary"></i>
+              <h5 class="card-title mt-3">Train Your Brain</h5>
+              <p class="card-text text-muted">Build logic, memory, and problem-solving skills.</p>
+            </div>
           </div>
         </div>
       </div>
-      </div>
-    
     </div>
+
+    <!-- Right side image -->
     <div class="col-lg-4 text-center d-none d-lg-block">
-      <img class="doc-img" src="assets/images/document.jpg" alt="image of document">
+      <img class="doc-img" src="assets/images/document.jpg" alt="image of document" />
     </div>
   </div>
 
-  <!-- Contact Us -->
- <div class="row feature-section align-items-start">
-  <div class="col-lg-3">
+  <div id="explore-cta" class="text-center mt-5">
+    <h4>Ready to start exploring?</h4>
+    <button class="btn btn-primary" (click)="modalService.openModal('ExploreDevModal')">Get Started</button>
+  </div>
+</div>
+
+<!-- Contact Us -->
+
+<div class="feature-section">
+  <div class="row text-center">
+    <div class="col">
+      <h2>Our wonderful team of teachers</h2>
+    </div>
+  </div>
+
+  <div class="d-flex flex-wrap justify-content-center gap-5 mt-3">
+    <div *ngFor="let t of teachersNames" class="text-center">
+      <img class="teacher-img" [src]="domain + '/api/Users/GetProfilePicture/' + t + '?t=' + timestamp" alt="image of teacher" />
+      <p>{{ t }}</p>
+    </div>
+  </div>
+
+  <div class="text-center mt-5">
     <h2>Need more help?</h2>
     <p class="description">Send your questions to a real teacher!</p>
-    <button [routerLink]="['/contactUs']">Try now</button>
+    <button class="btn btn-primary" [routerLink]="['/contactUs']">Try now</button>
   </div>
+</div>
 
-  <div class="col-lg-9 text-center">
-    <h3>Our wonderful team of teachers</h3>
-    <!--Teacher images placeholder-->
-    <div class="row text-center ">
-      <div class="col" *ngFor="let t of teachersNames">
-        <img class="teacher-img" [src]='domain + "/api/Users/GetProfilePicture/" + t + "?t=" + timestamp' alt="image of teacher">
-        <p>{{t}}</p>
+<!-- AI Section -->
+<div class="row feature-section2 text-center">
+  <div class="col">
+    <h2>Our AI-powered chatbot!</h2>
+    <p class="description">Let ÉduMeilleur AI answer your questions under a moments notice</p>
+
+    <div class="chatbox">
+      <div class="chat-messages" id="chat">
+        <div class="message ai-msg">Hello! 👋 I’m EduBot. How can I help you today?</div>
+        <div class="message user">Can you help me with math?</div>
+        <div class="message ai-msg">Of course! What topic are you working on?</div>
+      </div>
+      <div class="chat-input">
+        <input type="text" id="userInput" placeholder="Type your question..." />
+        <button [routerLink]="['/ai']">Send</button>
       </div>
     </div>
   </div>
 </div>
 
-
-  <!-- AI Section -->
-  <div class="row feature-section text-center">
-    <div class="col">
-      <h2>Our AI-powered chatbot!</h2>
-      <p class="description">Let ÉduMeilleur AI answer your questions under a moments notice</p>
-      <button [routerLink]="['/ai']">Try now</button>
-    </div>
-  </div>
-</div>
-
-
+<app-modal modalId="ExploreDevModal" title="In development" body="Our Explore page is still being worked on; please check again another time." cancelText="Cancel" confirmText="Ok"></app-modal>

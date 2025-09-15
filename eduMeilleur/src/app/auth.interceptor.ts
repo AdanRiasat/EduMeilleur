@@ -4,18 +4,18 @@ import { UserService } from './services/user.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const userService = inject(UserService);
-  const token = userService.token()
+  const token = userService.token();
 
-  if (userService.isTokenExpired()){
-    userService.logout()
-    return next(req)
+  if (userService.isTokenExpired()) {
+    userService.logout();
+    return next(req);
   }
-  
+
   req = req.clone({
-        setHeaders:{
-            "Authorization" : "Bearer " + token
-        }
-    });
-    
+    setHeaders: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+
   return next(req);
 };

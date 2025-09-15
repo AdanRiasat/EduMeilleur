@@ -10,24 +10,34 @@ import { UserService } from '../services/user.service';
 import { environment } from '../../environments/environment';
 import { ModalComponent } from '../modal/modal.component';
 import { Modal } from 'bootstrap';
-
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgbCarouselModule, CommonModule, ImageSliderComponent, RouterModule, ModalComponent],
+  imports: [NgbCarouselModule, CommonModule, ImageSliderComponent, RouterModule, ModalComponent, ModalComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
 })
-export class HomeComponent implements OnInit  {
-  teachersNames: string[] = []
+export class HomeComponent implements OnInit {
+  teachersNames: string[] = [];
 
-  domain = environment.apiUrl
+  domain = environment.apiUrl;
   timestamp: number = Date.now();
- 
-  constructor (public global: GlobalService, public userService: UserService) {}
-  
+
+  constructor(public global: GlobalService, public userService: UserService, public modalService: ModalService) {}
+
   async ngOnInit() {
-   this.teachersNames = await this.userService.getTeachers()
+    this.teachersNames = await this.userService.getTeachers();
+  }
+
+  ngAfterViewInit() {
+    const video: HTMLVideoElement | null = document.querySelector('.hero-video');
+    if (video) {
+      video.muted = true;
+      video.play().catch((err) => {
+        console.log('Autoplay blocked:', err);
+      });
+    }
   }
 }

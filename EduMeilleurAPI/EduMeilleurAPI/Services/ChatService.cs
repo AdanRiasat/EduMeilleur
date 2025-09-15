@@ -38,7 +38,7 @@ namespace EduMeilleurAPI.Services
 
             var request = new
             {
-                model = "deepseek/deepseek-r1-0528:free",
+                model = "deepseek/deepseek-chat-v3.1:free",
                 messages = new[]
                 {
                     new { role = "user", content = chatMessage.Text }
