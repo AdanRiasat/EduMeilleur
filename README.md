@@ -2,32 +2,23 @@
 
 Pour devenir meilleur, utilisez ÉduMeilleur
 
+## 🌐 Live Website
+
+Hosted on [RaspPi_WebHost](https://github.com/AdanRiasat/RaspPi_WebHost) with Cloudflared tunnels
+
+Link : https://edumeilleur.ca
+
 ## 📘 Description
 
 ÉduMeilleur is an educational platform designed for secondary school students. Many students struggle with the advanced courses they’re required to take to pursue their career goals. Finding help can be challenging, tutors are expensive, support from teachers may not always be enough, and students often lack access to sufficient practice materials. Our platform addresses all of these issues.
 
-![home](readme-images/home.png)
-
 After selecting a subject, students can access detailed written notes, educational videos, and a revision cheat sheet for each chapter —all in one place. They’ll also find a variety of exercises tied to each chapter, complete with answers for self-assessment. A dedicated video page offers extra resources, including important explanations, helpful insights, and study tips.
-
-![subjects](readme-images/subjects.png)
-![subject](readme-images/sn4.png)
 
 Students can also reach out to us via the contact page to ask questions. They can include images or attachments, and our team of teachers will respond with reliable answers.
 
-![contact-us](readme-images/contactus.png)
-
 Additionally, the site features an AI chatbot to assist with quick and simple questions.
 
-![chatbot](readme-images/Chatbot.png)
-
 Our Explore page, currently in development, will allow students and teachers to share notes and exercises with the community.
-
-## 🌐 Live Website
-
-Hosted on [RaspPi_WebHost](https://github.com/AdanRiasat/RaspPi_WebHost), currently only on LAN
-
-Will be fully published soon.
 
 ## 🚀 Features
 
@@ -61,12 +52,14 @@ The project’s scope quickly grew, showing me how large-scale applications requ
 ## 📝TODO
 
 - Replace all placeholders
-- Create real notes 
+- Create real notes
 - Add error messages to edit-profile
 - Make more tests on the backend
 - Add logo
 - Explore page
-- Improve nav-bar design
 - Translate website to english and french
-- Disconnect user when token is expired
 - Add multiple sign up options
+- Mobile design
+- Refactor chatbot layout
+- Chatbot stream response
+- Lower size of images to load faster
