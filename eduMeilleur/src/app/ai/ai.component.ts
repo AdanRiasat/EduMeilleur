@@ -56,7 +56,7 @@ export class AiComponent implements OnInit {
       this.chats = await this.aiService.getChats();
     } catch (error: any) {
       if (error.status === 0) {
-        this.modalSerice.OpenModal('error500Modal');
+        this.modalSerice.openModal('error500Modal');
       }
     }
   }
@@ -91,7 +91,7 @@ export class AiComponent implements OnInit {
   async sendMessage() {
     this.userIsConnected = this.userService.token() != null;
     if (!this.userIsConnected) {
-      this.modalSerice.OpenModal('errorConnectionModal');
+      this.modalSerice.openModal('errorConnectionModal');
       return;
     }
 
@@ -153,7 +153,7 @@ export class AiComponent implements OnInit {
 
   openDeleteModal(id: number) {
     this.deleteId = id;
-    this.modalSerice.OpenModal('deleteChatModal');
+    this.modalSerice.openModal('deleteChatModal');
   }
 
   redirectLogin() {

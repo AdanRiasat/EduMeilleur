@@ -8,7 +8,7 @@ import { SpinnerService } from './spinner.service';
 export class ModalService {
   constructor(public spinner: SpinnerService) {}
 
-  OpenModal(elementId: string) {
+  openModal(elementId: string) {
     let modalElement = document.getElementById(elementId);
     if (modalElement) {
       let modal = Modal.getInstance(modalElement) || new Modal(modalElement);

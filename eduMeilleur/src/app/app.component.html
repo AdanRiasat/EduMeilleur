@@ -1,126 +1,107 @@
 <div class="layout-wrapper">
   <header>
-  <div class="container-fluid">
-    <div id="main-row" class="row">
+    <div class="container-fluid">
+      <div id="main-row" class="row">
+        <div class="col-1 align-self-center text-center">
+          <a [routerLink]="['']">ÉduMeilleur</a>
+        </div>
 
-      <div class="col-1 align-self-center text-center">
-        <a [routerLink]="['']">ÉduMeilleur</a>
-      </div>
-
-      <div class="col-6">
-        <nav>
-            <div id="main-pages" class="row align-items-center text-center" style="height: 60px;">
+        <div class="col-6">
+          <nav>
+            <div id="main-pages" class="row align-items-center text-center" style="height: 60px">
               <div [routerLink]="['/sujets']" class="col-auto nav-bar"><a>Sujets</a></div>
               <div [routerLink]="['/ai']" class="col-auto nav-bar"><a>Chatbot</a></div>
-              <div class="col-auto nav-bar"><a>Explore</a></div>
+              <div class="col-auto nav-bar" (click)="modalService.openModal('ExploreDevModal')"><a>Explore</a></div>
               <div [routerLink]="['/contactUs']" class="col-auto nav-bar"><a>Contacter Nous</a></div>
             </div>
-        </nav>
-      </div>
+          </nav>
+        </div>
 
-      <div class="col">
+        <div class="col"></div>
 
-      </div>
-      
-    
-      <div class="col-2 text-end user-nav align-self-center">
-        <nav>
-          <div class="row">
-            <!--User nav-->
+        <div class="col-auto text-end user-nav align-self-center">
+          <nav>
+            <div class="row">
+              <!--User nav-->
               <div class="col-4">
-                <select class="form-select" id="lang" name="lang">
+                <select id="lang" name="lang">
                   <option value="english">EN</option>
                   <option value="french">FR</option>
-
                 </select>
               </div>
 
               <div class="col-8 text-end">
                 <div class="d-flex justify-content-end align-items-center gap-4">
-                  
-                  <button (click)="openDisconnectModal()" class="btn btn-link p-0"><i class="bi bi-box-arrow-right" style="font-size: 1.5rem;"></i></button>
+                  <button (click)="openDisconnectModal()" class="btn btn-link p-0"><i class="bi bi-box-arrow-right" style="font-size: 1.5rem"></i></button>
 
-                  
-                    <a (click)="profile()">
-                      <img class="img-circle" *ngIf="username != null" [src]='global.pfpSrc + username + "?t=" + timestamp'>
-                      <img class="img-circle" *ngIf="username == null" src="assets/images/notLoggedIn.png">
-                    </a>
+                  <a (click)="profile()">
+                    <img class="img-circle" *ngIf="username != null" [src]="global.pfpSrc + username + '?t=' + timestamp" />
+                    <img class="img-circle" *ngIf="username == null" src="assets/images/notLoggedIn.png" />
+                  </a>
                 </div>
               </div>
-          </div>
-        </nav>
-      </div>
-    
-    
-    </div>
-  </div>
-</header>
-<main>
-  <ngx-spinner><p style="color: white;">Loading IQ...</p></ngx-spinner>
-  <router-outlet></router-outlet>
-</main>
-
-
-<footer class="footer">
-  <div class="container">
-    <div class="row">
-
-      <div class="col-md-4 mb-4">
-        <h5 class="footer-logo">ÉduMeilleur</h5>
-        <p class="footer-text">
-          Free educational platform for secondary school students.  
-          Notes, exercises, and videos for every chapter.
-        </p>
-      </div>
-
-      <div class="col-md-2 mb-4">
-        <h6 class="footer-heading">Quick Links</h6>
-        <ul class="list-unstyled">
-          <li><a routerLink="/sujets">Subjects</a></li>
-          <li><a routerLink="/ai">Chatbot</a></li>
-          <li><a>Explore</a></li>
-          <li><a routerLink="/contactUs">Contact</a></li>
-        </ul>
-      </div>
-
-      <!-- Resources -->
-      <div class="col-md-2 mb-4">
-        <h6 class="footer-heading">Existing resources</h6>
-        <ul class="list-unstyled">
-          <li><a [routerLink]="['/sujets', '2']">SN5</a></li>
-        </ul>
-      </div>
-
-      <!-- Contact / Social -->
-      <div class="col-md-4 mb-4">
-        <h6 class="footer-heading">Get in Touch</h6>
-        <p class="footer-text">
-          📧 {{global.adminEmail}}<br>
-          Brossard, QC
-        </p>
-        <div class="social-icons">
-          <a href="#"><i class="bi bi-facebook"></i></a>
-          <a href="#"><i class="bi bi-twitter"></i></a>
-          <a href="#"><i class="bi bi-instagram"></i></a>
-          <a href="#"><i class="bi bi-linkedin"></i></a>
+            </div>
+          </nav>
         </div>
       </div>
     </div>
+  </header>
+  <main>
+    <ngx-spinner><p style="color: white">Loading IQ...</p></ngx-spinner>
+    <router-outlet></router-outlet>
+  </main>
 
-    <!-- Bottom bar -->
-    <div class="footer-bottom text-center">
-      <p class="mb-0">© 2025 ÉduMeilleur. All rights reserved.</p>
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <h5 class="footer-logo">ÉduMeilleur</h5>
+          <p class="footer-text">Free educational platform for secondary school students. Notes, exercises, and videos for every chapter.</p>
+        </div>
+
+        <div class="col-md-2 mb-4">
+          <h6 class="footer-heading">Quick Links</h6>
+          <ul class="list-unstyled">
+            <li><a routerLink="/sujets">Subjects</a></li>
+            <li><a routerLink="/ai">Chatbot</a></li>
+            <li><a (click)="modalService.openModal('ExploreDevModal')">Explore</a></li>
+            <li><a routerLink="/contactUs">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Resources -->
+        <div class="col-md-2 mb-4">
+          <h6 class="footer-heading">Existing resources</h6>
+          <ul class="list-unstyled">
+            <li><a [routerLink]="['/sujets', '2']">SN5</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact / Social -->
+        <div class="col-md-4 mb-4">
+          <h6 class="footer-heading">Get in Touch</h6>
+          <p class="footer-text">
+            📧 {{ global.adminEmail }}<br />
+            Brossard, QC
+          </p>
+          <div class="social-icons">
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-twitter"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="footer-bottom text-center">
+        <p class="mb-0">© 2025 ÉduMeilleur. All rights reserved.</p>
+      </div>
     </div>
-  </div>
-</footer>
-
+  </footer>
 </div>
 
-<!-- Disconnect Confirmation Modal -->
-<app-modal
-  modalId="disconnectModal"
-  title="Disconnect"
-  body="Are you sure you want to disconnect?"
-  confirmText="Disconnect"
-  (confirmed)="disconnect()">
-</app-modal>
+<!-- Modals -->
+<app-modal modalId="disconnectModal" title="Disconnect" body="Are you sure you want to disconnect?" confirmText="Disconnect" (confirmed)="disconnect()"> </app-modal>
+
+<app-modal modalId="ExploreDevModal" title="In development" body="Our Explore page is still being worked on; please check again another time." cancelText="Cancel" confirmText="Ok"></app-modal>

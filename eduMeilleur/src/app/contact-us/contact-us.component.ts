@@ -63,12 +63,12 @@ export class ContactUsComponent {
   async postQuestion() {
     this.userIsConnected = this.userService.token() != null;
     if (!this.userIsConnected) {
-      this.modalService.OpenModal('errorConnectionModal');
+      this.modalService.openModal('errorConnectionModal');
       return;
     }
 
     if (this.titleAdmin == '' || this.messageAdmin == '') {
-      this.modalService.OpenModal('errorEmptyModal');
+      this.modalService.openModal('errorEmptyModal');
       return;
     }
 
@@ -101,12 +101,12 @@ export class ContactUsComponent {
   async postFeedback() {
     this.userIsConnected = this.userService.token() != null;
     if (!this.userIsConnected) {
-      this.modalService.OpenModal('errorConnectionModal');
+      this.modalService.openModal('errorConnectionModal');
       return;
     }
 
     if (this.titleAdmin == '' || this.messageAdmin == '') {
-      this.modalService.OpenModal('errorEmptyModal');
+      this.modalService.openModal('errorEmptyModal');
       return;
     }
 
