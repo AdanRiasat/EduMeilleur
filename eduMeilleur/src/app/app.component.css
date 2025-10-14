@@ -4,7 +4,56 @@ header {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
-  z-index: 1000; /* make sure it stays on top */
+  z-index: 1000;
+}
+
+#main-row .col-auto {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.site-title {
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: inherit;
+  vertical-align: middle;
+}
+
+/* Hamburger dropdown */
+#hamburger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+.dropdown-menu {
+  min-width: 8rem;
+  right: 0;
+  left: auto;
+  text-align: start;
+}
+
+.dropdown-item {
+  font-weight: 500;
+  color: black;
+}
+
+.dropdown-item:active {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+
+.site-title {
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: inherit;
 }
 
 .user-nav {
@@ -177,4 +226,19 @@ main {
   padding-top: 1rem;
   font-size: 0.9rem;
   opacity: 0.7;
+}
+
+@media screen and (min-width: 867px) {
+  #hamburger {
+    display: none !important;
+  }
+  .dropdown-menu {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 867px) {
+  #main-nav {
+    display: none !important;
+  }
 }

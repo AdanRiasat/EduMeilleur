@@ -1,19 +1,30 @@
 <div class="layout-wrapper">
   <header>
     <div class="container-fluid">
-      <div id="main-row" class="row">
-        <div class="col-1 align-self-center text-center">
+      <div id="main-row" class="row align-items-center flex-nowrap">
+        <div class="col-auto align-self-center text-center">
+          <div class="dropdown">
+            <button id="hamburger" class="btn btn-link p-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-list" style="font-size: 1.8rem"></i>
+            </button>
+
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" [routerLink]="['/sujets']">Sujets</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/ai']">Chatbot</a></li>
+              <li><a class="dropdown-item" (click)="modalService.openModal('ExploreDevModal')">Explore</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/contactUs']">Contacter Nous</a></li>
+            </ul>
+          </div>
           <a [routerLink]="['']">ÉduMeilleur</a>
         </div>
 
-        <div class="col-6">
-          <nav>
-            <div id="main-pages" class="row align-items-center text-center" style="height: 60px">
-              <div [routerLink]="['/sujets']" class="col-auto nav-bar"><a>Sujets</a></div>
-              <div [routerLink]="['/ai']" class="col-auto nav-bar"><a>Chatbot</a></div>
-              <div class="col-auto nav-bar" (click)="modalService.openModal('ExploreDevModal')"><a>Explore</a></div>
-              <div [routerLink]="['/contactUs']" class="col-auto nav-bar"><a>Contacter Nous</a></div>
-            </div>
+        <!-- Main nav -->
+        <div id="main-nav" class="col-auto">
+          <nav class="d-flex align-items-center flex-nowrap">
+            <a [routerLink]="['/sujets']" class="nav-bar">Sujets</a>
+            <a [routerLink]="['/ai']" class="nav-bar">Chatbot</a>
+            <a class="nav-bar" (click)="modalService.openModal('ExploreDevModal')">Explore</a>
+            <a [routerLink]="['/contactUs']" class="nav-bar">Contacter Nous</a>
           </nav>
         </div>
 
@@ -104,4 +115,4 @@
 <!-- Modals -->
 <app-modal modalId="disconnectModal" title="Disconnect" body="Are you sure you want to disconnect?" confirmText="Disconnect" (confirmed)="disconnect()"> </app-modal>
 
-<app-modal modalId="ExploreDevModal" title="In development" body="Our Explore page is still being worked on; please check again another time." cancelText="Cancel" confirmText="Ok"></app-modal>
+<app-modal modalId="ExploreDevModal" title="In development" body="Our Explore page is still being worked on, please check again another time." cancelText="Cancel" confirmText="Ok"></app-modal>
