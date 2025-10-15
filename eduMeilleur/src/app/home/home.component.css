@@ -50,6 +50,10 @@
   background-color: #f7f9fc;
 }
 
+ng-template {
+  height: 500px !important;
+}
+
 ngb-carousel img {
   max-height: 500px;
   width: 100%;
@@ -71,7 +75,7 @@ ngb-carousel img {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-width: 75%;
+  width: 60%;
   text-align: center;
   z-index: 2;
 }
@@ -254,5 +258,22 @@ button:hover {
   button {
     display: block;
     margin: 0 auto;
+  }
+}
+
+/* Main-carousel */
+
+@media (max-width: 935px) {
+  .carousel-caption {
+    display: none !important; /* hide title */
+  }
+
+  .centered-content {
+    top: 50%;
+  }
+
+  .paragraph-overlay {
+    font-weight: 600;
+    font-size: 1rem;
   }
 }
