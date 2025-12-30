@@ -1,12 +1,30 @@
-.container{
-    width: 800px;
-    margin: 40px auto;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+.container {
+  width: max-content;
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.move-error-message{
-    position: relative;
-    bottom: 20px;
+.col-auto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.col-auto input,
+.col-auto button,
+.col-auto a {
+  margin: 10px;
+}
+
+.form-control {
+  width: 100%;
+}
+
+.move-error-message {
+  position: relative;
+  bottom: 20px;
 }

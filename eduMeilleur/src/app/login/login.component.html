@@ -1,31 +1,26 @@
 <div class="container bg-light">
-    <div class="row">
-        <div class="col text-center"><h2>Log in</h2></div>
-       
-        <div class="row">
-            <div class="col">
-                <div *ngIf="errors['badRequest']" class="text-danger">{{errors['badRequest']}}</div>
+  <div class="col text-center"><h2>Log in</h2></div>
 
-                <input id="username" class="form-control" type="text" name="username" [(ngModel)]="username" placeholder="Username or Email"><br>
-                <div *ngIf="errors['username']" class="text-danger move-error-message">{{errors['username']}}</div>
+  <div class="row">
+    <div class="col-auto">
+      <div *ngIf="errors['badRequest']" class="text-danger">{{ errors["badRequest"] }}</div>
 
-                <input id="password" class="form-control" type="password" name="password" [(ngModel)]="password" placeholder="Password"><br>
-                <div *ngIf="errors['password']" class="text-danger move-error-message">{{errors['password']}}</div>
+      <input id="username" class="form-control" type="text" name="username" [(ngModel)]="username" placeholder="Username or Email" /><br />
+      <div *ngIf="errors['username']" class="text-danger move-error-message">{{ errors["username"] }}</div>
 
-                <a [routerLink]="['/signup']">Don't have an account? Create one!</a><br><br>
+      <input id="password" class="form-control" type="password" name="password" [(ngModel)]="password" placeholder="Password" /><br />
+      <div *ngIf="errors['password']" class="text-danger move-error-message">{{ errors["password"] }}</div>
 
-                <button class="btn btn-primary" (click)="login()">Log in</button>
-                
-            </div>
-            <div class="col-3">
-                QR code or image
-            </div>
-        </div>
+      <button class="btn btn-outline-dark w-100 d-flex align-items-center justify-content-center gap-2">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" width="20" height="20" />
+        Continue with Google
+      </button>
 
+      <a [routerLink]="['/signup']">Don't have an account? Create one!</a><br /><br />
 
-
+      <button class="btn btn-primary" (click)="login()">Log in</button>
     </div>
+  </div>
 </div>
-
 
 <app-modal modalId="error500Modal" title="Something went wrong" body="Our servers are currently having issues, please try again later" cancelText="Ok" confirmText="Try again" (confirmed)="login()"></app-modal>

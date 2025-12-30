@@ -4,7 +4,11 @@ header {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 8;
+}
+
+#main-row {
+  height: 70px;
 }
 
 #main-row .col-auto {
@@ -23,31 +27,16 @@ header {
 
 /* Hamburger dropdown */
 #hamburger {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border: none;
-  background: none;
-  color: inherit;
+  cursor: pointer;
+  padding: 5px;
 }
 
-.dropdown-menu {
-  min-width: 8rem;
-  right: 0;
-  left: auto;
-  text-align: start;
+#hamburger:hover {
+  background: var(--btnHover);
+  border-radius: 50%;
 }
 
-.dropdown-item {
-  font-weight: 500;
-  color: black;
-}
 
-.dropdown-item:active {
-  background-color: transparent !important;
-  color: inherit !important;
-}
 
 .site-title {
   font-weight: 600;
@@ -86,6 +75,9 @@ a {
   color: white;
   cursor: pointer;
 }
+
+
+
 .row {
   margin: 0;
 }
@@ -149,6 +141,8 @@ a {
   display: none;
 }
 
+/* main */
+
 html,
 body {
   height: 100%;
@@ -168,9 +162,76 @@ main {
   min-height: 100vh;
 }
 
-/* Ensure main content grows to fill space */
 main {
   flex-grow: 1;
+}
+
+/* sidebar */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -500px;            
+  width: 250px;
+  height: 100vh;
+  background: white;
+  border-right: solid 1px #ccc;
+  padding: 20px;
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  transition: left 0.3s ease;   
+}
+
+.sidebar.open {
+  left: 0;                      
+}
+
+.sidebar-header {
+  display: flex;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
+  z-index: 9;
+}
+
+.sidebar ul {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.sidebar li {
+  width: 100%;
+}
+
+.sidebar a {
+  display: block;
+  padding: 12px 10px;
+  color: black;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  background: #f1f1f1;
+}
+
+.close-btn {
+  margin-left: auto;
+  border: none;
+  cursor: pointer;
+  height: 30px;
 }
 
 /* Footer */
@@ -232,13 +293,16 @@ main {
   #hamburger {
     display: none !important;
   }
-  .dropdown-menu {
-    display: none !important;
-  }
 }
 
 @media screen and (max-width: 867px) {
   #main-nav {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #header-right {
     display: none !important;
   }
 }

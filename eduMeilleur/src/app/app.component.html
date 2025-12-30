@@ -3,18 +3,12 @@
     <div class="container-fluid">
       <div id="main-row" class="row align-items-center flex-nowrap">
         <div class="col-auto align-self-center text-center">
-          <div class="dropdown">
-            <button id="hamburger" class="btn btn-link p-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi bi-list" style="font-size: 1.8rem"></i>
-            </button>
 
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" [routerLink]="['/sujets']">Sujets</a></li>
-              <li><a class="dropdown-item" [routerLink]="['/ai']">Chatbot</a></li>
-              <li><a class="dropdown-item" (click)="modalService.openModal('ExploreDevModal')">Explore</a></li>
-              <li><a class="dropdown-item" [routerLink]="['/contactUs']">Contacter Nous</a></li>
-            </ul>
-          </div>
+          <svg id='hamburger' (click)="toggleSidebar()" xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+            viewBox="0 0 50 50">
+            <path fill="white" d="M10 12h30v4H10zm0 10h30v4H10zm0 10h30v4H10z" />
+          </svg>
+
           <a [routerLink]="['']">ÉduMeilleur</a>
         </div>
 
@@ -30,7 +24,7 @@
 
         <div class="col"></div>
 
-        <div class="col-auto text-end user-nav align-self-center">
+        <div id="header-right" class="col-auto text-end user-nav align-self-center">
           <nav>
             <div class="row">
               <!--User nav-->
@@ -43,10 +37,12 @@
 
               <div class="col-8 text-end">
                 <div class="d-flex justify-content-end align-items-center gap-4">
-                  <button (click)="openDisconnectModal()" class="btn btn-link p-0"><i class="bi bi-box-arrow-right" style="font-size: 1.5rem"></i></button>
+                  <button (click)="openDisconnectModal()" class="btn btn-link p-0"><i class="bi bi-box-arrow-right"
+                      style="font-size: 1.5rem"></i></button>
 
                   <a (click)="profile()">
-                    <img class="img-circle" *ngIf="username != null" [src]="global.pfpSrc + username + '?t=' + timestamp" />
+                    <img class="img-circle" *ngIf="username != null"
+                      [src]="global.pfpSrc + username + '?t=' + timestamp" />
                     <img class="img-circle" *ngIf="username == null" src="assets/images/notLoggedIn.png" />
                   </a>
                 </div>
@@ -58,7 +54,9 @@
     </div>
   </header>
   <main>
-    <ngx-spinner><p style="color: white">Loading IQ...</p></ngx-spinner>
+    <ngx-spinner>
+      <p style="color: white">Loading IQ...</p>
+    </ngx-spinner>
     <router-outlet></router-outlet>
   </main>
 
@@ -67,7 +65,8 @@
       <div class="row">
         <div class="col-md-4 mb-4">
           <h5 class="footer-logo">ÉduMeilleur</h5>
-          <p class="footer-text">Free educational platform for secondary school students. Notes, exercises, and videos for every chapter.</p>
+          <p class="footer-text">Free educational platform for secondary school students. Notes, exercises, and videos
+            for every chapter.</p>
         </div>
 
         <div class="col-md-2 mb-4">
@@ -92,7 +91,7 @@
         <div class="col-md-4 mb-4">
           <h6 class="footer-heading">Get in Touch</h6>
           <p class="footer-text">
-            📧 {{ global.adminEmail }}<br />
+            {{ global.adminEmail }}<br />
             Brossard, QC
           </p>
           <div class="social-icons">
@@ -112,7 +111,29 @@
   </footer>
 </div>
 
-<!-- Modals -->
-<app-modal modalId="disconnectModal" title="Disconnect" body="Are you sure you want to disconnect?" confirmText="Disconnect" (confirmed)="disconnect()"> </app-modal>
+<div class="sidebar" [class.open]="isSidebarOpen">
+  <div class="sidebar-header">
+    <h3>Welcome to ÉduMeilleur!</h3>
+    <button class="close-btn" (click)="toggleSidebar()">X</button>
+  </div>
 
-<app-modal modalId="ExploreDevModal" title="In development" body="Our Explore page is still being worked on, please check again another time." cancelText="Cancel" confirmText="Ok"></app-modal>
+  <div class="sidebar-body">
+    <ul>
+      <li><a [routerLink]="['/sujets']">Sujets</a></li>
+      <li><a [routerLink]="['/ai']">Chatbot</a></li>
+      <li><a (click)="modalService.openModal('ExploreDevModal')">Explore</a></li>
+      <li><a [routerLink]="['/contactUs']">Contacter Nous</a></li>
+    </ul>
+  </div>
+
+</div>
+
+<div *ngIf="isSidebarOpen" class="sidebar-overlay" (click)="toggleSidebar()"></div>
+
+<!-- Modals -->
+<app-modal modalId="disconnectModal" title="Disconnect" body="Are you sure you want to disconnect?"
+  confirmText="Disconnect" (confirmed)="disconnect()"> </app-modal>
+
+<app-modal modalId="ExploreDevModal" title="In development"
+  body="Our Explore page is still being worked on, please check again another time." cancelText="Cancel"
+  confirmText="Ok"></app-modal>

@@ -24,6 +24,8 @@ export class AppComponent {
 
   timestamp: number = Date.now();
 
+  isSidebarOpen: boolean = false;
+
   constructor(public userService: UserService, public route: Router, public global: GlobalService, public modalService: ModalService) {
     effect(() => {
       let token: string | null = userService.token();
@@ -37,6 +39,10 @@ export class AppComponent {
         this.username = null;
       }
     });
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   profile() {

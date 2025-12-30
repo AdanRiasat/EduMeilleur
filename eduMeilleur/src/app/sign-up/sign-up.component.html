@@ -1,50 +1,57 @@
 <div class="container bg-light">
-    <div class="row">
-        <div class="col text-center"><h2>Sign up</h2></div>
+  <h2 class="text-center mb-4">Sign up</h2>
 
-        <div class="row">
-            <div class="col">
-                <input id="username" class="form-control" type="text" name="username" [(ngModel)]="username" placeholder="Username" required><br>
-                <div *ngIf="errors['username']" class="text-danger">{{errors['username']}}</div>
+  <!-- main section -->
+  <div class="row justify-content-center">
+    <div class="col-md-5 d-flex flex-column align-items-center">
+      <input id="username" class="form-control mb-3" type="text" name="username" [(ngModel)]="username" placeholder="Username" required />
+      <div *ngIf="errors['username']" class="text-danger">{{ errors["username"] }}</div>
 
-                <input id="email" class="form-control" type="text" name="email" [(ngModel)]="email" placeholder="Email"><br>
-                <div *ngIf="errors['email']" class="text-danger">{{errors['email']}}</div>
+      <input id="email" class="form-control mb-3" type="text" name="email" [(ngModel)]="email" placeholder="Email" />
+      <div *ngIf="errors['email']" class="text-danger">{{ errors["email"] }}</div>
 
-                <input id="password" class="form-control" type="password" name="password" [(ngModel)]="password" placeholder="Password"><br>
-                <div *ngIf="errors['password']" class="text-danger">{{errors['password']}}</div>
-                <div *ngIf="errors['confirmPassword']" class="text-danger">{{errors['confirmPassword']}}</div>
+      <input id="password" class="form-control mb-3" type="password" name="password" [(ngModel)]="password" placeholder="Password" />
+      <div *ngIf="errors['password']" class="text-danger">{{ errors["password"] }}</div>
 
-                <input id="confirmPassword" class="form-control" type="password" name="confirmPassword" [(ngModel)]="confirmPassword" placeholder="Confirm Password"><br>
-                <div *ngIf="errors['confirmPassword']" class="text-danger">{{errors['confirmPassword']}}</div>
-
-                <label for="school" class="optional"></label>
-                <select id="school" class="form-control" name="school" [(ngModel)]="school">
-                    <option value="" disabled selected hidden>Select your school</option>
-                    <option value="1">Antoine-Brossard</option>
-                    <option value="2">Lucille-Teasdale</option>
-                </select><br>
-
-                <label for="schoolYear" class="optional"></label>
-                <select id="schoolYear" class="form-control" name="schoolYear" [(ngModel)]="schoolYear">
-                    <option value="" disabled selected hidden>Select your school year</option>
-                    <option value="1">Secondaire 1</option>
-                    <option value="2">Secondaire 2</option>
-                    <option value="3">Secondaire 3</option>
-                    <option value="4">Secondaire 4</option>
-                    <option value="5">Secondaire 5</option>
-                </select><br>
-
-                <button class="btn btn-primary" (click)="register()">Sign up</button>  
-            </div>
-            <div class="col-3">
-                other options
-            </div>
-        </div>
-
-
-
+      <input id="confirmPassword" class="form-control mb-3" type="password" name="confirmPassword" [(ngModel)]="confirmPassword" placeholder="Confirm Password" />
+      <div *ngIf="errors['confirmPassword']" class="text-danger">{{ errors["confirmPassword"] }}</div>
     </div>
-</div>
 
+    <!-- school selection -->
+    <div class="col-md-5 d-flex flex-column align-items-center">
+      <select id="school" class="form-control mb-3" name="school" [(ngModel)]="school">
+        <option value="" disabled selected hidden>Select your school</option>
+        <option value="1">Antoine-Brossard</option>
+        <option value="2">Lucille-Teasdale</option>
+      </select>
+
+      <select id="schoolYear" class="form-control mb-3" name="schoolYear" [(ngModel)]="schoolYear">
+        <option value="" disabled selected hidden>Select your school year</option>
+        <option value="1">Secondaire 1</option>
+        <option value="2">Secondaire 2</option>
+        <option value="3">Secondaire 3</option>
+        <option value="4">Secondaire 4</option>
+        <option value="5">Secondaire 5</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Extra options -->
+  <div class="text-center mt-4">
+    <button class="btn btn-outline-dark w-100 d-flex align-items-center justify-content-center gap-2 mb-3" style="max-width: 320px; margin: 0 auto">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" width="20" height="20" />
+      Sign in with Google
+    </button>
+
+    <button class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center gap-2 mb-3" style="max-width: 320px; margin: 0 auto">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook logo" width="20" height="20" />
+      Sign in with Facebook
+    </button>
+  </div>
+
+  <div class="text-center mt-3">
+    <button class="btn btn-primary px-5" (click)="register()">Sign up</button>
+  </div>
+</div>
 
 <app-modal modalId="error500Modal" title="Something went wrong" body="Our servers are currently having issues, please try again later" cancelText="Ok" confirmText="Try again" (confirmed)="register()"></app-modal>
