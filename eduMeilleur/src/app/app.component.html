@@ -118,12 +118,33 @@
   </div>
 
   <div class="sidebar-body">
-    <ul>
+    <div class="extra-sidebars" *ngIf="route.url == '/ai'">
+      <button>Chatbot sidebar</button>
+    </div>
+
+    <ul (click)="toggleSidebar()">
+      <li><a [routerLink]="['/home']">Accueil</a></li>
       <li><a [routerLink]="['/sujets']">Sujets</a></li>
       <li><a [routerLink]="['/ai']">Chatbot</a></li>
       <li><a (click)="modalService.openModal('ExploreDevModal')">Explore</a></li>
       <li><a [routerLink]="['/contactUs']">Contacter Nous</a></li>
     </ul>
+
+    <div class="horizontal-line"></div>
+
+    <ul (click)="toggleSidebar()">
+      <li><a>Log in</a></li>
+      <li><a>Sign up</a></li>
+      <li><a>Profile</a></li>
+      <li><a>Log out</a></li>
+    </ul>
+
+    <div>
+      <select id="lang" name="lang">
+        <option value="english">EN</option>
+        <option value="french">FR</option>
+      </select>
+    </div>
   </div>
 
 </div>

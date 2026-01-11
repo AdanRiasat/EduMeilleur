@@ -199,3 +199,9 @@
   top: 100%;
   z-index: 1000;
 }
+
+@media screen and (max-width: 867px) {
+  #ai-sidebar {
+    display: none !important;
+  }
+}

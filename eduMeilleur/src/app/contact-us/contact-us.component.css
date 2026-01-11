@@ -12,6 +12,10 @@ textarea {
   margin-bottom: 30px;
 }
 
+.card-content{
+  padding-bottom: 20px;
+}
+
 .form-control,
 textarea {
   margin-bottom: 15px;

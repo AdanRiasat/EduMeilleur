@@ -1,8 +1,8 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2 scroll-sidebar">
+        <div id="sujet-sidebar" class="col-2 scroll-sidebar">
             <h3 class="sidebar-title">{{sujet?.name}}</h3>
-            
+
             <div class="sidebar-buttons">
                 <button (click)="getAllItems('Notes')">Notes</button>
                 <button (click)="getAllItems('Exercises')">Exercises</button>
@@ -15,16 +15,17 @@
 
                     <div class="chapter-items">
                         <div *ngFor="let n of allItems">
-                            <div class="item" [class.active]="n.id == currentItem?.id" *ngIf="n.chapter == c" (click)="getCurrentItem(n.id, this.currentType)">
+                            <div class="item" [class.active]="n.id == currentItem?.id" *ngIf="n.chapter == c"
+                                (click)="getCurrentItem(n.id, this.currentType)">
                                 {{n.title}}
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
-            
-            
+
+
         </div>
 
         <div class="col scroll-content" *ngIf="currentItem && currentItem.content != null">

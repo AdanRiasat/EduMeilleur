@@ -31,12 +31,16 @@ export class SujetComponent implements OnInit{
 
   async ngOnInit() {
     let sujetIdStringData: string | null = this.route.snapshot.paramMap.get("id")
-    if (sujetIdStringData != null){
+    if (!sujetIdStringData){
+      // TODO reroute
+      return
+    }
       this.id = parseFloat(sujetIdStringData)
       this.sujet = await this.sujetService.getSujet(this.id)
       this.chapters = this.sujet.chapters
       await this.getAllItems("Notes")
-    }
+      await this.getCurrentItem(this.allItems[0].id, this.currentType)
+    
   }
 
   async getAllItems(type: string){

@@ -1,12 +1,8 @@
-
-
 .sidebar-title {
   font-size: 1.25rem;
   margin-bottom: 1rem;
   font-weight: 600;
 }
-
-
 
 .sidebar-buttons button {
   padding: 0.4rem 0.75rem;
@@ -78,4 +74,11 @@
 
 .scroll-content{
   background-color: #f2f2f2;
+  padding: 20px clamp(10px, 10vw, 200px);
+}
+
+@media screen and (max-width: 867px) {
+  #sujet-sidebar {
+    display: none !important;
+  }
 }

@@ -19,3 +19,9 @@ ul {
 li {
  list-style-type: none;
 }
+
+h2 {
+  font-size: clamp(0.75, 1rem + 2vw, 1.5rem);
+}
+
+
