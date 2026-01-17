@@ -8,11 +8,11 @@ Hosted on [RaspPi_WebHost](https://github.com/AdanRiasat/RaspPi_WebHost) with Cl
 
 Link : https://edumeilleur.ca
 
-## 📘 Description
+## Description
 
 ÉduMeilleur is an educational platform designed for secondary school students. Many students struggle with the advanced courses they’re required to take to pursue their career goals. Finding help can be challenging, tutors are expensive, support from teachers may not always be enough, and students often lack access to sufficient practice materials. Our platform addresses all of these issues.
 
-After selecting a subject, students can access detailed written notes, educational videos, and a revision cheat sheet for each chapter —all in one place. They’ll also find a variety of exercises tied to each chapter, complete with answers for self-assessment. A dedicated video page offers extra resources, including important explanations, helpful insights, and study tips.
+After selecting a subject, students can access detailed written notes, educational videos, and a revision cheat sheet for each chapter all in one place. They’ll also find a variety of exercises tied to each chapter, complete with answers for self-assessment. A dedicated video page offers extra resources, including important explanations, helpful insights, and study tips.
 
 Students can also reach out to us via the contact page to ask questions. They can include images or attachments, and our team of teachers will respond with reliable answers.
 
@@ -20,7 +20,7 @@ Additionally, the site features an AI chatbot to assist with quick and simple qu
 
 Our Explore page, currently in development, will allow students and teachers to share notes and exercises with the community.
 
-## 🚀 Features
+## Features
 
 - Notes, exercises, and videos served with markdown files provided by the backend.
 
@@ -34,14 +34,14 @@ Our Explore page, currently in development, will allow students and teachers to 
 
 - Website will be fully translated into English and French (translation not yet implemented).
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - Frontend: Angular
 - Backend: ASP.NET CORE
 - Database: PostgreSQL
 - Hosting: NGINX, Raspberry Pi 4
 
-## 📚 Lessons Learned
+## Lessons Learned
 
 This was my first experience developing a full-stack web application entirely from scratch. Setting up the backend, frontend, dependencies, and database was a significant initial challenge, but it laid the foundation for rapid feature development.
 
@@ -49,7 +49,7 @@ I learned the importance of considering performance, code quality (DRY principle
 
 The project’s scope quickly grew, showing me how large-scale applications require continuous iteration and why such work is often distributed across entire teams.
 
-## 📝TODO
+## TODOs
 
 - Replace all placeholders
 - Create real notes
