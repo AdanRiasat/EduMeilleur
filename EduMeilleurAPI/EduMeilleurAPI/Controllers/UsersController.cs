@@ -1,5 +1,4 @@
-﻿using EduMeilleurAPI.Migrations;
-using EduMeilleurAPI.Models;
+﻿using EduMeilleurAPI.Models;
 using EduMeilleurAPI.Models.DTO;
 using EduMeilleurAPI.Services;
 using EduMeilleurAPI.Services.Interfaces;

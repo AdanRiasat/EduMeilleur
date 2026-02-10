@@ -131,7 +131,7 @@ namespace EduMeilleurAPI.Data
             .HasForeignKey("SubjectId");
 
             builder.Entity<Chapter>().HasData(
-                new {Id = 1, Title = "Vectors", SubjectId = 2}
+                new Chapter {Id = 1, Title = "Vectors", SubjectId = 2}
             );
 
             builder.Entity<Notes>().HasData(
@@ -140,17 +140,17 @@ namespace EduMeilleurAPI.Data
                 //new Notes { Id = 3, Title = "1* REVISION on skibidi", Content = "test.md", ChapterId = 1 },
             );
             
-            builder.Entity<Exercise>().HasData(
+         //   builder.Entity<Exercise>().HasData(
                 //new Exercise {Id = 1, Title = "Pythagore with friends", Content = "testExerc.md", ChapterId = 1},
                 //new Exercise { Id = 2, Title = "Find the function", Content = "testExerc.md", ChapterId = 1},
                 //new Exercise { Id = 3, Title = "Simplification", Content = "testExerc.md", ChapterId = 1 }
-            );
+           // );
 
-            builder.Entity<Video>().HasData(
+            //builder.Entity<Video>().HasData(
                 //new Video { Id = 1, Title = "hmmm I cant quite remember", Content = "vidExample.md", ChapterId = 1},
                 //new Video { Id = 2, Title = "Favorite color?", Content = "vidExample.md", ChapterId = 1},
                 //new Video { Id = 3, Title = "Sigma vs Alpha", Content = "vidExample.md", ChapterId = 2}
-            );
+            //);
 
 
             builder.Entity<Chat>().HasData(

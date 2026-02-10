@@ -71,14 +71,14 @@
 
 <!--Explore-->
 <div class="feature-section2">
-  <div class="row align-items-center">
-    <div class="col-lg-8">
+  <div class="row align-items-center justify-content-center">
+    <div id="explore-content" class="col-lg-8">
       <h2>Explore</h2>
       <p class="description">Dive into interactive activities, challenge yourself, and contribute to a growing knowledge base.</p>
 
       <div class="row">
         <div class="col-md-4 mb-3">
-          <div class="card h-100 shadow-sm border-0 text-center hover-card">
+          <div class="card h-100 shadow-sm border-0 text-center">
             <div class="card-body">
               <i class="bi bi-search h1 text-primary"></i>
               <h5 class="card-title mt-3">Find New Exercises</h5>
@@ -88,7 +88,7 @@
         </div>
 
         <div class="col-md-4 mb-3">
-          <div class="card h-100 shadow-sm border-0 text-center hover-card">
+          <div class="card h-100 shadow-sm border-0 text-center">
             <div class="card-body">
               <i class="bi bi-upload h1 text-primary"></i>
               <h5 class="card-title mt-3">Share Yours</h5>
@@ -98,7 +98,7 @@
         </div>
 
         <div class="col-md-4 mb-3">
-          <div class="card h-100 shadow-sm border-0 text-center hover-card">
+          <div class="card h-100 shadow-sm border-0 text-center">
             <div class="card-body">
               <i class="bi bi-lightbulb h1 text-primary"></i>
               <h5 class="card-title mt-3">Train Your Brain</h5>
@@ -108,16 +108,14 @@
         </div>
       </div>
     </div>
-
-    <!-- Right side image -->
-    <div class="col-lg-4 text-center d-none d-lg-block">
-      <img class="doc-img" src="assets/images/document.jpg" alt="image of document" />
-    </div>
   </div>
 
-  <div id="explore-cta" class="text-center mt-5">
+  <div id="explore-cta" class="text-center mt-3">
     <h4>Ready to start exploring?</h4>
-    <button class="btn btn-primary" (click)="modalService.openModal('ExploreDevModal')">Get Started</button>
+    <div>
+      <button class="btn btn-primary" (click)="modalService.openModal('ExploreDevModal')">Get Started</button>
+    </div>
+    
   </div>
 </div>
 
@@ -130,7 +128,7 @@
     </div>
   </div>
 
-  <div class="d-flex flex-wrap justify-content-center gap-5 mt-3">
+  <div class="d-flex flex-wrap justify-content-center gap-5 mt-4">
     <div *ngFor="let t of teachersNames" class="text-center">
       <img class="teacher-img" [src]="domain + '/api/Users/GetProfilePicture/' + t + '?t=' + timestamp" alt="image of teacher" />
       <p>{{ t }}</p>

@@ -8,11 +8,12 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { ModalComponent } from './modal/modal.component';
 import { GlobalService } from './services/global.service';
 import { ModalService } from './services/modal.service';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, CommonModule, NgxSpinnerModule, ModalComponent],
+  imports: [RouterOutlet, RouterModule, CommonModule, NgxSpinnerModule, ModalComponent, SidebarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -22,9 +23,9 @@ export class AppComponent {
   username: string | null = '';
   userIsConnected: boolean = false;
 
-  timestamp: number = Date.now();
+  isSidebarOpen: boolean = false
 
-  isSidebarOpen: boolean = false;
+  timestamp: number = Date.now();
 
   constructor(public userService: UserService, public route: Router, public global: GlobalService, public modalService: ModalService) {
     effect(() => {
@@ -39,10 +40,6 @@ export class AppComponent {
         this.username = null;
       }
     });
-  }
-
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   profile() {
@@ -76,5 +73,15 @@ export class AppComponent {
     }
 
     this.route.navigate(['/home']);
+  }
+
+  openSidebar() {
+    this.isSidebarOpen = true
+    console.log(this.isSidebarOpen);
+    
+  }
+
+  closeSidebar() {
+    this.isSidebarOpen = false
   }
 }

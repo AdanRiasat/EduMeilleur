@@ -4,7 +4,7 @@
       <div id="main-row" class="row align-items-center flex-nowrap">
         <div class="col-auto align-self-center text-center">
 
-          <svg id='hamburger' (click)="toggleSidebar()" xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+          <svg id='hamburger' (click)="openSidebar()" xmlns="http://www.w3.org/2000/svg" width="40" height="40"
             viewBox="0 0 50 50">
             <path fill="white" d="M10 12h30v4H10zm0 10h30v4H10zm0 10h30v4H10z" />
           </svg>
@@ -111,45 +111,7 @@
   </footer>
 </div>
 
-<div class="sidebar" [class.open]="isSidebarOpen">
-  <div class="sidebar-header">
-    <h3>Welcome to ÉduMeilleur!</h3>
-    <button class="close-btn" (click)="toggleSidebar()">X</button>
-  </div>
-
-  <div class="sidebar-body">
-    <div class="extra-sidebars" *ngIf="route.url == '/ai'">
-      <button>Chatbot sidebar</button>
-    </div>
-
-    <ul (click)="toggleSidebar()">
-      <li><a [routerLink]="['/home']">Accueil</a></li>
-      <li><a [routerLink]="['/sujets']">Sujets</a></li>
-      <li><a [routerLink]="['/ai']">Chatbot</a></li>
-      <li><a (click)="modalService.openModal('ExploreDevModal')">Explore</a></li>
-      <li><a [routerLink]="['/contactUs']">Contacter Nous</a></li>
-    </ul>
-
-    <div class="horizontal-line"></div>
-
-    <ul (click)="toggleSidebar()">
-      <li><a>Log in</a></li>
-      <li><a>Sign up</a></li>
-      <li><a>Profile</a></li>
-      <li><a>Log out</a></li>
-    </ul>
-
-    <div>
-      <select id="lang" name="lang">
-        <option value="english">EN</option>
-        <option value="french">FR</option>
-      </select>
-    </div>
-  </div>
-
-</div>
-
-<div *ngIf="isSidebarOpen" class="sidebar-overlay" (click)="toggleSidebar()"></div>
+<app-sidebar [isOpen]="isSidebarOpen" (close)="closeSidebar()"></app-sidebar>
 
 <!-- Modals -->
 <app-modal modalId="disconnectModal" title="Disconnect" body="Are you sure you want to disconnect?"

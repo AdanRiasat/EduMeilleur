@@ -171,9 +171,16 @@ button:hover {
 }
 
 #explore-cta {
-  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
+#explore-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
 .feature-section2 {
   margin-left: 0;
   margin-right: 0;
