@@ -1,58 +1,6 @@
 <div class="layout-wrapper">
-  <header>
-    <div class="container-fluid">
-      <div id="main-row" class="row align-items-center flex-nowrap">
-        <div class="col-auto align-self-center text-center">
+  <app-header></app-header>
 
-          <svg id='hamburger' (click)="openSidebar()" xmlns="http://www.w3.org/2000/svg" width="40" height="40"
-            viewBox="0 0 50 50">
-            <path fill="white" d="M10 12h30v4H10zm0 10h30v4H10zm0 10h30v4H10z" />
-          </svg>
-
-          <a [routerLink]="['']">ÉduMeilleur</a>
-        </div>
-
-        <!-- Main nav -->
-        <div id="main-nav" class="col-auto">
-          <nav class="d-flex align-items-center flex-nowrap">
-            <a [routerLink]="['/sujets']" class="nav-bar">Sujets</a>
-            <a [routerLink]="['/ai']" class="nav-bar">Chatbot</a>
-            <a class="nav-bar" (click)="modalService.openModal('ExploreDevModal')">Explore</a>
-            <a [routerLink]="['/contactUs']" class="nav-bar">Contacter Nous</a>
-          </nav>
-        </div>
-
-        <div class="col"></div>
-
-        <div id="header-right" class="col-auto text-end user-nav align-self-center">
-          <nav>
-            <div class="row">
-              <!--User nav-->
-              <div class="col-4">
-                <select id="lang" name="lang">
-                  <option value="english">EN</option>
-                  <option value="french">FR</option>
-                </select>
-              </div>
-
-              <div class="col-8 text-end">
-                <div class="d-flex justify-content-end align-items-center gap-4">
-                  <button (click)="openDisconnectModal()" class="btn btn-link p-0"><i class="bi bi-box-arrow-right"
-                      style="font-size: 1.5rem"></i></button>
-
-                  <a (click)="profile()">
-                    <img class="img-circle" *ngIf="username != null"
-                      [src]="global.pfpSrc + username + '?t=' + timestamp" />
-                    <img class="img-circle" *ngIf="username == null" src="assets/images/notLoggedIn.png" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </nav>
-        </div>
-      </div>
-    </div>
-  </header>
   <main>
     <ngx-spinner>
       <p style="color: white">Loading IQ...</p>
@@ -60,63 +8,5 @@
     <router-outlet></router-outlet>
   </main>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4 mb-4">
-          <h5 class="footer-logo">ÉduMeilleur</h5>
-          <p class="footer-text">Free educational platform for secondary school students. Notes, exercises, and videos
-            for every chapter.</p>
-        </div>
-
-        <div class="col-md-2 mb-4">
-          <h6 class="footer-heading">Quick Links</h6>
-          <ul class="list-unstyled">
-            <li><a routerLink="/sujets">Subjects</a></li>
-            <li><a routerLink="/ai">Chatbot</a></li>
-            <li><a (click)="modalService.openModal('ExploreDevModal')">Explore</a></li>
-            <li><a routerLink="/contactUs">Contact</a></li>
-          </ul>
-        </div>
-
-        <!-- Resources -->
-        <div class="col-md-2 mb-4">
-          <h6 class="footer-heading">Existing resources</h6>
-          <ul class="list-unstyled">
-            <li><a [routerLink]="['/sujets', '2']">SN5</a></li>
-          </ul>
-        </div>
-
-        <!-- Contact / Social -->
-        <div class="col-md-4 mb-4">
-          <h6 class="footer-heading">Get in Touch</h6>
-          <p class="footer-text">
-            {{ global.adminEmail }}<br />
-            Brossard, QC
-          </p>
-          <div class="social-icons">
-            <a href="#"><i class="bi bi-facebook"></i></a>
-            <a href="#"><i class="bi bi-twitter"></i></a>
-            <a href="#"><i class="bi bi-instagram"></i></a>
-            <a href="#"><i class="bi bi-linkedin"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bottom bar -->
-      <div class="footer-bottom text-center">
-        <p class="mb-0">© 2025 ÉduMeilleur. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
+  <app-footer></app-footer>
 </div>
-
-<app-sidebar [isOpen]="isSidebarOpen" (close)="closeSidebar()"></app-sidebar>
-
-<!-- Modals -->
-<app-modal modalId="disconnectModal" title="Disconnect" body="Are you sure you want to disconnect?"
-  confirmText="Disconnect" (confirmed)="disconnect()"> </app-modal>
-
-<app-modal modalId="ExploreDevModal" title="In development"
-  body="Our Explore page is still being worked on, please check again another time." cancelText="Cancel"
-  confirmText="Ok"></app-modal>
