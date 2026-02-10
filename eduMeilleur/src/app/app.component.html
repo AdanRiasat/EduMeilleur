@@ -1,5 +1,5 @@
 <div class="layout-wrapper">
-  <app-header></app-header>
+  <app-header *ngIf="!showMainOnly"></app-header>
 
   <main>
     <ngx-spinner>
@@ -8,5 +8,5 @@
     <router-outlet></router-outlet>
   </main>
 
-  <app-footer></app-footer>
+  <app-footer *ngIf="!showMainOnly"></app-footer>
 </div>
