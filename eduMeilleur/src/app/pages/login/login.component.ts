@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { UserService } from '../services/user.service';
+import { UserService } from '../../services/user.service';
 import { Router, RouterModule } from '@angular/router';
-import { SpinnerService } from '../services/spinner.service';
+import { SpinnerService } from '../../services/spinner.service';
 import { Modal } from 'bootstrap';
-import { ModalComponent } from '../modal/modal.component';
+import { ModalComponent } from '../../components/modal/modal.component';
 
 @Component({
   selector: 'app-login',

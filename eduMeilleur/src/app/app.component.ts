@@ -5,10 +5,10 @@ import { UserService } from './services/user.service';
 import { Modal } from 'bootstrap';
 import { Profile } from './models/profile';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { ModalComponent } from './modal/modal.component';
+import { ModalComponent } from './components/modal/modal.component';
 import { GlobalService } from './services/global.service';
 import { ModalService } from './services/modal.service';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',

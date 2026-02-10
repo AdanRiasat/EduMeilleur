@@ -3,7 +3,7 @@ import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { authInterceptor } from './auth.interceptor';
+import { authInterceptor } from './interceptors/auth.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {

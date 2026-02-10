@@ -1,17 +1,17 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-import { AiService } from '../services/ai.service';
-import { ChatMessage } from '../models/chatMessage';
+import { AiService } from '../../services/ai.service';
+import { ChatMessage } from '../../models/chatMessage';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 import { marked } from 'marked';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Chat } from '../models/chat';
+import { Chat } from '../../models/chat';
 import { Modal } from 'bootstrap';
-import { ModalComponent } from '../modal/modal.component';
-import { UserService } from '../services/user.service';
+import { ModalComponent } from '../../components/modal/modal.component';
+import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
-import { SpinnerService } from '../services/spinner.service';
-import { ModalService } from '../services/modal.service';
+import { SpinnerService } from '../../services/spinner.service';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-ai',

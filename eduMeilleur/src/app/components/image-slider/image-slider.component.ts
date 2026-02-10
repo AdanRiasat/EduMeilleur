@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
-import { DisplaySujet } from '../models/displaySujet';
-import { SujetService } from '../services/sujet.service';
+import { DisplaySujet } from '../../models/displaySujet';
+import { SujetService } from '../../services/sujet.service';
 import { RouterModule } from '@angular/router';
 import { Modal } from 'bootstrap';
 import { ModalComponent } from '../modal/modal.component';
-import { SpinnerService } from '../services/spinner.service';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'app-image-slider',

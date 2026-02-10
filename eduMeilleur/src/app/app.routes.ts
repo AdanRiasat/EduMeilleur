@@ -1,13 +1,13 @@
 import { Routes } from '@angular/router';
-import { SignUpComponent } from './sign-up/sign-up.component';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { ProfileComponent } from './profile/profile.component';
-import { AiComponent } from './ai/ai.component';
-import { SujetsComponent } from './sujets/sujets.component';
-import { SujetComponent } from './sujet/sujet.component';
-import { ContactUsComponent } from './contact-us/contact-us.component';
-import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { LoginComponent } from './pages/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { AiComponent } from './pages/ai/ai.component';
+import { SujetsComponent } from './pages/sujets/sujets.component';
+import { SujetComponent } from './pages/sujet/sujet.component';
+import { ContactUsComponent } from './pages/contact-us/contact-us.component';
+import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 
 export const routes: Routes = [
     {path: "", redirectTo: "/home", pathMatch: "full"},

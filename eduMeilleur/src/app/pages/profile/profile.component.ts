@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Profile } from '../models/profile';
-import { UserService } from '../services/user.service';
+import { Profile } from '../../models/profile';
+import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SpinnerService } from '../services/spinner.service';
-import { GlobalService } from '../services/global.service';
+import { SpinnerService } from '../../services/spinner.service';
+import { GlobalService } from '../../services/global.service';
 
 @Component({
   selector: 'app-profile',

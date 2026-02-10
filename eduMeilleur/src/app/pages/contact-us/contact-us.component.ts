@@ -1,13 +1,13 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ContactService } from '../services/contact.service';
+import { ContactService } from '../../services/contact.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { SpinnerService } from '../services/spinner.service';
-import { GlobalService } from '../services/global.service';
-import { UserService } from '../services/user.service';
-import { ModalService } from '../services/modal.service';
+import { SpinnerService } from '../../services/spinner.service';
+import { GlobalService } from '../../services/global.service';
+import { UserService } from '../../services/user.service';
+import { ModalService } from '../../services/modal.service';
 import { Router } from '@angular/router';
-import { ModalComponent } from '../modal/modal.component';
+import { ModalComponent } from '../../components/modal/modal.component';
 
 @Component({
   selector: 'app-contact-us',

@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { UserService } from '../services/user.service';
-import { Profile } from '../models/profile';
-import { SpinnerService } from '../services/spinner.service';
-import { GlobalService } from '../services/global.service';
+import { UserService } from '../../services/user.service';
+import { Profile } from '../../models/profile';
+import { SpinnerService } from '../../services/spinner.service';
+import { GlobalService } from '../../services/global.service';
 
 @Component({
   selector: 'app-edit-profile',

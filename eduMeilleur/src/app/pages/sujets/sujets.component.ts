@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { DisplaySujet } from '../models/displaySujet';
-import { SujetService } from '../services/sujet.service';
+import { DisplaySujet } from '../../models/displaySujet';
+import { SujetService } from '../../services/sujet.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SpinnerService } from '../services/spinner.service';
+import { SpinnerService } from '../../services/spinner.service';
 import { Modal } from 'bootstrap';
-import { ModalComponent } from '../modal/modal.component';
+import { ModalComponent } from '../../components/modal/modal.component';
 
 @Component({
   selector: 'app-sujets',

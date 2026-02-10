@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { UserService } from '../services/user.service';
+import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { parse } from 'marked';
 import { CommonModule } from '@angular/common';
-import { SpinnerService } from '../services/spinner.service';
-import { ModalComponent } from '../modal/modal.component';
+import { SpinnerService } from '../../services/spinner.service';
+import { ModalComponent } from '../../components/modal/modal.component';
 import { Modal } from 'bootstrap';
 
 @Component({

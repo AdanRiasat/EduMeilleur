@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { SujetService } from '../services/sujet.service';
+import { SujetService } from '../../services/sujet.service';
 import { ActivatedRoute } from '@angular/router';
-import { DisplaySujet } from '../models/displaySujet';
-import { Item } from '../models/Item';
+import { DisplaySujet } from '../../models/displaySujet';
+import { Item } from '../../models/Item';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { MarkdownService } from '../services/markdown.service';
+import { MarkdownService } from '../../services/markdown.service';
 import katex from 'katex';
 
 

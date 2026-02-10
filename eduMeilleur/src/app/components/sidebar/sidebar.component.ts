@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { ModalService } from '../services/modal.service';
+import { ModalService } from '../../services/modal.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
