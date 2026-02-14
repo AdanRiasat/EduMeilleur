@@ -127,7 +127,7 @@ namespace EduMeilleurAPI.Controllers
             authClaims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
 
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8
-                .GetBytes(_config["JWT:Key"])); // Phrase identique dans Program.cs
+                .GetBytes(_config["JWT:Key"])); 
             JwtSecurityToken token = new JwtSecurityToken(
                 issuer: _config["JWT:Issuer"],
                 audience: _config["JWT:Audience"],

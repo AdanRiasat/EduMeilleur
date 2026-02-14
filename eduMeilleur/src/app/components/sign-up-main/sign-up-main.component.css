@@ -1,0 +1,11 @@
+button {
+  padding: 10px 40px;
+  background-color: var(--button);
+  border-radius: 7px;
+  color: white;
+  border: solid 1px var(--border);
+}
+
+button:hover {
+    background: var(--btnHover);
+}

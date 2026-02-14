@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { parse } from 'marked';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SpinnerService } from '../../services/spinner.service';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { Modal } from 'bootstrap';
+import { SignUpMainComponent } from '../../components/sign-up-main/sign-up-main.component';
+import { SignUpExtraComponent } from '../../components/sign-up-extra/sign-up-extra.component';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [FormsModule, CommonModule, ModalComponent],
+  imports: [FormsModule, CommonModule, ModalComponent, SignUpMainComponent, SignUpExtraComponent],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css'
 })
@@ -24,6 +25,8 @@ export class SignUpComponent {
   schoolYear: string = ""
 
   errors: { [key: string]: string} = {}
+
+  isFirstPage = signal(true)
 
   constructor(public userService: UserService, public route: Router, public spinner: SpinnerService) {}
 
@@ -103,6 +106,12 @@ export class SignUpComponent {
       this.spinner.hide()
   }
  
+  }
+
+  nextPage() {
+    this.isFirstPage.set(false)
+    console.log(this.isFirstPage());
+    
   }
 
   openErrorModal(){

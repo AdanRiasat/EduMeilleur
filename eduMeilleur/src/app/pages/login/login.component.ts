@@ -6,11 +6,12 @@ import { Router, RouterModule } from '@angular/router';
 import { SpinnerService } from '../../services/spinner.service';
 import { Modal } from 'bootstrap';
 import { ModalComponent } from '../../components/modal/modal.component';
+import { AuthExtraOptionsComponent } from '../../components/auth-extra-options/auth-extra-options.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule,CommonModule, RouterModule, ModalComponent],
+  imports: [FormsModule, CommonModule, RouterModule, ModalComponent, AuthExtraOptionsComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -28,12 +29,12 @@ export class LoginComponent {
     let isInputEmpty: boolean = false
 
     if (this.username == ""){
-      this.errors["username"] = "Username field is empty"
+      this.errors["username"] = "Username or email is required"
       isInputEmpty = true
     }
 
     if (this.password == ""){
-      this.errors["password"] = "Password field is empty"
+      this.errors["password"] = "Password is required"
     }
 
     if (isInputEmpty) {

@@ -6,6 +6,10 @@
 
   --button: #5fa8d3;
   --btnHover: #4a94c0;
+
+  --border: #457b9d;
+
+  --bg: hsl(202, 46%, 91%);
 }
 
 body {
@@ -23,5 +27,70 @@ li {
 h2 {
   font-size: clamp(0.75, 1rem + 2vw, 1.5rem);
 }
+
+/* auth-styles */
+
+.auth-container {
+  display: inline-flex;
+  align-items: flex-start;
+  width: 100vw;
+  height: 100vh;
+}
+
+.left-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50vw;
+  height: 100vh;
+}
+
+.right-side {
+  width: 50vw;
+  height: 100vh;
+  background: var(--primary);
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth-field input {
+  align-self: stretch;
+  height: 40px;
+  border-radius: 5px;
+  border: solid 1px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.line {
+  height: 1px;
+  width: 100%;
+  border-bottom: solid 1px;
+  opacity: 30%;
+}
+
+.auth-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+#signup-link {
+  align-self: center;
+}
+
+
+
+
 
 

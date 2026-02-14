@@ -1,0 +1,35 @@
+<div class="auth-form-fields">
+    <div class="auth-field">
+        <label for="email">Email</label>
+        <input id="email" type="text" name="email" [(ngModel)]="email" />
+        <div *ngIf="errors['email']" class="text-danger">{{ errors["email"] }}</div>
+    </div>
+
+    <div class="auth-field">
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" [(ngModel)]="password" />
+        <div *ngIf="errors['password']" class="text-danger">{{ errors["password"] }}</div>
+    </div>
+
+    <div class="auth-field">
+        <label for="confirmPassword">Confirm Password</label>
+        <input id="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="confirmPassword" />
+        <div *ngIf="errors['confirmPassword']" class="text-danger">{{ errors["confirmPassword"] }}</div>
+    </div>
+</div>
+
+<div class="divider">
+    <div class="line"></div>
+    Or
+    <div class="line"></div>
+</div>
+
+<app-auth-extra-options></app-auth-extra-options>
+
+<div id="signup-link">
+    <a [routerLink]="['/login']">Already have an account? Sign in</a>
+</div>
+
+<div class="text-center mt-3">
+    <button (click)="next.emit()">Next step</button>
+</div>

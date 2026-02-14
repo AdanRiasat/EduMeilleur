@@ -1,26 +1,61 @@
-<div class="container bg-light">
-  <div class="col text-center"><h2>Log in</h2></div>
+<div class="auth-container">
 
-  <div class="row">
-    <div class="col-auto">
-      <div *ngIf="errors['badRequest']" class="text-danger">{{ errors["badRequest"] }}</div>
+  <div class="left-side">
+    <div class="login-forms">
 
-      <input id="username" class="form-control" type="text" name="username" [(ngModel)]="username" placeholder="Username or Email" /><br />
-      <div *ngIf="errors['username']" class="text-danger move-error-message">{{ errors["username"] }}</div>
+      <h2>Log in</h2>
 
-      <input id="password" class="form-control" type="password" name="password" [(ngModel)]="password" placeholder="Password" /><br />
-      <div *ngIf="errors['password']" class="text-danger move-error-message">{{ errors["password"] }}</div>
+      <form>
+        <div *ngIf="errors['badRequest']" class="text-danger">{{ errors["badRequest"] }}</div>
 
-      <button class="btn btn-outline-dark w-100 d-flex align-items-center justify-content-center gap-2">
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" width="20" height="20" />
-        Continue with Google
-      </button>
+        <div class="auth-form-fields">
+          <div class="auth-field">
+            <label style="font-weight: 600;" for="username">Username or email</label>
+            <input id="username" type="text" name="username" [(ngModel)]="username" />
+            <div *ngIf="errors['username']" class="text-danger">{{ errors["username"] }}</div>
+          </div>
 
-      <a [routerLink]="['/signup']">Don't have an account? Create one!</a><br /><br />
+          <div class="auth-field">
+            <label style="font-weight: 600;" for=" password">Password</label>
+            <input id="password" type="password" name="password" [(ngModel)]="password" />
+            <div *ngIf="errors['password']" class="text-danger">{{ errors["password"] }}</div>
+          </div>
+        </div>
 
-      <button class="btn btn-primary" (click)="login()">Log in</button>
+
+        <a>Forgot password?</a>
+
+        <div class="divider">
+          <div class="line"></div>
+          Or
+          <div class="line"></div>
+        </div>
+
+        <app-auth-extra-options></app-auth-extra-options>
+
+        <div id="signup-link">
+          <a [routerLink]="['/signup']">Don't have an account? Create one</a>
+        </div>
+
+        <div style="align-self: center;">
+          <button class="login-btn" (click)="login()">Log in</button>
+        </div>
+      </form>
+
+
+
     </div>
+
+  </div>
+
+  <div class="right-side">
+
   </div>
 </div>
 
-<app-modal modalId="error500Modal" title="Something went wrong" body="Our servers are currently having issues, please try again later" cancelText="Ok" confirmText="Try again" (confirmed)="login()"></app-modal>
+
+
+
+<app-modal modalId="error500Modal" title="Something went wrong"
+  body="Our servers are currently having issues, please try again later" cancelText="Ok" confirmText="Try again"
+  (confirmed)="login()"></app-modal>
