@@ -1,4 +1,4 @@
-<form class="auth-form-wrapper" [formGroup]="formGroup()!" (ngSubmit)="register.emit()">
+<form class="auth-form-wrapper" [formGroup]="formGroup()!" (ngSubmit)="formGroup()!.valid && register.emit()">
     <div class="auth-form-fields">
         <div class="auth-field">
             <label for="username">Username</label>

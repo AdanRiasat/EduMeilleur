@@ -15,9 +15,14 @@ button:hover {
     background: var(--btnHover);
 }
 
+label {
+  font-weight: 600;
+}
+
 .auth-field select {
   align-self: stretch;
   height: 40px;
   border-radius: 5px;
   border: solid 1px;
 }
+

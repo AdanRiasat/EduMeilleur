@@ -40,10 +40,10 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateIssuer = true,
         ValidAudience = builder.Configuration["JWT:Audience"], // Audience : Client
-        ValidIssuer = builder.Configuration["JWT:Issuer"], // ⛔ Issuer : Serveur -> HTTPS VÉRIFIEZ le PORT de votre serveur dans launchsettings.json !
+        ValidIssuer = builder.Configuration["JWT:Issuer"], // Issuer : Serveur 
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-            .GetBytes(jwtKey)), // Clé pour déchiffrer les tokens
+            .GetBytes(jwtKey)), 
 
         ClockSkew = TimeSpan.Zero
     };

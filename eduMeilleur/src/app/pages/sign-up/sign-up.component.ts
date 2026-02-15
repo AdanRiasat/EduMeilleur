@@ -8,7 +8,7 @@ import { ModalComponent } from '../../components/modal/modal.component';
 import { Modal } from 'bootstrap';
 import { SignUpMainComponent } from '../../components/sign-up-main/sign-up-main.component';
 import { SignUpExtraComponent } from '../../components/sign-up-extra/sign-up-extra.component';
-import { passwordsMatch } from '../../Validators/passwords-match';
+import { passwordsMatch } from '../../validators/passwords-match';
 
 @Component({
   selector: 'app-sign-up',
@@ -29,7 +29,7 @@ export class SignUpComponent {
     this.formGroupMain = formBuilder.group(
           {
             email: ['', [Validators.required, Validators.email]],
-            password: ['', [Validators.required]],
+            password: ['', [Validators.required, Validators.minLength(5), Validators.pattern('(?=.*\\d).*')]],
             confirmPassword: ['', [Validators.required]],
           },
           { validators: passwordsMatch()}
