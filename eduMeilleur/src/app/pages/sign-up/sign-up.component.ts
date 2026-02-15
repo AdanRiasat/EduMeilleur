@@ -108,10 +108,20 @@ export class SignUpComponent {
  
   }
 
-  nextPage() {
+  handleMainData(data: any) {
+    this.email = data.email;
+    this.password = data.password;
+    this.confirmPassword = data.confirmPassword;
+
     this.isFirstPage.set(false)
-    console.log(this.isFirstPage());
-    
+  }
+
+  handleExtraData(data: any){
+    this.username = data.username;
+    this.school = data.school;
+    this.schoolYear = data.schoolYear;
+
+    this.register()
   }
 
   openErrorModal(){

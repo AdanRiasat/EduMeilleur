@@ -5,20 +5,23 @@
 
       <h2>Log in</h2>
 
-      <form>
+      <form [formGroup]="formGroup">
         <div *ngIf="errors['badRequest']" class="text-danger">{{ errors["badRequest"] }}</div>
 
         <div class="auth-form-fields">
           <div class="auth-field">
             <label style="font-weight: 600;" for="username">Username or email</label>
-            <input id="username" type="text" name="username" [(ngModel)]="username" />
-            <div *ngIf="errors['username']" class="text-danger">{{ errors["username"] }}</div>
+            <input id="username" type="text" name="username" formControlName="username" />
+            <div *ngIf="formGroup.get('username')?.hasError('required') && formGroup.get('username')?.touched"
+              class="text-danger">Username or email is
+              required</div>
           </div>
 
           <div class="auth-field">
             <label style="font-weight: 600;" for=" password">Password</label>
-            <input id="password" type="password" name="password" [(ngModel)]="password" />
-            <div *ngIf="errors['password']" class="text-danger">{{ errors["password"] }}</div>
+            <input id="password" type="password" name="password" formControlName="password" />
+            <div *ngIf="formGroup.get('password')?.hasError('required') && formGroup.get('password')?.touched"
+              class="text-danger">Password is required</div>
           </div>
         </div>
 
@@ -38,7 +41,7 @@
         </div>
 
         <div style="align-self: center;">
-          <button class="login-btn" (click)="login()">Log in</button>
+          <button class="login-btn" (click)="login()" [disabled]="!formGroup.valid">Log in</button>
         </div>
       </form>
 

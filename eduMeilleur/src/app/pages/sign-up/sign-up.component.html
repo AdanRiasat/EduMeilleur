@@ -5,8 +5,8 @@
       <h2>Sign up</h2>
 
       <form>
-        <app-sign-up-main (next)="nextPage()" *ngIf="isFirstPage()"></app-sign-up-main>
-        <app-sign-up-extra (back)="isFirstPage.set(true)" (register)="register()"
+        <app-sign-up-main (next)="handleMainData($event)" *ngIf="isFirstPage()"></app-sign-up-main>
+        <app-sign-up-extra (back)="isFirstPage.set(true)" (register)="handleExtraData($event)"
           *ngIf="!isFirstPage()"></app-sign-up-extra>
       </form>
 

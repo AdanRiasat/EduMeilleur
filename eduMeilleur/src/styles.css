@@ -89,6 +89,16 @@ h2 {
   align-self: center;
 }
 
+@media screen and (max-width: 1200px) {
+  .right-side {
+    display: none;
+  }
+
+  .left-side {
+    width: 100vh;
+  }
+}
+
 
 
 

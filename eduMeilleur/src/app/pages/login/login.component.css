@@ -41,12 +41,11 @@ h2 {
   background: var(--btnHover);
 }
 
-@media screen and (max-width: 1200px) {
-  .right-side {
-    display: none;
-  }
-
-  .left-side {
-    width: 100vh;
-  }
+.login-btn:disabled {
+  background: #888fb8;
+  color: #ffffff;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
+
+

@@ -12,7 +12,11 @@ import { RouterLink } from '@angular/router';
   styleUrl: './sign-up-extra.component.css'
 })
 export class SignUpExtraComponent {
-  register = output<void>()
+  register = output<{
+    username: string,
+    school: string,
+    schoolYear: string
+  }>()
   back = output<void>()
 
   username: string = ""
@@ -21,4 +25,11 @@ export class SignUpExtraComponent {
 
   errors: { [key: string]: string} = {}
 
+  onRegister() {
+    this.register.emit({
+      username: this.username,
+      school: this.school,
+      schoolYear: this.schoolYear
+    })
+  }
 }

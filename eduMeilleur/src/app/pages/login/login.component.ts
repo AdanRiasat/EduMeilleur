@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { Router, RouterModule } from '@angular/router';
 import { SpinnerService } from '../../services/spinner.service';
@@ -11,42 +11,36 @@ import { AuthExtraOptionsComponent } from '../../components/auth-extra-options/a
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterModule, ModalComponent, AuthExtraOptionsComponent],
+  imports: [FormsModule, CommonModule, RouterModule, ModalComponent, AuthExtraOptionsComponent, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  username: string = ""
-  password: string = ""
-
   errors: { [key: string]: string} = {}
 
-  constructor(public userService: UserService, public router: Router, public spinner: SpinnerService) {}
+  formGroup: FormGroup
+
+  constructor(public userService: UserService, public router: Router, public spinner: SpinnerService, private formBuilder: FormBuilder) {
+    this.formGroup = formBuilder.group(
+      {
+        username: ['', [Validators.required]],
+        password: ['', [Validators.required]]
+      }
+    )
+  }
 
   async login() {
     this.spinner.show()
     this.errors = {}
-    let isInputEmpty: boolean = false
 
-    if (this.username == ""){
-      this.errors["username"] = "Username or email is required"
-      isInputEmpty = true
-    }
-
-    if (this.password == ""){
-      this.errors["password"] = "Password is required"
-    }
-
-    if (isInputEmpty) {
-      this.spinner.hide()
-      return
-    }
+    let username = this.formGroup.get('username')?.value
+    let password = this.formGroup.get('password')?.value
 
     try {
-      await this.userService.login(this.username, this.password)
+      await this.userService.login(username, password)
 
       if (this.userService.token() != null){
-        console.log(this.userService.token());
+        this.spinner.hide()
         this.router.navigate(['/profile']);
       }
     } catch (error: any){
@@ -58,9 +52,7 @@ export class LoginComponent {
       }
       this.errors["badRequest"] = error.error.message
     }
-
-    this.username = ""
-    this.password = ""
+    
     this.spinner.hide()
   }
 

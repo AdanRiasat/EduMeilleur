@@ -12,11 +12,23 @@ import { RouterLink } from '@angular/router';
   styleUrl: './sign-up-main.component.css'
 })
 export class SignUpMainComponent {
-  next = output<void>()
+  next = output<{
+    email: string,
+    password: string,
+    confirmPassword: string
+  }>()
 
   email: string = ""
   password: string = ""
   confirmPassword: string = ""
 
   errors: { [key: string]: string} = {}
+
+  onNext() {
+    this.next.emit({
+      email: this.email,
+      password: this.password,
+      confirmPassword: this.confirmPassword
+    })
+  }
 }
