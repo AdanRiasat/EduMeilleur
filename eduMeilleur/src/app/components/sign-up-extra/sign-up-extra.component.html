@@ -4,7 +4,11 @@
             <label for="username">Username</label>
             <input id="username" type="text" name="username" formControlName="username" required />
             <div *ngIf="formGroup()!.get('username')?.hasError('required') && formGroup()!.get('username')?.touched"
-                class="text-danger">Username is required</div>
+                class="text-danger">Username is required
+            </div>
+            <div *ngIf="usernamePatternError()" class="text-danger">
+                Username allows some special characters: - . _ &#64; + /
+            </div>
         </div>
 
         <div class="auth-field">

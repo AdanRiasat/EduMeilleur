@@ -37,7 +37,7 @@ export class SignUpComponent {
 
     this.formGroupExtra = formBuilder.group(
       {
-        username: ['', [Validators.required]],
+        username: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\-._@+/ ]+$/)]],
         school: ['', []],
         schoolYear: ['', []]
       }

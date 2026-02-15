@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthExtraOptionsComponent } from '../auth-extra-options/auth-extra-options.component';
 import { RouterLink } from '@angular/router';
@@ -18,4 +18,13 @@ export class SignUpExtraComponent {
   formGroup = input<FormGroup>()
 
   errors: { [key: string]: string} = {}
+
+  usernameField = computed(() => this.formGroup()!.get('username')!)
+
+  usernamePatternError(): boolean {
+    return this.usernameField().hasError('pattern')
+    && this.usernameField().touched
+  }
+
+  
 }
