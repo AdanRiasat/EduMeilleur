@@ -8,12 +8,13 @@ import { SujetsComponent } from './pages/sujets/sujets.component';
 import { SujetComponent } from './pages/sujet/sujet.component';
 import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
+import { authPagesGuard } from './guards/auth-pages.guard';
 
 export const routes: Routes = [
     {path: "", redirectTo: "/home", pathMatch: "full"},
     {path: "home", component: HomeComponent},
-    {path: "signup", component: SignUpComponent},
-    {path: "login", component: LoginComponent},
+    {path: "signup", component: SignUpComponent, canActivate: [authPagesGuard]},
+    {path: "login", component: LoginComponent, canActivate: [authPagesGuard]},
     {path: "profile", component: ProfileComponent},
     {path: "profile/:username", component: EditProfileComponent},
     {path: "ai", component: AiComponent},
