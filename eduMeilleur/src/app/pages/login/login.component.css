@@ -41,11 +41,5 @@ h2 {
   background: var(--btnHover);
 }
 
-.login-btn:disabled {
-  background: #888fb8;
-  color: #ffffff;
-  cursor: not-allowed;
-  opacity: 0.6;
-}
 
 

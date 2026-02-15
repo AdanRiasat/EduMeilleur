@@ -1,35 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { Component, output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, input, output } from '@angular/core';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthExtraOptionsComponent } from '../auth-extra-options/auth-extra-options.component';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up-extra',
   standalone: true,
-  imports: [FormsModule, CommonModule, AuthExtraOptionsComponent, RouterLink],
+  imports: [FormsModule, CommonModule, AuthExtraOptionsComponent, RouterLink, ReactiveFormsModule],
   templateUrl: './sign-up-extra.component.html',
   styleUrl: './sign-up-extra.component.css'
 })
 export class SignUpExtraComponent {
-  register = output<{
-    username: string,
-    school: string,
-    schoolYear: string
-  }>()
+  register = output<void>()
   back = output<void>()
 
-  username: string = ""
-  school: string = ""
-  schoolYear: string = ""
+  formGroup = input<FormGroup>()
 
   errors: { [key: string]: string} = {}
-
-  onRegister() {
-    this.register.emit({
-      username: this.username,
-      school: this.school,
-      schoolYear: this.schoolYear
-    })
-  }
 }

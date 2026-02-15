@@ -46,6 +46,8 @@ export class UserService {
       schoolYear: schoolYear,
     };
 
+    console.log(dto);
+
     let x = await lastValueFrom(this.http.post<any>(domain + '/api/Users/Register', dto));
     console.log(x);
 

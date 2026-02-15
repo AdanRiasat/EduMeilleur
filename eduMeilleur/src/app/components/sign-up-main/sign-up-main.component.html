@@ -1,35 +1,51 @@
-<div class="auth-form-fields">
-    <div class="auth-field">
-        <label for="email">Email</label>
-        <input id="email" type="text" name="email" [(ngModel)]="email" />
-        <div *ngIf="errors['email']" class="text-danger">{{ errors["email"] }}</div>
+<form class="auth-form-wrapper" [formGroup]="formGroup()!" (ngSubmit)="next.emit()">
+    <div class="auth-form-fields">
+        <div class="auth-field">
+            <label for="email">Email</label>
+            <input id="email" type="text" name="email" formControlName="email" />
+            <div *ngIf="formGroup()!.get('email')?.hasError('required') && formGroup()!.get('email')?.touched"
+                class="text-danger">Email is required</div>
+            <div *ngIf="formGroup()!.get('email')?.hasError('email') && formGroup()!.get('email')?.touched"
+                class="text-danger">
+                Email is not valid</div>
+        </div>
+
+        <div class="auth-field">
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" formControlName="password" />
+            <div *ngIf="formGroup()!.get('password')?.hasError('required') && formGroup()!.get('password')?.touched"
+                class="text-danger">
+                Password is required
+            </div>
+            <div class="text-danger"
+                *ngIf="formGroup()!.get('confirmPassword')?.hasError('passwordsMatch') && !formGroup()!.get('confirmPassword')?.hasError('required') && formGroup()!.get('confirmPassword')?.touched">
+                Passwords do not match</div>
+        </div>
+
+        <div class="auth-field">
+            <label for="confirmPassword">Confirm Password</label>
+            <input id="confirmPassword" type="password" name="confirmPassword" formControlName="confirmPassword" />
+            <div *ngIf="formGroup()!.get('confirmPassword')?.hasError('required') && formGroup()!.get('confirmPassword')?.touched"
+                class="text-danger">Confirm Password is required</div>
+            <div class="text-danger"
+                *ngIf="formGroup()!.get('confirmPassword')?.hasError('passwordsMatch') && !formGroup()!.get('confirmPassword')?.hasError('required') && formGroup()!.get('confirmPassword')?.touched">
+                Passwords do not match</div>
+        </div>
     </div>
 
-    <div class="auth-field">
-        <label for="password">Password</label>
-        <input id="password" type="password" name="password" [(ngModel)]="password" />
-        <div *ngIf="errors['password']" class="text-danger">{{ errors["password"] }}</div>
+    <div class="divider">
+        <div class="line"></div>
+        Or
+        <div class="line"></div>
     </div>
 
-    <div class="auth-field">
-        <label for="confirmPassword">Confirm Password</label>
-        <input id="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="confirmPassword" />
-        <div *ngIf="errors['confirmPassword']" class="text-danger">{{ errors["confirmPassword"] }}</div>
+    <app-auth-extra-options></app-auth-extra-options>
+
+    <div id="signup-link">
+        <a [routerLink]="['/login']">Already have an account? Sign in</a>
     </div>
-</div>
 
-<div class="divider">
-    <div class="line"></div>
-    Or
-    <div class="line"></div>
-</div>
-
-<app-auth-extra-options></app-auth-extra-options>
-
-<div id="signup-link">
-    <a [routerLink]="['/login']">Already have an account? Sign in</a>
-</div>
-
-<div class="text-center mt-3">
-    <button (click)="onNext()">Next step</button>
-</div>
+    <div style="align-self: center;">
+        <button type="submit" [disabled]="!formGroup()!.valid">Next step</button>
+    </div>
+</form>

@@ -5,14 +5,13 @@
       <h2>Sign up</h2>
 
       <form>
-        <app-sign-up-main (next)="handleMainData($event)" *ngIf="isFirstPage()"></app-sign-up-main>
-        <app-sign-up-extra (back)="isFirstPage.set(true)" (register)="handleExtraData($event)"
+        <app-sign-up-main [formGroup]="formGroupMain" (next)="isFirstPage.set(false)"
+          *ngIf="isFirstPage()"></app-sign-up-main>
+        <app-sign-up-extra [formGroup]="formGroupExtra" (back)="isFirstPage.set(true)" (register)="register()"
           *ngIf="!isFirstPage()"></app-sign-up-extra>
       </form>
 
     </div>
-
-
   </div>
 
   <div class="right-side"></div>

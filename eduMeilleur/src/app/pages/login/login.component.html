@@ -1,11 +1,10 @@
 <div class="auth-container">
-
   <div class="left-side">
     <div class="login-forms">
 
       <h2>Log in</h2>
 
-      <form [formGroup]="formGroup">
+      <form [formGroup]="formGroup" (ngSubmit)="login()">
         <div *ngIf="errors['badRequest']" class="text-danger">{{ errors["badRequest"] }}</div>
 
         <div class="auth-form-fields">
@@ -41,7 +40,7 @@
         </div>
 
         <div style="align-self: center;">
-          <button class="login-btn" (click)="login()" [disabled]="!formGroup.valid">Log in</button>
+          <button type="submit" class="login-btn" [disabled]="!formGroup.valid">Log in</button>
         </div>
       </form>
 

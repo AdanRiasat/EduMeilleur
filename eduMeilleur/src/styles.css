@@ -28,6 +28,13 @@ h2 {
   font-size: clamp(0.75, 1rem + 2vw, 1.5rem);
 }
 
+button:disabled {
+  background: #888fb8;
+  color: #ffffff;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 /* auth-styles */
 
 .auth-container {
@@ -87,6 +94,13 @@ h2 {
 
 #signup-link {
   align-self: center;
+}
+
+.auth-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
 }
 
 @media screen and (max-width: 1200px) {
