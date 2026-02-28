@@ -7,13 +7,14 @@ import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MarkdownService } from '../../services/markdown.service';
 import katex from 'katex';
+import { SubjectSidebarComponent } from '../../components/subject-sidebar/subject-sidebar.component';
 
 
 
 @Component({
   selector: 'app-sujet',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SubjectSidebarComponent],
   templateUrl: './sujet.component.html',
   styleUrl: './sujet.component.css'
 })
@@ -39,7 +40,7 @@ export class SujetComponent implements OnInit{
       this.sujet = await this.sujetService.getSujet(this.id)
       this.chapters = this.sujet.chapters
       await this.getAllItems("Notes")
-      await this.getCurrentItem(this.allItems[0].id, this.currentType)
+      await this.getCurrentItem(this.allItems[0].id)
     
   }
 
@@ -47,10 +48,11 @@ export class SujetComponent implements OnInit{
     this.allItems = await this.sujetService.getAllItems(this.id, type)
     console.log(this.allItems);
     this.currentType = type
+    
   }
 
-  async getCurrentItem(id: number, type: string){
-    this.currentItem = await this.sujetService.getItem(id, type)
+  async getCurrentItem(id: number){
+    this.currentItem = await this.sujetService.getItem(id, this.currentType)
   }
 
   formatMessage(message: string): SafeHtml {

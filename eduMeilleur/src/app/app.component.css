@@ -9,10 +9,10 @@ body {
 }
 
 main {
+  margin-top: 70px;
   background-color: hsl(202, 46%, 91%);
 }
 
-/* Wrapper that contains header, main and footer */
 .layout-wrapper {
   display: flex;
   flex-direction: column;

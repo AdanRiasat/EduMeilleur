@@ -1,9 +1,11 @@
 header {
   height: 70px;
+  width: 100%;
   background-image: var(--primary);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
   z-index: 8;
 }
 

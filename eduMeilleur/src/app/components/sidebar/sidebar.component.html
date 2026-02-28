@@ -5,8 +5,9 @@
   </div>
 
   <div class="sidebar-body">
-    <div class="extra-sidebars" *ngIf="router.url == '/ai'">
-      <button>Chatbot sidebar</button>
+    <div class="extra-sidebars">
+      <button *ngIf="router.url == '/ai'">Chatbot sidebar</button>
+      <button *ngIf="hasSubjectId()">Subject sidebar</button>
     </div>
 
     <ul (click)="closeSidebar()">
