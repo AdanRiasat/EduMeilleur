@@ -6,7 +6,6 @@ import { Item } from '../models/Item';
 import { SpinnerService } from './spinner.service';
 import { environment } from '../../environments/environment';
 
-
 const domain: string = environment.apiUrl
 console.log(domain);
 

@@ -61,9 +61,3 @@
   padding: 5px;
   transition: background-color 0.2s;
 }
-
-@media screen and (max-width: 867px) {
-  #sujet-sidebar {
-    display: none !important;
-  }
-}

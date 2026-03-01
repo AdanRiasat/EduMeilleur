@@ -6,10 +6,8 @@ import { Item } from '../../models/Item';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MarkdownService } from '../../services/markdown.service';
-import katex from 'katex';
 import { SubjectSidebarComponent } from '../../components/subject-sidebar/subject-sidebar.component';
-
-
+import { SidebarStateService } from '../../services/sidebar-state.service';
 
 @Component({
   selector: 'app-sujet',
@@ -28,7 +26,7 @@ export class SujetComponent implements OnInit{
   currentItem: Item | null = null
   currentType: string = ""
 
-  constructor(public sujetService: SujetService, public route: ActivatedRoute, public sanitizer: DomSanitizer, public markdown: MarkdownService){}
+  constructor(public sujetService: SujetService, public route: ActivatedRoute, public sanitizer: DomSanitizer, public markdown: MarkdownService, private sidebarStateService: SidebarStateService){}
 
   async ngOnInit() {
     let sujetIdStringData: string | null = this.route.snapshot.paramMap.get("id")
@@ -42,6 +40,7 @@ export class SujetComponent implements OnInit{
       await this.getAllItems("Notes")
       await this.getCurrentItem(this.allItems[0].id)
     
+      this.sidebarStateService.setActiveSidebar('subject');
   }
 
   async getAllItems(type: string){
@@ -58,7 +57,6 @@ export class SujetComponent implements OnInit{
   formatMessage(message: string): SafeHtml {
       let cleanMessage = message.replace(/\\r\\n/g, "\n");
       let rawHtml: string = this.markdown.parse(cleanMessage);
-      console.log(rawHtml);
       
       return this.sanitizer.bypassSecurityTrustHtml(rawHtml)
   }

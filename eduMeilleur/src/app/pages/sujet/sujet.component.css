@@ -11,3 +11,10 @@
   border-right: 1px solid #ddd; /* Optional: visual separation */
   background-color: hsl(202, 46%, 91%);    /* Optional: subtle background */
 }
+
+@media screen and (max-width: 867px) {
+  #sujet-sidebar {
+    display: none !important;
+  }
+}
+

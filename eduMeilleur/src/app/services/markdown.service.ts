@@ -11,14 +11,12 @@ const imgBaseURL: string = environment.apiUrl + "/api/Pictures/GetMdImage/"
 })
 export class MarkdownService {
   constructor() {
-
     const renderer = new marked.Renderer();
 
    renderer.image = ({ href, title, text }) => {
       const finalSrc = `${imgBaseURL}${href}?t=${Date.now()}`;
       const alt = text || '';
       const titleAttr = title ? `title="${title}"` : '';
-      console.log(finalSrc);
       
       return `<img src="${finalSrc}" alt="${alt}" ${titleAttr} class="img-circle" />`;
     };
