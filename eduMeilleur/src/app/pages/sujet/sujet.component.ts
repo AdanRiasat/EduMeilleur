@@ -34,13 +34,15 @@ export class SujetComponent implements OnInit{
       // TODO reroute
       return
     }
-      this.id = parseFloat(sujetIdStringData)
-      this.sujet = await this.sujetService.getSujet(this.id)
-      this.chapters = this.sujet.chapters
-      await this.getAllItems("Notes")
-      await this.getCurrentItem(this.allItems[0].id)
-    
-      this.sidebarStateService.setActiveSidebar('subject');
+
+    let screenWidth = window.innerWidth   
+    if (screenWidth <= 867) return
+
+    this.id = parseFloat(sujetIdStringData)
+    this.sujet = await this.sujetService.getSujet(this.id)
+    this.chapters = this.sujet.chapters
+    await this.getAllItems("Notes")
+    await this.getCurrentItem(this.allItems[0].id)
   }
 
   async getAllItems(type: string){
@@ -52,13 +54,7 @@ export class SujetComponent implements OnInit{
 
   async getCurrentItem(id: number){
     this.currentItem = await this.sujetService.getItem(id, this.currentType)
-  }
-
-  formatMessage(message: string): SafeHtml {
-      let cleanMessage = message.replace(/\\r\\n/g, "\n");
-      let rawHtml: string = this.markdown.parse(cleanMessage);
-      
-      return this.sanitizer.bypassSecurityTrustHtml(rawHtml)
+    this.sujetService.formatMessage(this.currentItem!.content)
   }
 }
 

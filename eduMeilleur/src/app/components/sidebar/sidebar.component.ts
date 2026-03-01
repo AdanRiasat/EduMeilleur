@@ -49,6 +49,7 @@ export class SidebarComponent implements OnInit{
       this.getSubjectId();
       if (this.hasSubjectId()) {
         await this.loadSubjectData(this.subjectId);
+        this.openSubjectSidebar()
       } else {
         this.resetSubjectData();
       }
@@ -57,6 +58,7 @@ export class SidebarComponent implements OnInit{
     this.getSubjectId();
     if (this.hasSubjectId()) {
       await this.loadSubjectData(this.subjectId);
+      this.openSubjectSidebar()
     } else {
       this.resetSubjectData();
     }
@@ -92,6 +94,7 @@ export class SidebarComponent implements OnInit{
 
   async getCurrentItem(id: number){
     this.currentItem = await this.subjectService.getItem(id, this.currentType)
+    this.subjectService.formatMessage(this.currentItem!.content)
   }
 
   getSubjectId() {
