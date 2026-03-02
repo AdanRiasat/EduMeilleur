@@ -42,6 +42,8 @@ export class SidebarComponent implements OnInit{
   }
 
   async ngOnInit() {
+    if (window.innerWidth > 876) return
+
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       takeUntil(this.destroy$)
@@ -55,13 +57,14 @@ export class SidebarComponent implements OnInit{
       }
     });
 
-    this.getSubjectId();
-    if (this.hasSubjectId()) {
-      await this.loadSubjectData(this.subjectId);
-      this.openSubjectSidebar()
-    } else {
-      this.resetSubjectData();
-    }
+      this.getSubjectId();
+      if (this.hasSubjectId()) {
+        await this.loadSubjectData(this.subjectId);
+        this.openSubjectSidebar()
+      } else {
+        this.resetSubjectData();
+      }
+    
   }
 
   ngOnDestroy() {
@@ -87,9 +90,7 @@ export class SidebarComponent implements OnInit{
 
   async getAllItems(type: string){
     this.allItems = await this.subjectService.getAllItems(this.subjectId, type)
-    console.log(this.allItems);
     this.currentType = type
-    
   }
 
   async getCurrentItem(id: number){

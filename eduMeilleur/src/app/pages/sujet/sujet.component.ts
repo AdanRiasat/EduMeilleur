@@ -16,8 +16,7 @@ import { SidebarStateService } from '../../services/sidebar-state.service';
   templateUrl: './sujet.component.html',
   styleUrl: './sujet.component.css'
 })
-export class SujetComponent implements OnInit{
-  
+export class SujetComponent implements OnInit{ // TODO might need ro refactor logic into service
   sujet: DisplaySujet | null = null
   chapters: string[] = []
   id: number = 0 //this is subjectId
@@ -35,10 +34,13 @@ export class SujetComponent implements OnInit{
       return
     }
 
-    let screenWidth = window.innerWidth   
-    if (screenWidth <= 867) return
+    if (window.innerWidth <= 876) return
+    console.log('web interface');
+    await this.loadItems(sujetIdStringData)
+  }
 
-    this.id = parseFloat(sujetIdStringData)
+  async loadItems(idData: string){
+    this.id = parseFloat(idData)
     this.sujet = await this.sujetService.getSujet(this.id)
     this.chapters = this.sujet.chapters
     await this.getAllItems("Notes")
@@ -47,9 +49,7 @@ export class SujetComponent implements OnInit{
 
   async getAllItems(type: string){
     this.allItems = await this.sujetService.getAllItems(this.id, type)
-    console.log(this.allItems);
     this.currentType = type
-    
   }
 
   async getCurrentItem(id: number){
