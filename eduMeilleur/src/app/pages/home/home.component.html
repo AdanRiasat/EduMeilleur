@@ -27,7 +27,10 @@
           <h2>About us</h2>
         </div>
         <div class="centered-content">
-          <p class="paragraph-overlay">ÉduMeilleur is a free educational platform for secondary school students. We offer notes, exercises, and videos for every subject, along with direct help from our teachers. All content on ÉduMeilleur is completely free. Our goal is to help students overcome challenges, improve their grades, and grow their knowledge.</p>
+          <p class="paragraph-overlay">ÉduMeilleur is a free educational platform for secondary school students. We
+            offer notes, exercises, and videos for every subject, along with direct help from our teachers. All content
+            on ÉduMeilleur is completely free. Our goal is to help students overcome challenges, improve their grades,
+            and grow their knowledge.</p>
         </div>
       </div>
     </ng-template>
@@ -40,9 +43,10 @@
         </div>
         <div class="centered-content">
           <p class="paragraph-overlay">
-            Join our team and help shape the future of student learning. We’re looking for passionate individuals to help write notes, create exercises, and even produce educational videos. If you're interested in contributing to our platform and making a difference, contact us at:<br />
-            📧 <i>{{ global.adminEmail }}</i
-            ><br />
+            Join our team and help shape the future of student learning. We’re looking for passionate individuals to
+            help write notes, create exercises, and even produce educational videos. If you're interested in
+            contributing to our platform and making a difference, contact us at:<br />
+            📧 <i>{{ global.adminEmail }}</i><br />
             <!--📞 123-765-092-->
           </p>
         </div>
@@ -63,7 +67,7 @@
   <div class="row feature-section">
     <div class="col text-center">
       <h1>Find your subject</h1>
-      <h4>We have notes, exercises and videos for each</h4>
+      <h2>We have notes, exercises and videos for each</h2>
       <app-image-slider></app-image-slider>
     </div>
   </div>
@@ -73,15 +77,16 @@
 <div class="feature-section2">
   <div class="row align-items-center justify-content-center">
     <div id="explore-content" class="col-lg-8">
-      <h2>Explore</h2>
-      <p class="description">Dive into interactive activities, challenge yourself, and contribute to a growing knowledge base.</p>
+      <h1>Explore</h1>
+      <p class="description">Dive into interactive activities, challenge yourself, and contribute to a growing knowledge
+        base.</p>
 
       <div class="row">
         <div class="col-md-4 mb-3">
           <div class="card h-100 shadow-sm border-0 text-center">
             <div class="card-body">
               <i class="bi bi-search h1 text-primary"></i>
-              <h5 class="card-title mt-3">Find New Exercises</h5>
+              <h3 class="card-title mt-3">Find New Exercises</h3>
               <p class="card-text text-muted">Browse curated challenges to test your skills.</p>
             </div>
           </div>
@@ -91,7 +96,7 @@
           <div class="card h-100 shadow-sm border-0 text-center">
             <div class="card-body">
               <i class="bi bi-upload h1 text-primary"></i>
-              <h5 class="card-title mt-3">Share Yours</h5>
+              <h3 class="card-title mt-3">Share Yours</h3>
               <p class="card-text text-muted">Contribute exercises and help the community grow.</p>
             </div>
           </div>
@@ -101,7 +106,7 @@
           <div class="card h-100 shadow-sm border-0 text-center">
             <div class="card-body">
               <i class="bi bi-lightbulb h1 text-primary"></i>
-              <h5 class="card-title mt-3">Train Your Brain</h5>
+              <h3 class="card-title mt-3">Train Your Brain</h3>
               <p class="card-text text-muted">Build logic, memory, and problem-solving skills.</p>
             </div>
           </div>
@@ -115,7 +120,7 @@
     <div>
       <button class="btn btn-primary" (click)="modalService.openModal('ExploreDevModal')">Get Started</button>
     </div>
-    
+
   </div>
 </div>
 
@@ -124,13 +129,14 @@
 <div class="feature-section">
   <div class="row text-center">
     <div class="col">
-      <h2>Our wonderful team of teachers</h2>
+      <h1>Our wonderful team of teachers</h1>
     </div>
   </div>
 
   <div class="d-flex flex-wrap justify-content-center gap-5 mt-4">
     <div *ngFor="let t of teachersNames" class="text-center">
-      <img class="teacher-img" [src]="domain + '/api/Users/GetProfilePicture/' + t + '?t=' + timestamp" alt="image of teacher" />
+      <img class="teacher-img" [src]="domain + '/api/Users/GetProfilePicture/' + t + '?t=' + timestamp"
+        alt="image of teacher" />
       <p>{{ t }}</p>
     </div>
   </div>
@@ -145,14 +151,20 @@
 <!-- AI Section -->
 <div class="row feature-section2 text-center">
   <div class="col">
-    <h2>Our AI-powered chatbot!</h2>
+    <h1>Our AI-powered chatbot!</h1>
     <p class="description">Let ÉduMeilleur AI answer your questions under a moments notice</p>
 
     <div class="chatbox">
       <div class="chat-messages" id="chat">
-        <div class="message ai-msg">Hello! 👋 I’m EduBot. How can I help you today?</div>
-        <div class="message user">Can you help me with math?</div>
-        <div class="message ai-msg">Of course! What topic are you working on?</div>
+        <div class="message ai-msg">
+          <p>Hello! 👋 I’m EduBot. How can I help you today?</p>
+        </div>
+        <div class="message user">
+          <p>Can you help me with math?</p>
+        </div>
+        <div class="message ai-msg">
+          <p>Of course! What topic are you working on?</p>
+        </div>
       </div>
       <div class="chat-input">
         <input type="text" id="userInput" placeholder="Type your question..." />
@@ -162,4 +174,6 @@
   </div>
 </div>
 
-<app-modal modalId="ExploreDevModal" title="In development" body="Our Explore page is still being worked on, please check again another time." cancelText="Cancel" confirmText="Ok"></app-modal>
+<app-modal modalId="ExploreDevModal" title="In development"
+  body="Our Explore page is still being worked on, please check again another time." cancelText="Cancel"
+  confirmText="Ok"></app-modal>
