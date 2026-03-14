@@ -13,6 +13,22 @@
   background-color: hsl(202, 46%, 91%);    /* Optional: subtle background */
 }
 
+#sujet-sidebar {
+  flex: 0 0 300px;
+  width: 300px;
+  min-width: 300px;
+  max-width: 300px;
+}
+
+.scroll-content {
+  min-width: 0;
+}
+
+app-subject-sidebar {
+  display: block;
+  width: 100%;
+}
+
 @media screen and (max-width: 867px) {
   #sujet-sidebar {
     display: none !important;

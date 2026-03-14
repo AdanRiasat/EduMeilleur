@@ -1,4 +1,5 @@
 .sidebar-content {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -6,8 +7,12 @@
   gap: 17px;
 }
 
-.sidebar-title {
- 
+h3 {
+  font-size: var(--h3-fixed-size);
+}
+
+p, button {
+  font-size: var(--p-fixed-size) !important;
 }
 
 .sidebar-body {
