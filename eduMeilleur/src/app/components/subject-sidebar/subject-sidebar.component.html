@@ -1,23 +1,26 @@
-<h3 class="sidebar-title">{{subject?.name}}</h3>
+<div class="sidebar-content">
+    <h3 class="sidebar-title">{{subject?.name}}</h3>
 
-<div class="sidebar-buttons">
-    <button (click)="getAllItems.emit('Notes')">Notes</button>
-    <button (click)="getAllItems.emit('Exercises')">Exercises</button>
-    <button (click)="getAllItems.emit('Videos')">Videos</button>
-</div>
-
-<div class="chapters">
-    <div class="chapter-section" *ngFor="let c of chapters; let i = index">
-        <strong class="chapter-section">{{i + 1}}. {{c}}</strong>
-
-        <div class="chapter-items">
-            <div *ngFor="let n of allItems">
-                <div class="item" [class.active]="n.id == currentItem?.id" *ngIf="n.chapter == c"
-                    (click)="getCurrentItem.emit(n.id)">
-                    {{n.title}}
-                </div>
-            </div>
+    <div class="sidebar-body">
+        <div class="sidebar-buttons">
+            <button (click)="getAllItems.emit('Notes')">Notes</button>
+            <button (click)="getAllItems.emit('Exercises')">Exercises</button>
+            <button (click)="getAllItems.emit('Videos')">Videos</button>
         </div>
 
+        <div class="chapter-section">
+            <div class="chapter" *ngFor="let c of chapters; let i = index">
+
+                <strong>{{i + 1}}. {{c}}</strong>
+                <div *ngFor="let n of allItems" class="sub-chapters">
+                    <div class="item" [class.active]="n.id == currentItem?.id" *ngIf="n.chapter == c"
+                        (click)="getCurrentItem.emit(n.id)">
+                        <p>{{n.title}}</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
     </div>
 </div>

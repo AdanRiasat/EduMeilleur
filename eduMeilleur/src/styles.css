@@ -23,6 +23,11 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+.scroll-content img {
+  max-width: 275px;
+  height: auto;
+}
+
 ul {
   padding: 0;
 }

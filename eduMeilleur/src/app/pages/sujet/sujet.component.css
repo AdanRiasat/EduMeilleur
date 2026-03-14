@@ -2,6 +2,7 @@
   background-color: #f2f2f2;
   padding: 20px clamp(10px, 10vw, 200px);
 }
+
 .scroll-sidebar {
   top: 70px;
   position: sticky;

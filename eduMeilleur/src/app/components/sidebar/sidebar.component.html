@@ -1,48 +1,52 @@
 <div class="sidebar" [class.open]="isOpen">
   <div class="sidebar-header">
     <h3>Welcome to ÉduMeilleur!</h3>
-    <button class="close-btn" (click)="closeSidebar()">X</button>
+    <button class="btn-close btn-close-white" (click)="closeSidebar()"></button>
   </div>
 
-  <div class="extra-sidebars">
-    <button *ngIf="router.url == '/ai' && activeSidebarContent != 'chatbot'">Chatbot sidebar</button>
-    <button *ngIf="hasSubjectId() && activeSidebarContent != 'subject'" (click)="openSubjectSidebar()">Subject
-      sidebar</button>
-    <button *ngIf="activeSidebarContent != 'base'" (click)="openBaseSidebar()">Base sidebar</button>
-  </div>
+  <div class="sidebar-content-wrapper">
+    <div class="extra-sidebars">
+      <button *ngIf="router.url == '/ai' && activeSidebarContent != 'chatbot'">Chatbot sidebar</button>
+      <button *ngIf="hasSubjectId() && activeSidebarContent != 'subject'" (click)="openSubjectSidebar()">Subject
+        sidebar</button>
+      <button *ngIf="activeSidebarContent != 'base'" (click)="openBaseSidebar()">Base sidebar</button>
+    </div>
 
-  <div class="base-sidebar" *ngIf="activeSidebarContent == 'base'">
-    <div class="sidebar-body">
-      <ul (click)="closeSidebar()">
-        <li><a [routerLink]="['/home']">Accueil</a></li>
-        <li><a [routerLink]="['/sujets']">Sujets</a></li>
-        <li><a [routerLink]="['/ai']">Chatbot</a></li>
-        <li><a (click)="modalService.openModal('ExploreDevModal')">Explore</a></li>
-        <li><a [routerLink]="['/contactUs']">Contacter Nous</a></li>
-      </ul>
+    <div class="base-sidebar" *ngIf="activeSidebarContent == 'base'">
+      <div class="sidebar-body">
+        <ul (click)="closeSidebar()">
+          <li><a [routerLink]="['/home']">Accueil</a></li>
+          <li><a [routerLink]="['/sujets']">Sujets</a></li>
+          <li><a [routerLink]="['/ai']">Chatbot</a></li>
+          <li><a (click)="modalService.openModal('ExploreDevModal')">Explore</a></li>
+          <li><a [routerLink]="['/contactUs']">Contacter Nous</a></li>
+        </ul>
 
-      <div class="horizontal-line"></div>
+        <div class="horizontal-line"></div>
 
-      <ul (click)="closeSidebar()">
-        <li><a>Log in</a></li>
-        <li><a>Sign up</a></li>
-        <li><a>Profile</a></li>
-        <li><a>Log out</a></li>
-      </ul>
+        <ul (click)="closeSidebar()">
+          <li><a>Log in</a></li>
+          <li><a>Sign up</a></li>
+          <li><a>Profile</a></li>
+          <li><a>Log out</a></li>
+        </ul>
 
-      <div>
-        <select id="lang" name="lang">
-          <option value="english">EN</option>
-          <option value="french">FR</option>
-        </select>
+        <div>
+          <select id="lang" name="lang">
+            <option value="english">EN</option>
+            <option value="french">FR</option>
+          </select>
+        </div>
       </div>
+    </div>
+
+    <div class="subject-sidebar-content" *ngIf="activeSidebarContent === 'subject'">
+      <app-subject-sidebar [subject]="subject" [chapters]="chapters" [allItems]="allItems" [currentItem]="currentItem"
+        (getAllItems)="getAllItems($event)" (getCurrentItem)="getCurrentItem($event)"></app-subject-sidebar>
     </div>
   </div>
 
-  <div class="subject-sidebar-content" *ngIf="activeSidebarContent === 'subject'">
-    <app-subject-sidebar [subject]="subject" [chapters]="chapters" [allItems]="allItems" [currentItem]="currentItem"
-      (getAllItems)="getAllItems($event)" (getCurrentItem)="getCurrentItem($event)"></app-subject-sidebar>
-  </div>
+
 
 
 
