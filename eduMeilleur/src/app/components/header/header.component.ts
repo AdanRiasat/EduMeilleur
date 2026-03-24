@@ -62,8 +62,8 @@ export class HeaderComponent {
     this.modalService.openModal('disconnectModal');
   }
 
-  async disconnect() {
-    await this.userService.logout();
+  disconnect() {
+    this.userService.logout();
 
     let modalElement = document.getElementById('disconnectModal');
     if (modalElement) {

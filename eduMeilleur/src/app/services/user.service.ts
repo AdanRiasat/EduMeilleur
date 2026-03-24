@@ -67,7 +67,7 @@ export class UserService {
     this.updateSignals(x);
   }
 
-  async logout() {
+  logout() {
     this.tokenSignal.set(null);
     this.rolesSignal.set([]);
     this.refreshTokenSignal.set(null);
