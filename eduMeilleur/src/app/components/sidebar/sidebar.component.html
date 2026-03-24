@@ -6,7 +6,8 @@
 
   <div class="sidebar-content-wrapper">
     <div class="extra-sidebars">
-      <button *ngIf="router.url == '/ai' && activeSidebarContent != 'chatbot'">Chatbot sidebar</button>
+      <button *ngIf="router.url == '/ai' && activeSidebarContent != 'chatbot'" (click)="openChatbotSidebar()">Chatbot
+        sidebar</button>
       <button *ngIf="hasSubjectId() && activeSidebarContent != 'subject'" (click)="openSubjectSidebar()">Subject
         sidebar</button>
       <button *ngIf="activeSidebarContent != 'base'" (click)="openBaseSidebar()">Base sidebar</button>
@@ -44,11 +45,14 @@
       <app-subject-sidebar [subject]="subject" [chapters]="chapters" [allItems]="allItems" [currentItem]="currentItem"
         (getAllItems)="getAllItems($event)" (getCurrentItem)="getCurrentItem($event)"></app-subject-sidebar>
     </div>
+
+    <div class="chatbot-sidebar-content" *ngIf="activeSidebarContent === 'chatbot'">
+      <app-chatbot-sidebar [chats]="aiService.chats()" [currentChat]="aiService.currentChat()"
+        [dropdownOpen]="aiService.dropdownOpen()" (newChat)="aiService.newChat()" (getMessages)="getMessages($event)"
+        (toggleDropdown)="aiService.toggleDropdown($event)"
+        (openDeleteModal)="aiService.openDeleteModal($event)"></app-chatbot-sidebar>
+    </div>
   </div>
-
-
-
-
 
 </div>
 

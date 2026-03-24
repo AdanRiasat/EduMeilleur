@@ -6,6 +6,11 @@
   background-color: #e0f4ff;
 }
 /* TODO fix layout */
+
+#ai-sidebar{
+  width: 300px;
+}
+
 .ai-page {
   height: 100%;
   display: flex;

@@ -6,7 +6,6 @@ import { ModalService } from '../../services/modal.service';
 import { Profile } from '../../models/profile';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../sidebar/sidebar.component';
-import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-header',

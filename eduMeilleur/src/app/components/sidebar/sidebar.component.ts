@@ -8,11 +8,14 @@ import { DisplaySujet } from '../../models/displaySujet';
 import { Item } from '../../models/Item';
 import { SujetService } from '../../services/sujet.service';
 import { Subject, takeUntil, filter } from 'rxjs';
+import { Chat } from '../../models/chat';
+import { ChatbotSidebarComponent } from '../chatbot-sidebar/chatbot-sidebar.component';
+import { AiService } from '../../services/ai.service';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterLink, CommonModule, SubjectSidebarComponent],
+  imports: [RouterLink, CommonModule, SubjectSidebarComponent, ChatbotSidebarComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
@@ -22,6 +25,7 @@ export class SidebarComponent implements OnInit{
 
   readonly DEFAULT_TYPE: string = "Notes"
 
+  // subject
   subject: DisplaySujet | null = null;
   subjectId: number = -1;
   chapters: string[] = [];
@@ -31,16 +35,20 @@ export class SidebarComponent implements OnInit{
 
   hasSubjectId = signal<boolean>(false)
 
+  // chatbot
+
+  // base
   activeSidebarContent = 'base'
 
   private destroy$ = new Subject<void>();
 
-  constructor(public modalService: ModalService, public router: Router, public sidebarStateService: SidebarStateService, private subjectService: SujetService, private route: ActivatedRoute) {
+  constructor(public modalService: ModalService, public router: Router, public sidebarStateService: SidebarStateService, private subjectService: SujetService, private route: ActivatedRoute, public aiService: AiService) {
     effect(() => {
       this.activeSidebarContent = this.sidebarStateService.getActiveSidebar();
     });
   }
 
+  // subject
   async ngOnInit() {
     if (window.innerWidth > 876) return
 
@@ -111,6 +119,13 @@ export class SidebarComponent implements OnInit{
     }
   }
 
+  // chatbot
+  async getMessages(chat: Chat) {
+    this.aiService.currentChat.set(chat);
+    await this.aiService.getMessages(chat.id);
+  }
+
+  // base
   openSubjectSidebar() {
     this.sidebarStateService.setActiveSidebar('subject')
   }

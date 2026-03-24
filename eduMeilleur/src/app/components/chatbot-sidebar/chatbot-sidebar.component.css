@@ -12,3 +12,8 @@
   color: white;
   background-color: var(--button);
 }
+
+app-chatbot-sidebar {
+  display: block;
+  width: 100%;
+}

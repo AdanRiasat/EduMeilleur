@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, OnInit, ViewChild } from '@angular/core';
 import { AiService } from '../../services/ai.service';
 import { ChatMessage } from '../../models/chatMessage';
 import { FormsModule } from '@angular/forms';
@@ -22,19 +22,22 @@ import { ChatbotSidebarComponent } from '../../components/chatbot-sidebar/chatbo
   styleUrl: './ai.component.css',
 })
 export class AiComponent implements OnInit {
+  aiService = inject(AiService)
+
   userMessage: string = '';
-  messages: ChatMessage[] = [];
-  chats: Chat[] = [];
-  currentChat: Chat | null = null;
+
+  messages = this.aiService.messages;
+  currentChat = this.aiService.currentChat;
+  chats = this.aiService.chats;
+  dropdownOpen = this.aiService.dropdownOpen;
+  deleteId = this.aiService.deleteId
 
   isLoading: boolean = false;
   loadingId: number = -1;
-  dropdownOpen: number | null = null;
-  deleteId: number = -1;
 
   userIsConnected: boolean = false;
 
-  constructor(public aiService: AiService, public sanitizer: DomSanitizer, public userService: UserService, public route: Router, public spinner: SpinnerService, public modalSerice: ModalService) {}
+  constructor(public sanitizer: DomSanitizer, public userService: UserService, public route: Router, public spinner: SpinnerService, public modalService: ModalService) {}
 
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
 
@@ -54,32 +57,34 @@ export class AiComponent implements OnInit {
 
   async getChats() {
     try {
-      this.chats = await this.aiService.getChats();
+      await this.aiService.getChats();
     } catch (error: any) {
       if (error.status === 0) {
-        this.modalSerice.openModal('error500Modal');
+        this.modalService.openModal('error500Modal');
       }
     }
   }
 
   async getMessages(chat: Chat) {
-    this.currentChat = chat;
-    this.messages = await this.aiService.getMessages(chat.id);
+    this.currentChat.set(chat);
+    await this.aiService.getMessages(chat.id);
     this.scrollToBottom();
   }
 
   async deleteChat() {
     await this.aiService.deleteChat(this.deleteId);
 
-    for (let i = 0; i < this.chats.length; i++) {
-      if (this.chats[i].id == this.deleteId) {
-        this.chats.splice(i, 1);
+    let chats = this.chats()
+
+    for (let i = 0; i < chats.length; i++) {
+      if (chats[i].id == this.deleteId) {
+        chats.splice(i, 1);
       }
     }
 
-    if (this.currentChat?.id == this.deleteId) {
-      this.currentChat = null;
-      this.messages = [];
+    if (this.currentChat()?.id == this.deleteId) {
+      this.currentChat.set(null);
+      this.messages.set([]);
     }
 
     let modalElement = document.getElementById('deleteChatModal');
@@ -92,7 +97,7 @@ export class AiComponent implements OnInit {
   async sendMessage() {
     this.userIsConnected = this.userService.token() != null;
     if (!this.userIsConnected) {
-      this.modalSerice.openModal('errorConnectionModal');
+      this.modalService.openModal('errorConnectionModal');
       return;
     }
 
@@ -109,34 +114,25 @@ export class AiComponent implements OnInit {
       isUser: true,
       timeStamp: new Date(),
     };
-    this.messages.push(userMsg);
+    this.messages().push(userMsg);
 
     this.userMessage = '';
     this.isLoading = true;
 
-    if (this.currentChat == null) {
-      this.currentChat = await this.aiService.postChat(text);
+    if (this.currentChat() == null) {
+      this.currentChat.set(await this.aiService.postChat(text));
       await this.getChats();
     }
 
-    if (this.currentChat != null) {
-      this.loadingId = this.currentChat.id;
-      let botReply = await this.aiService.sendMessage(text, this.currentChat);
-      this.messages.push(botReply);
+    if (this.currentChat() != null) {
+      this.loadingId = this.currentChat()!.id;
+      let botReply = await this.aiService.sendMessage(text, this.currentChat()!);
+      this.messages().push(botReply);
       this.scrollToBottom();
     }
 
     this.isLoading = false;
     this.loadingId = -1;
-  }
-
-  toggleDropdown(id: number) {
-    this.dropdownOpen = this.dropdownOpen === id ? null : id;
-  }
-
-  newChat() {
-    this.currentChat = null;
-    this.messages = [];
   }
 
   formatMessage(message: string): SafeHtml {
@@ -148,13 +144,8 @@ export class AiComponent implements OnInit {
   onOutsideClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
     if (!target.closest('.list-group-item')) {
-      this.dropdownOpen = null;
+      this.dropdownOpen.set(null);
     }
-  }
-
-  openDeleteModal(id: number) {
-    this.deleteId = id;
-    this.modalSerice.openModal('deleteChatModal');
   }
 
   redirectLogin() {

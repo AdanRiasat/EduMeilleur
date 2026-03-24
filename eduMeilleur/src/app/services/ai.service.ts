@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { ChatMessage } from '../models/chatMessage';
 import { Chat } from '../models/chat';
 import { environment } from '../../environments/environment';
+import { ModalService } from './modal.service';
 
 const domain: string = environment.apiUrl
 
@@ -11,8 +12,14 @@ const domain: string = environment.apiUrl
   providedIn: 'root'
 })
 export class AiService {
+  chats = signal<Chat[]>([]);
+  currentChat = signal<Chat | null>(null);
+  dropdownOpen = signal<number | null>(null);
+  messages = signal<ChatMessage[]>([]);
 
-  constructor(public http: HttpClient) { }
+  deleteId: number = -1
+
+  constructor(public http: HttpClient, public modalService: ModalService) { }
 
   async sendMessage(text: string, chat: Chat): Promise<ChatMessage> {
     let dto = {
@@ -45,17 +52,33 @@ export class AiService {
     console.log(x);
   }
 
-  async getMessages(chatId: number): Promise<ChatMessage[]>{
+  async getMessages(chatId: number) {
     let x = await lastValueFrom(this.http.get<ChatMessage[]>(domain + "/api/Chats/GetMessages/" + chatId))
     console.log(x);
+
+    this.messages.set(x)
     
     return x
   }
 
-  async getChats(): Promise<Chat[]>{
+  async getChats() {
     let x = await lastValueFrom(this.http.get<Chat[]>(domain + "/api/Chats/GetChats"))
     console.log(x);
 
-    return x
+    this.chats.set(x)
+  }
+
+  newChat() {
+    this.currentChat.set(null);
+    this.messages.set([]);
+  }
+
+  toggleDropdown(id: number) {
+    this.dropdownOpen.set(this.dropdownOpen() === id ? null : id);
+  }
+
+  openDeleteModal(id: number) {
+    this.deleteId = id;
+    this.modalService.openModal('deleteChatModal');
   }
 }
