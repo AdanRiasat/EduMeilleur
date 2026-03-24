@@ -1,0 +1,41 @@
+<div class="card mb-3 border-0 shadow-sm">
+    <div class="card-header text-white">
+        <div class="d-flex align-items-center">
+            <div class="rounded-circle bg-white p-2 me-3">
+                <i class="bi bi-robot text-primary"></i>
+            </div>
+            <div>
+                <h5 class="mb-0">ÉduMeilleur AI</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- New Chat -->
+<button class="btn btn-outline-primary w-100 mb-3 d-flex align-items-center justify-content-center gap-2"
+    (click)="newChat.emit()">
+    <i class="bi bi-plus-lg"></i>
+    <span>New Chat</span>
+</button>
+
+<!-- Chat List -->
+<div class="list-group list-group-flush overflow-auto flex-grow-1">
+    <div *ngFor="let c of chats" class="list-group-item d-flex justify-content-between align-items-center chat-title"
+        [class.active]="c.id === currentChat?.id" (click)="getMessages.emit(c)">
+        <!-- Chat Title-->
+        <div class="flex-grow-1 text-truncate">
+            {{ c.title }}
+        </div>
+
+        <!-- Dropdown for actions -->
+        <div class="dropdown">
+            <button class="btn btn-sm btn-light" type="button" (click)="toggleDropdown.emit(c.id)">
+                <i class="bi bi-three-dots-vertical"></i>
+            </button>
+
+            <ul *ngIf="dropdownOpen === c.id" class="dropdown-menu show">
+                <li><button class="dropdown-item text-danger" (click)="openDeleteModal.emit(c.id)">Delete</button></li>
+            </ul>
+        </div>
+    </div>
+</div>

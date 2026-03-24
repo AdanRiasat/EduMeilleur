@@ -27,11 +27,6 @@
   padding-bottom: 1rem;
 }
 
-.chat-title {
-  margin: 5px;
-  border-radius: 5px;
-}
-
 .chat-messages {
   flex: 1;
   overflow-y: auto;

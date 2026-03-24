@@ -1,0 +1,14 @@
+.chat-title {
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.btn:hover {
+  background-color: var(--btnHover);
+}
+
+.input-group .btn,
+.card-header {
+  color: white;
+  background-color: var(--button);
+}

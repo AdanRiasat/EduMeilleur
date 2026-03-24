@@ -12,11 +12,12 @@ import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { SpinnerService } from '../../services/spinner.service';
 import { ModalService } from '../../services/modal.service';
+import { ChatbotSidebarComponent } from '../../components/chatbot-sidebar/chatbot-sidebar.component';
 
 @Component({
   selector: 'app-ai',
   standalone: true,
-  imports: [FormsModule, CommonModule, DatePipe, ModalComponent],
+  imports: [FormsModule, CommonModule, DatePipe, ModalComponent, ChatbotSidebarComponent],
   templateUrl: './ai.component.html',
   styleUrl: './ai.component.css',
 })
