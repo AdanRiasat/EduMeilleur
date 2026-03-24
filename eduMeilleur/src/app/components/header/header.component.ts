@@ -4,7 +4,6 @@ import { Router, RouterLink } from '@angular/router';
 import { GlobalService } from '../../services/global.service';
 import { ModalService } from '../../services/modal.service';
 import { Profile } from '../../models/profile';
-import { Modal } from 'bootstrap';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { ModalComponent } from '../modal/modal.component';
@@ -12,7 +11,7 @@ import { ModalComponent } from '../modal/modal.component';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, CommonModule, SidebarComponent, ModalComponent],
+  imports: [RouterLink, CommonModule, SidebarComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
@@ -60,18 +59,6 @@ export class HeaderComponent {
     }
 
     this.modalService.openModal('disconnectModal');
-  }
-
-  disconnect() {
-    this.userService.logout();
-
-    let modalElement = document.getElementById('disconnectModal');
-    if (modalElement) {
-      let modal = Modal.getInstance(modalElement);
-      modal?.hide();
-    }
-
-    this.route.navigate(['/home']);
   }
 
   openSidebar() {

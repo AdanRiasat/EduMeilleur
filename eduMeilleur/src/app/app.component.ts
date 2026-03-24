@@ -8,6 +8,8 @@ import { ModalService } from './services/modal.service';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { filter } from 'rxjs';
+import { UserService } from './services/user.service';
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-root',
@@ -20,11 +22,23 @@ export class AppComponent {
   showMainOnly: boolean = false
   mainOnlyUrls: string[] = ['/login', '/signup']
 
-  constructor(public modalService: ModalService, public global: GlobalService, public router: Router) {
+  constructor(public modalService: ModalService, public global: GlobalService, public router: Router, public userService: UserService) {
    this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.showMainOnly = this.mainOnlyUrls.includes(event.urlAfterRedirects);
       });
+  }
+
+  disconnect() {
+    this.userService.logout();
+
+    let modalElement = document.getElementById('disconnectModal');
+    if (modalElement) {
+      let modal = Modal.getInstance(modalElement);
+      modal?.hide();
+    }
+
+    this.router.navigate(['/home']);
   }
 }
