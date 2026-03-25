@@ -118,7 +118,7 @@
   <div id="explore-cta" class="text-center mt-3">
     <h4>Ready to start exploring?</h4>
     <div>
-      <button class="btn btn-primary" (click)="modalService.openModal('ExploreDevModal')">Get Started</button>
+      <button class="btn-home" (click)="modalService.openModal('ExploreDevModal')">Get Started</button>
     </div>
 
   </div>
@@ -144,7 +144,7 @@
   <div class="text-center mt-5">
     <h2>Need more help?</h2>
     <p class="description">Send your questions to a real teacher!</p>
-    <button class="btn btn-primary" [routerLink]="['/contactUs']">Try now</button>
+    <button class="btn-home" [routerLink]="['/contactUs']">Try now</button>
   </div>
 </div>
 
@@ -168,7 +168,7 @@
       </div>
       <div class="chat-input">
         <input type="text" id="userInput" placeholder="Type your question..." />
-        <button [routerLink]="['/ai']">Send</button>
+        <button class="btn-home" [routerLink]="['/ai']">Send</button>
       </div>
     </div>
   </div>

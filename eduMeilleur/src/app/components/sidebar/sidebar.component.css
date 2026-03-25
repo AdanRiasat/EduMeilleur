@@ -27,8 +27,18 @@ p, button {
   font-size: var(--p-fixed-size) !important;
 }
 
+.btn-home {
+  padding: 10px 15px;
+}
+
 .sidebar-content-wrapper {
-  padding: 20px;
+  padding: 10px 20px;
+}
+
+.extra-sidebars {
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
 }
 
 .sidebar-body{

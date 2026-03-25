@@ -6,11 +6,13 @@
 
   <div class="sidebar-content-wrapper">
     <div class="extra-sidebars">
-      <button *ngIf="router.url == '/ai' && activeSidebarContent != 'chatbot'" (click)="openChatbotSidebar()">Chatbot
+      <button class="btn-home" *ngIf="router.url == '/ai' && activeSidebarContent != 'chatbot'"
+        (click)="openChatbotSidebar()">Chatbot
         sidebar</button>
-      <button *ngIf="hasSubjectId() && activeSidebarContent != 'subject'" (click)="openSubjectSidebar()">Subject
+      <button class="btn-home" *ngIf="hasSubjectId() && activeSidebarContent != 'subject'"
+        (click)="openSubjectSidebar()">Subject
         sidebar</button>
-      <button *ngIf="activeSidebarContent != 'base'" (click)="openBaseSidebar()">Base sidebar</button>
+      <button class="btn-home" *ngIf="activeSidebarContent != 'base'" (click)="openBaseSidebar()">Base sidebar</button>
     </div>
 
     <div class="base-sidebar" *ngIf="activeSidebarContent == 'base'">
