@@ -26,10 +26,16 @@
         <div class="horizontal-line"></div>
 
         <ul (click)="closeSidebar()">
-          <li><a>Log in</a></li>
-          <li><a>Sign up</a></li>
-          <li><a>Profile</a></li>
-          <li><a>Log out</a></li>
+          <div *ngIf="!userService.isLoggedIn()">
+            <li><a [routerLink]="['/login']">Log in</a></li>
+            <li><a [routerLink]="['/signup']">Sign up</a></li>
+          </div>
+          <div *ngIf="userService.isLoggedIn()">
+            <li><a [routerLink]="['/profile']">Profile</a></li>
+            <li><a (click)="openDisconnectModal()">Log out</a></li>
+          </div>
+
+
         </ul>
 
         <div>
@@ -47,8 +53,9 @@
     </div>
 
     <div class="chatbot-sidebar-content" *ngIf="activeSidebarContent === 'chatbot'">
-      <app-chatbot-sidebar [chats]="aiService.chats()" [currentChat]="aiService.currentChat()"
-        [dropdownOpen]="aiService.dropdownOpen()" (newChat)="aiService.newChat()" (getMessages)="getMessages($event)"
+      <app-chatbot-sidebar [isMobileSidebar]="sidebarStateService.isMobileSidebar" [chats]="aiService.chats()"
+        [currentChat]="aiService.currentChat()" [dropdownOpen]="aiService.dropdownOpen()"
+        (newChat)="aiService.newChat()" (getMessages)="getMessages($event)"
         (toggleDropdown)="aiService.toggleDropdown($event)"
         (openDeleteModal)="aiService.openDeleteModal($event)"></app-chatbot-sidebar>
     </div>

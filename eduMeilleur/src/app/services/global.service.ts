@@ -12,5 +12,7 @@ export class GlobalService {
     adminNumber: string = "438-925-3926"
     pfpSrc: string = environment.apiUrl + "/api/Users/GetProfilePicture/"
 
+    isMobileInterface: boolean = window.innerWidth <= 876
+
   constructor() { }
 }

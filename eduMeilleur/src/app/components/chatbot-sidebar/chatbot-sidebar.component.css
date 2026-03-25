@@ -17,3 +17,25 @@ app-chatbot-sidebar {
   display: block;
   width: 100%;
 }
+
+/*  Delete menu    */
+
+.list-group-item .dropdown .btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #888;
+}
+
+.list-group-item .dropdown .btn:hover {
+  color: #000;
+}
+
+.dropdown-menu.show {
+  display: block;
+  min-width: 8rem;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 1000;
+}

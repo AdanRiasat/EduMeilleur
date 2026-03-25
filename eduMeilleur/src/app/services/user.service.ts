@@ -77,6 +77,10 @@ export class UserService {
     localStorage.removeItem('roles');
   }
 
+  isLoggedIn(): boolean {
+    return this.tokenSignal() != null
+  }
+
   async editProfile(dto: FormData) {
     let x = await lastValueFrom(this.http.put<Profile>(domain + '/api/Users/EditProfile', dto));
     console.log(x);

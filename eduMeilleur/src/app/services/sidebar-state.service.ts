@@ -1,4 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
+import { GlobalService } from './global.service';
 
 export type SidebarContent = 'base' | 'subject' | 'chatbot';
 
@@ -6,8 +7,11 @@ export type SidebarContent = 'base' | 'subject' | 'chatbot';
   providedIn: 'root'
 })
 export class SidebarStateService {
+  globalService = inject(GlobalService)
   private activeSidebarContent = signal<SidebarContent>('base')
   activeSidebarContent$ = this.activeSidebarContent.asReadonly()
+
+  isMobileSidebar: boolean = this.globalService.isMobileInterface
 
   setActiveSidebar(content: SidebarContent) {
     this.activeSidebarContent.set(content)

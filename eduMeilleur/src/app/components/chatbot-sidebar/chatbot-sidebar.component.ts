@@ -13,6 +13,7 @@ export class ChatbotSidebarComponent {
   @Input() chats: Chat[] = []
   @Input() currentChat: Chat | null = null
   @Input() dropdownOpen: number | null = null
+  @Input() isMobileSidebar: boolean = false
   @Output() newChat = new EventEmitter<void>()
   @Output() getMessages = new EventEmitter<Chat>()
   @Output() toggleDropdown = new EventEmitter<number>()

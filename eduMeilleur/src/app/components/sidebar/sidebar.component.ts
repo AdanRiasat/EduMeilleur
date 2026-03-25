@@ -11,6 +11,7 @@ import { Subject, takeUntil, filter } from 'rxjs';
 import { Chat } from '../../models/chat';
 import { ChatbotSidebarComponent } from '../chatbot-sidebar/chatbot-sidebar.component';
 import { AiService } from '../../services/ai.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -42,7 +43,7 @@ export class SidebarComponent implements OnInit{
 
   private destroy$ = new Subject<void>();
 
-  constructor(public modalService: ModalService, public router: Router, public sidebarStateService: SidebarStateService, private subjectService: SujetService, private route: ActivatedRoute, public aiService: AiService) {
+  constructor(public modalService: ModalService, public router: Router, public sidebarStateService: SidebarStateService, private subjectService: SujetService, public aiService: AiService, public userService: UserService) {
     effect(() => {
       this.activeSidebarContent = this.sidebarStateService.getActiveSidebar();
     });
@@ -55,24 +56,7 @@ export class SidebarComponent implements OnInit{
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       takeUntil(this.destroy$)
-    ).subscribe(async () => {
-      this.getSubjectId();
-      if (this.hasSubjectId()) {
-        await this.loadSubjectData(this.subjectId);
-        this.openSubjectSidebar()
-      } else {
-        this.resetSubjectData();
-      }
-    });
-
-      this.getSubjectId();
-      if (this.hasSubjectId()) {
-        await this.loadSubjectData(this.subjectId);
-        this.openSubjectSidebar()
-      } else {
-        this.resetSubjectData();
-      }
-    
+    ).subscribe(() => this.handleRouteChange())
   }
 
   ngOnDestroy() {
@@ -126,6 +110,12 @@ export class SidebarComponent implements OnInit{
   }
 
   // base
+  openDisconnectModal() {
+    if (!this.userService.isLoggedIn()) return;
+    
+    this.modalService.openModal('disconnectModal');
+  }
+  
   openSubjectSidebar() {
     this.sidebarStateService.setActiveSidebar('subject')
   }
@@ -138,6 +128,25 @@ export class SidebarComponent implements OnInit{
     this.sidebarStateService.setActiveSidebar('chatbot')
   }
 
+  async handleRouteChange() {
+    const url = this.router.url;
+
+    if (url.startsWith('/ai')) {
+      this.resetSubjectData();
+      this.openChatbotSidebar();
+      return;
+    }
+
+    this.getSubjectId();
+
+    if (this.hasSubjectId()) {
+      await this.loadSubjectData(this.subjectId);
+      this.openSubjectSidebar();
+    } else {
+      this.resetSubjectData();
+    }
+  }
+
   resetSubjectData() {
     this.subject = null;
     this.chapters = [];
@@ -145,6 +154,7 @@ export class SidebarComponent implements OnInit{
     this.currentItem = null;
     this.subjectId = -1;
     this.openBaseSidebar();
+    this.hasSubjectId.set(false)
   }
 
 }

@@ -25,7 +25,7 @@ export class SujetComponent implements OnInit{ // TODO might need ro refactor lo
   currentItem: Item | null = null
   currentType: string = ""
 
-  constructor(public sujetService: SujetService, public route: ActivatedRoute, public sanitizer: DomSanitizer, public markdown: MarkdownService, private sidebarStateService: SidebarStateService){}
+  constructor(public sujetService: SujetService, public route: ActivatedRoute, public sanitizer: DomSanitizer, public markdown: MarkdownService){}
 
   async ngOnInit() {
     let sujetIdStringData: string | null = this.route.snapshot.paramMap.get("id")
