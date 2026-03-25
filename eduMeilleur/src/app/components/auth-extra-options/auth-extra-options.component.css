@@ -18,5 +18,5 @@
 }
 
 .extra-option:hover {
-  background: var(--btnHover);
+  background: var(--item-hover);
 }

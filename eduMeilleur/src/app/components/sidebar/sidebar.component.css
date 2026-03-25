@@ -27,6 +27,10 @@ p, button {
   font-size: var(--p-fixed-size) !important;
 }
 
+li {
+  cursor: pointer;
+}
+
 .btn-home {
   padding: 10px 15px;
 }

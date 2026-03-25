@@ -4,19 +4,19 @@ a {
   cursor: pointer;
 }
 
-h2 {
+h2, p {
   padding: 0;
   margin: 0;
 }
 
 .login-forms {
-  width: 55%;
+  width: clamp(375px, 75%, 500px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 30px;
-  padding: 30px 60px;
+  padding: 30px clamp(40px, 5vw, 60px);
   border-radius: 15px;
   background-color: white;
   border: solid 1px var(--border);
