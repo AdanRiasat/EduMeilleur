@@ -4,10 +4,13 @@
             <label for="email">Email</label>
             <input id="email" type="text" name="email" formControlName="email" />
             <div *ngIf="formGroup()!.get('email')?.hasError('required') && formGroup()!.get('email')?.touched"
-                class="text-danger">Email is required</div>
+                class="text-danger">
+                <p>Email is required</p>
+            </div>
             <div *ngIf="formGroup()!.get('email')?.hasError('email') && formGroup()!.get('email')?.touched"
                 class="text-danger">
-                Email is not valid</div>
+                <p>Email is not valid</p>
+            </div>
         </div>
 
         <div class="password-field-wrapper">
@@ -16,10 +19,10 @@
                 <input id="password" type="password" name="password" formControlName="password"
                     (focus)="passwordFieldFocused.set(true)" (blur)="passwordFieldFocused.set(false)" />
                 <div *ngIf="passwordRequiredError()" class="text-danger">
-                    Password is required
+                    <p>Password is required</p>
                 </div>
                 <div *ngIf="passwordInvalidError()" class="text-danger">
-                    Password format is invalid
+                    <p>Password format is invalid</p>
                 </div>
             </div>
 
@@ -50,7 +53,7 @@
 
     <div class="divider">
         <div class="line"></div>
-        Or
+        <p>Or</p>
         <div class="line"></div>
     </div>
 

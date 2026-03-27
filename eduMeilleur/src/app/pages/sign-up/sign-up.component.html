@@ -3,11 +3,14 @@
 
     <div class="signup-forms">
       <h2>Sign up</h2>
+      <div class="progression-bar">
+        <div class="progression-fill" [style.width.%]="progressPercent()"></div>
+      </div>
 
       <form>
-        <app-sign-up-main [formGroup]="formGroupMain" (next)="isFirstPage.set(false)"
+        <app-sign-up-main [formGroup]="formGroupMain" (next)="goToSecondPage()"
           *ngIf="isFirstPage()"></app-sign-up-main>
-        <app-sign-up-extra [formGroup]="formGroupExtra" (back)="isFirstPage.set(true)" (register)="register()"
+        <app-sign-up-extra [formGroup]="formGroupExtra" (back)="goToFirstPage()" (register)="register()"
           *ngIf="!isFirstPage()"></app-sign-up-extra>
       </form>
 

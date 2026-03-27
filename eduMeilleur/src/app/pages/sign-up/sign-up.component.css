@@ -1,19 +1,37 @@
-h2 {
+h2, p {
   padding: 0;
-  margin: 0;
+  margin: 0 !important;
 }
 
 .signup-forms {
-  width: 55%;
+  width: clamp(350px, 75%, 500px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 30px;
-  padding: 30px 60px;
+  padding: 30px clamp(40px, 5vw, 60px);
   border-radius: 15px;
   background-color: white;
   border: solid 1px var(--border);
+}
+
+.progression-bar {
+  width: 100%;
+  height: 4px;
+  position: relative;
+  border-radius: 15px;
+  outline: solid 0.5px var(--border-lite);
+  background: var(--bg);
+}
+
+.progression-fill {
+  width: 0;
+  height: 100%;
+  position: absolute;
+  background: var(--button);
+  border-radius: inherit;
+  transition: width 280ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .signup-forms form {

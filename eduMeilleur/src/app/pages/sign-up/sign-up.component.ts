@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { AfterViewInit, Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
@@ -17,10 +17,11 @@ import { passwordsMatch } from '../../validators/passwords-match';
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css'
 })
-export class SignUpComponent {
+export class SignUpComponent implements AfterViewInit {
   errors: { [key: string]: string} = {}
 
   isFirstPage = signal(true)
+  progressPercent = signal(0)
 
   formGroupMain: FormGroup
   formGroupExtra: FormGroup
@@ -42,6 +43,22 @@ export class SignUpComponent {
         schoolYear: ['', []]
       }
     )
+  }
+
+  ngAfterViewInit(): void {
+    requestAnimationFrame(() => {
+      this.progressPercent.set(50)
+    })
+  }
+
+  goToSecondPage(): void {
+    this.isFirstPage.set(false)
+    this.progressPercent.set(100)
+  }
+
+  goToFirstPage(): void {
+    this.isFirstPage.set(true)
+    this.progressPercent.set(50)
   }
 
   async register(){

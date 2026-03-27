@@ -10,7 +10,7 @@ h2, p {
 }
 
 .login-forms {
-  width: clamp(375px, 75%, 500px);
+  width: clamp(350px, 75%, 500px);
   display: flex;
   flex-direction: column;
   justify-content: center;

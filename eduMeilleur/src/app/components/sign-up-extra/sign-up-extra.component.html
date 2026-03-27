@@ -4,16 +4,17 @@
             <label for="username">Username</label>
             <input id="username" type="text" name="username" formControlName="username" required />
             <div *ngIf="formGroup()!.get('username')?.hasError('required') && formGroup()!.get('username')?.touched"
-                class="text-danger">Username is required
+                class="text-danger">
+                <p>Username is required</p>
             </div>
             <div *ngIf="usernamePatternError()" class="text-danger">
-                Username allows some special characters: - . _ &#64; + /
+                <p>Username allows some special characters: - . _ &#64; + /</p>
             </div>
         </div>
 
         <div class="auth-field">
             <label for="confirmPassword">Select school</label>
-            <select id="school" class="form-control mb-3" name="school" formControlName="school">
+            <select id="school" class="form-control" name="school" formControlName="school">
                 <option value="" disabled selected hidden>Select your school</option>
                 <option value="1">Antoine-Brossard</option>
                 <option value="2">Lucille-Teasdale</option>
@@ -22,7 +23,7 @@
 
         <div class="auth-field">
             <label for="confirmPassword">Select grade</label>
-            <select id="schoolYear" class="form-control mb-3" name="schoolYear" formControlName="schoolYear">
+            <select id="schoolYear" class="form-control" name="schoolYear" formControlName="schoolYear">
                 <option value="" disabled selected hidden>Select your school year</option>
                 <option value="1">Secondaire 1</option>
                 <option value="2">Secondaire 2</option>
@@ -35,7 +36,7 @@
 
     <div class="divider">
         <div class="line"></div>
-        Or
+        <p>Or</p>
         <div class="line"></div>
     </div>
 
