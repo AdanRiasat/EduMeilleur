@@ -427,6 +427,7 @@ images/pfp/
 # Local environment files
 src/environments/environment.ts
 src/environments/environment.*.ts
+*.env
 
 # User-uploaded files
 images/pfp/*
