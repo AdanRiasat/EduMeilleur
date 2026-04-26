@@ -13,7 +13,7 @@ using EduMeilleurAPI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var jwtKey = builder.Configuration["Jwt:Key"];
+var jwtKey = builder.Configuration["JWT:Key"];
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();

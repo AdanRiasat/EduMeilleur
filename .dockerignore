@@ -5,3 +5,12 @@ obj
 .gitignore
 Dockerfile
 docker-compose.yml
+**/bin
+**/obj
+**/node_modules
+**/dist
+**/.angular
+**/.vscode
+**/.idea
+**/TestResults
+**/coverage
