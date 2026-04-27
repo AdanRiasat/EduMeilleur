@@ -26,8 +26,10 @@ services:
     depends_on:
       db:
         condition: service_healthy
-      migrator:
-        condition: service_completed_successfully
+    command: >
+      sh -c "
+        dotnet EduMeilleurAPI.dll
+      "
     restart: unless-stopped
 
   frontend:
@@ -45,25 +47,6 @@ services:
       - api
       - frontend
     restart: unless-stopped
-
-  migrator:
-    image: mcr.microsoft.com/dotnet/sdk:8.0
-    working_dir: /src
-    volumes:
-      - ./EduMeilleurAPI:/src:Z
-    env_file: .env
-    environment:
-      ConnectionStrings__EduMeilleurAPIContext: "Host=db;Port=5432;Database=${EDUMEILLEUR_POSTGRES_DATABASE};Username=${EDUMEILLEUR_POSTGRES_USER};Password=${EDUMEILLEUR_POSTGRES_PASSWORD}"
-    depends_on:
-      db:
-        condition: service_healthy
-    command: >
-      bash -lc "
-        dotnet tool install --global dotnet-ef &&
-        export PATH=$PATH:/root/.dotnet/tools &&
-        dotnet restore EduMeilleurAPI.sln &&
-        dotnet ef database update --project EduMeilleurAPI/EduMeilleurAPI.csproj --startup-project EduMeilleurAPI/EduMeilleurAPI.csproj
-      "
 
 volumes:
   pg-data:
