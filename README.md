@@ -64,3 +64,42 @@ The project’s scope quickly grew, showing me how large-scale applications requ
 - Chatbot stream response
 - Lower size of images to load faster
 - Ssr
+
+## Deployement
+
+```
+# cloudflared/config.yaml
+
+tunnel: TUNNEL_ID
+credentials-file: /etc/cloudflared/TUNNEL_ID.json
+
+ingress:
+  - hostname: yourdomain.com
+    service: http://nginx:80
+
+  - hostname: api.yourdomain.com
+    service: http://nginx:80
+
+  - service: http_status:404
+```
+
+```
+# .env
+
+EDUMEILLEUR_POSTGRES_DATABASE='postgres'
+EDUMEILLEUR_POSTGRES_PASSWORD='edumeilleur'
+EDUMEILLEUR_POSTGRES_USER='edumeilleur'
+EDUMEILLEUR_POSTGRES_HOST='db'
+
+JWT__Key='superduperkey'
+JWT__Issuer='https://localhost:7027'
+JWT__Audience='http://localhost:4200'
+
+OpenRouter__ApiKey='superduperkey'
+
+Admin_Email='crazy@email.com'
+Admin_Password='edumeilleur'
+```
+
+
+
