@@ -434,3 +434,8 @@ images/pfp/*
 !images/pfp/default.png
 !images/notes/*
 /uploads/
+
+# Cloudflare
+cloudflared/*.json
+cloudflared/*.pem
+cloudflared/*.yaml
