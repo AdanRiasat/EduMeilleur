@@ -18,8 +18,7 @@ services:
     restart: unless-stopped
   
   api:
-    build:
-      context: ./EduMeilleurAPI
+    image: ghcr.io/adanriasat/edumeilleur-api:latest
     env_file: '.env'
     environment:
       ConnectionStrings__EduMeilleurAPIContext: "Host=${EDUMEILLEUR_POSTGRES_HOST};Port=5432;Database=${EDUMEILLEUR_POSTGRES_DATABASE};Username=${EDUMEILLEUR_POSTGRES_USER};Password=${EDUMEILLEUR_POSTGRES_PASSWORD}"
@@ -33,8 +32,7 @@ services:
     restart: unless-stopped
 
   frontend:
-    build:
-      context: ./eduMeilleur
+    image: ghcr.io/adanriasat/edumeilleur-frontend:latest
     restart: unless-stopped
 
   nginx:
@@ -47,6 +45,15 @@ services:
       - api
       - frontend
     restart: unless-stopped
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel run
+    restart: unless-stopped
+    depends_on:
+      - nginx
+    volumes:
+      - ./cloudflared:/etc/cloudflared
 
 volumes:
   pg-data:
