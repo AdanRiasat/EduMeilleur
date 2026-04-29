@@ -49,7 +49,7 @@ I learned the importance of considering performance, code quality (DRY principle
 
 The project’s scope quickly grew, showing me how large-scale applications require continuous iteration and why such work is often distributed across entire teams.
 
-## 📝TODO
+## TODOs
 
 - Replace all placeholders
 - Create real notes
