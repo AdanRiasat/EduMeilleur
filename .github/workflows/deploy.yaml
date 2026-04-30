@@ -34,7 +34,7 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
             -t ghcr.io/adanriasat/edumeilleur/api:latest \
-            -t ghcr.io/adanriasat/eduMeilleur/api:${{ github.sha }} \
+            -t ghcr.io/adanriasat/edumeilleur/api:${{ github.sha }} \
             --push ./EduMeilleurAPI
 
       # 5. Build & push Frontend
