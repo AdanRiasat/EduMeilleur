@@ -33,8 +33,8 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
-            -t ghcr.io/adanriasat/edumeilleur-api:latest \
-            -t ghcr.io/adanriasat/edumeilleur-api:${{ github.sha }} \
+            -t ghcr.io/${{ github.repository }}/api:latest \
+            -t ghcr.io/${{ github.repository }}/api:${{ github.sha }} \
             --push ./EduMeilleurAPI
 
       # 5. Build & push Frontend
@@ -42,8 +42,8 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
-            -t ghcr.io/adanriasat/edumeilleur-frontend:latest \
-            -t ghcr.io/adanriasat/edumeilleur-frontend:${{ github.sha }} \
+            -t ghcr.io/${{ github.repository }}/frontend:latest \
+            -t ghcr.io/${{ github.repository }}/frontend:${{ github.sha }} \
             --push ./eduMeilleur
 
       # 6. Deploy via SSH

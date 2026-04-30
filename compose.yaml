@@ -18,7 +18,7 @@ services:
     restart: unless-stopped
   
   api:
-    image: ghcr.io/adanriasat/edumeilleur-api:latest
+    image: ghcr.io/adanriasat/edumeilleur/api:latest
     env_file: '.env'
     environment:
       ConnectionStrings__EduMeilleurAPIContext: "Host=${EDUMEILLEUR_POSTGRES_HOST};Port=5432;Database=${EDUMEILLEUR_POSTGRES_DATABASE};Username=${EDUMEILLEUR_POSTGRES_USER};Password=${EDUMEILLEUR_POSTGRES_PASSWORD}"
@@ -32,7 +32,7 @@ services:
     restart: unless-stopped
 
   frontend:
-    image: ghcr.io/adanriasat/edumeilleur-frontend:latest
+    image: ghcr.io/adanriasat/edumeilleur/frontend:latest
     restart: unless-stopped
 
   nginx:
