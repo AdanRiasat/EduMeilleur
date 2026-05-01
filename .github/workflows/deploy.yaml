@@ -45,8 +45,18 @@ jobs:
             -t ghcr.io/adanriasat/edumeilleur/frontend:latest \
             -t ghcr.io/adanriasat/edumeilleur/frontend:${{ github.sha }} \
             --push ./eduMeilleur
+      
+      # 6. Install Tailscale
+      - name: Install Tailscale
+        run: |
+          curl -fsSL https://tailscale.com/install.sh | sh
 
-      # 6. Deploy via SSH
+      # 7. Connect to Tailscale
+      - name: Connect to Tailscale
+        run: |
+          sudo tailscale up --authkey=${{ secrets.TS_AUTHKEY }}
+
+      # 8. Deploy via SSH
       - name: Deploy to Raspberry Pi
         uses: appleboy/ssh-action@v1.0.3
         with:
