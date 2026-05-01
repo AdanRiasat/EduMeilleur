@@ -64,6 +64,6 @@ jobs:
           username: ${{ secrets.PI_USER }}
           key: ${{ secrets.PI_SSH_KEY }}
           script: |
-            cd ~/edumeilleur
+            cd ~/git/EduMeilleur
             docker compose pull
             docker compose up -d
