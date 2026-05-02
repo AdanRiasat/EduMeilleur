@@ -97,8 +97,14 @@ JWT__Audience='http://localhost:4200'
 
 OpenRouter__ApiKey='superduperkey'
 
-Admin_Email='crazy@email.com'
-Admin_Password='edumeilleur'
+Admin__Email='crazy@email.com'
+Admin__Password='edumeilleur'
+
+Teacher__Password='somepassword'
+Teacher2__Password='somepassword'
+Teacher3__Password='somepassword'
+Teacher4__Password='somepassword'
+Teacher5__Password='somepassword'
 ```
 
 
