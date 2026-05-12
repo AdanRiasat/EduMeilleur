@@ -22,7 +22,7 @@ export class AiService {
 
   constructor(public http: HttpClient, public modalService: ModalService, public userService: UserService) { }
 
-  async streamMessage(text: string, chat: Chat): Promise<void> {
+  async streamMessage(text: string, chat: Chat, onChunk?: () => void): Promise<void> {
      let dto = {
       id: 0,
       text: text,
@@ -65,6 +65,8 @@ export class AiService {
           }
         }
       }
+
+      onChunk?.();
     }
   }
 

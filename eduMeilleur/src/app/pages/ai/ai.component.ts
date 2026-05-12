@@ -37,6 +37,8 @@ export class AiComponent implements OnInit {
 
   userIsConnected: boolean = false;
 
+  isNearBottom = true;
+
   constructor(public sanitizer: DomSanitizer, public userService: UserService, public route: Router, public spinner: SpinnerService, public modalService: ModalService) {}
 
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
@@ -47,13 +49,22 @@ export class AiComponent implements OnInit {
     this.spinner.hide();
   }
 
-  scrollToBottom() {
-    try {
-      setTimeout(() => {
-        this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
-      }, 50);
-    } catch (err) {}
+  ngAfterViewInit() {
+    const el = this.scrollContainer.nativeElement;
+    el.addEventListener('scroll', () => {
+      this.isNearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 50;
+    });
   }
+
+  scrollToBottom() {
+  if (!this.isNearBottom) return;
+  try {
+    setTimeout(() => {
+      const el = this.scrollContainer.nativeElement;
+      el.scrollTop = el.scrollHeight;
+    }, 0);
+  } catch (err) {}
+}
 
   async getChats() {
     try {
@@ -125,8 +136,9 @@ export class AiComponent implements OnInit {
     }
 
     if (this.currentChat() != null) {
+      this.isNearBottom = true;
       this.loadingId = this.currentChat()!.id;
-      await this.aiService.streamMessage(text, this.currentChat()!)
+      await this.aiService.streamMessage(text, this.currentChat()!, () => this.scrollToBottom())
       this.scrollToBottom();
     }
 
