@@ -1,0 +1,34 @@
+<div class="toast-container">
+    <div *ngFor="let toast of toastService.toasts()" class="toast-item" [class.success]="toast.type === 'success'"
+        [class.error]="toast.type === 'error'" [class.info]="toast.type === 'info'">
+
+        <div class="toast-icon">
+            <!-- Success: animated check -->
+            <svg *ngIf="toast.type === 'success'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                <circle class="icon-circle" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                <path class="icon-check" d="M7 12.5l3.5 3.5L17 9" stroke="currentColor" stroke-width="2.4"
+                    stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+
+            <!-- Error: animated X -->
+            <svg *ngIf="toast.type === 'error'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                <circle class="icon-circle" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                <path class="icon-x1" d="M8.5 8.5l7 7" stroke="currentColor" stroke-width="2.4"
+                    stroke-linecap="round" />
+                <path class="icon-x2" d="M15.5 8.5l-7 7" stroke="currentColor" stroke-width="2.4"
+                    stroke-linecap="round" />
+            </svg>
+
+            <!-- Info: animated i -->
+            <svg *ngIf="toast.type === 'info'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                <circle class="icon-circle" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                <circle class="icon-dot" cx="12" cy="8" r="1.3" fill="currentColor" />
+                <path class="icon-bar" d="M12 11.5v6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
+            </svg>
+        </div>
+
+        <div class="toast-message">{{ toast.message }}</div>
+
+        <div class="toast-progress"></div>
+    </div>
+</div>

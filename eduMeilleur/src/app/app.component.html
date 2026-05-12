@@ -10,6 +10,8 @@
 
   <app-footer *ngIf="!showMainOnly"></app-footer>
 
+  <app-toast></app-toast>
+
   <!-- Modals -->
   <app-modal modalId="disconnectModal" title="Disconnect" body="Are you sure you want to disconnect?"
     confirmText="Disconnect" (confirmed)="disconnect()"></app-modal>

@@ -10,11 +10,12 @@ import { FooterComponent } from './components/footer/footer.component';
 import { filter } from 'rxjs';
 import { UserService } from './services/user.service';
 import { Modal } from 'bootstrap';
+import { ToastComponent } from './components/toast/toast.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, CommonModule, NgxSpinnerModule, ModalComponent, HeaderComponent, FooterComponent],
+  imports: [RouterOutlet, RouterModule, CommonModule, NgxSpinnerModule, ModalComponent, HeaderComponent, FooterComponent, ToastComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
