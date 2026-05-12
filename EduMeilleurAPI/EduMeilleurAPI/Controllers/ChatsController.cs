@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using EduMeilleurAPI.Models.DTO;
+using System.Text.Json;
 
 namespace EduMeilleurAPI.Controllers
 {
@@ -31,17 +32,21 @@ namespace EduMeilleurAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> SendMessage(ChatMessage message)
+        public async Task StreamMessage(ChatMessage message)
         {
             User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-            if (user == null) return NotFound();
+            if (user == null) { Response.StatusCode = 404; return; }
+            if (message == null) { Response.StatusCode = 400; return; }
 
-            if (message == null) return BadRequest();
+            Response.ContentType = "text/event-stream";
+            Response.Headers["Cache-Control"] = "no-cache";
+            Response.Headers["X-Accel-Buffering"] = "no";
 
-            var response = await _chatService.PostMessage(message);
-            if (response == null) return StatusCode(StatusCodes.Status500InternalServerError);
-
-            return Ok(response);
+            await foreach (var chunk in _chatService.StreamMessage(message))
+            {
+                await Response.WriteAsync($"data: {JsonSerializer.Serialize(chunk)}\n\n");
+                await Response.Body.FlushAsync();
+            }
         }
 
         [HttpPost]

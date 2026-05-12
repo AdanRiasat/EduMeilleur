@@ -126,8 +126,7 @@ export class AiComponent implements OnInit {
 
     if (this.currentChat() != null) {
       this.loadingId = this.currentChat()!.id;
-      let botReply = await this.aiService.sendMessage(text, this.currentChat()!);
-      this.messages().push(botReply);
+      await this.aiService.streamMessage(text, this.currentChat()!)
       this.scrollToBottom();
     }
 
