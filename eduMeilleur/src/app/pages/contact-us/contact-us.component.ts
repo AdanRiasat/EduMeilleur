@@ -8,6 +8,7 @@ import { UserService } from '../../services/user.service';
 import { ModalService } from '../../services/modal.service';
 import { Router } from '@angular/router';
 import { ModalComponent } from '../../components/modal/modal.component';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-contact-us',
@@ -30,7 +31,7 @@ export class ContactUsComponent {
   teacherFiles: File[] = [];
   adminFiles: File[] = [];
 
-  constructor(public contactService: ContactService, public spinner: SpinnerService, public global: GlobalService, public userService: UserService, public modalService: ModalService, public route: Router) {}
+  constructor(public contactService: ContactService, public spinner: SpinnerService, public global: GlobalService, public userService: UserService, public modalService: ModalService, public route: Router, public toastService: ToastService) {}
 
   updateTeacherFiles() {
     this.updateSelectedFiles(this.fileInputTeacher, this.teacherFiles);
@@ -67,7 +68,7 @@ export class ContactUsComponent {
       return;
     }
 
-    if (this.titleAdmin == '' || this.messageAdmin == '') {
+    if (this.titleTeacher == '' || this.messageTeacher == '') {
       this.modalService.openModal('errorEmptyModal');
       return;
     }
@@ -86,15 +87,21 @@ export class ContactUsComponent {
       i++;
     }
 
-    await this.contactService.postQuestion(formData);
+    try {
+      await this.contactService.postQuestion(formData);
+      this.toastService.success('Question sent successfully! A teacher will reach out to you shortly');
 
-    //reset
-    this.spinner.hide();
-    this.titleTeacher = '';
-    this.messageTeacher = '';
-    this.teacherFiles = [];
-    if (this.fileInputTeacher) {
-      this.fileInputTeacher.nativeElement.value = '';
+      // reset
+      this.titleTeacher = '';
+      this.messageTeacher = '';
+      this.teacherFiles = [];
+      if (this.fileInputTeacher) {
+        this.fileInputTeacher.nativeElement.value = '';
+      }
+    } catch (e) {
+      this.toastService.error('Something went wrong while sending your question, try again later');
+    } finally {
+      this.spinner.hide();
     }
   }
 
@@ -124,15 +131,21 @@ export class ContactUsComponent {
       i++;
     }
 
-    await this.contactService.postFeedback(formData);
+    try {
+      await this.contactService.postFeedback(formData);
+      this.toastService.success('Feedback sent successfully. Thank you for helping improve EduMeilleur!');
 
-    //reset
-    this.spinner.hide();
-    this.titleAdmin = '';
-    this.messageAdmin = '';
-    this.adminFiles = [];
-    if (this.fileInputAdmin) {
-      this.fileInputAdmin.nativeElement.value = '';
+      // reset
+      this.titleAdmin = '';
+      this.messageAdmin = '';
+      this.adminFiles = [];
+      if (this.fileInputAdmin) {
+        this.fileInputAdmin.nativeElement.value = '';
+      }
+    } catch (e) {
+      this.toastService.error('Something went wrong while sending feedback, please try again later');
+    } finally {
+      this.spinner.hide();
     }
   }
 
