@@ -1,6 +1,6 @@
 import { Component, effect } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { GlobalService } from '../../services/global.service';
 import { ModalService } from '../../services/modal.service';
 import { Profile } from '../../models/profile';
@@ -10,7 +10,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, CommonModule, SidebarComponent],
+  imports: [RouterLink, CommonModule, SidebarComponent, RouterLinkActive, RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })

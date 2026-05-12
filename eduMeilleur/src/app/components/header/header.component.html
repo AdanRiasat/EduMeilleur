@@ -14,10 +14,12 @@
             <!-- Main nav -->
             <div id="main-nav" class="col-auto">
                 <nav class="d-flex align-items-center flex-nowrap">
-                    <a [routerLink]="['/sujets']" class="nav-bar">Sujets</a>
-                    <a [routerLink]="['/ai']" class="nav-bar">Chatbot</a>
-                    <a class="nav-bar" (click)="modalService.openModal('ExploreDevModal')">Explore</a>
-                    <a [routerLink]="['/contactUs']" class="nav-bar">Contacter Nous</a>
+                    <a [routerLink]="['/sujets']" routerLinkActive="nav-bar-active" class="nav-bar">Sujets</a>
+                    <a [routerLink]="['/ai']" routerLinkActive="nav-bar-active" class="nav-bar">Chatbot</a>
+                    <a class="nav-bar" routerLinkActive="nav-bar-active"
+                        (click)="modalService.openModal('ExploreDevModal')">Explore</a>
+                    <a [routerLink]="['/contactUs']" routerLinkActive="nav-bar-active" class="nav-bar">Contacter
+                        Nous</a>
                 </nav>
             </div>
 

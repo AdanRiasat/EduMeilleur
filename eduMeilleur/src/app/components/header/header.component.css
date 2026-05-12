@@ -93,7 +93,16 @@ a {
   border-radius: 0;
   text-decoration: underline;
   text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
+  text-underline-offset: 6px;
+}
+
+.nav-bar-active {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #f8f9fa;
+  border-radius: 0;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
 }
 
 .img-circle {
