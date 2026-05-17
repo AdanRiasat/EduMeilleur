@@ -1,29 +1,37 @@
-<div *ngIf="!isMobileSidebar" class="card mb-3 border-0 shadow-sm">
-    <div class="card-header text-white">
-        <div class="d-flex align-items-center">
-            <div class="rounded-circle bg-white p-2 me-3">
-                <i class="bi bi-robot text-primary"></i>
-            </div>
-            <div>
-                <h5 class="mb-0">ÉduMeilleur AI</h5>
-            </div>
-        </div>
+<div *ngIf="!isMobileSidebar" class="sidebar-header">
+    <div class="icon-box">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                d="M15 19c1.2-3.678 2.526-5.005 6-6c-3.474-.995-4.8-2.322-6-6c-1.2 3.678-2.526 5.005-6 6c3.474.995 4.8 2.322 6 6Zm-8-9c.6-1.84 1.263-2.503 3-3c-1.737-.497-2.4-1.16-3-3c-.6 1.84-1.263 2.503-3 3c1.737.497 2.4 1.16 3 3Zm1.5 10c.3-.92.631-1.251 1.5-1.5c-.869-.249-1.2-.58-1.5-1.5c-.3.92-.631 1.251-1.5 1.5c.869.249 1.2.58 1.5 1.5Z" />
+        </svg>
+    </div>
+    <div class="brand-text">
+        <span class="brand-title">Amir</span>
+        <span class="brand-subtitle">Ai assistant</span>
     </div>
 </div>
 
-<!-- New Chat -->
-<button class="btn btn-outline-primary w-100 mb-3 d-flex align-items-center justify-content-center gap-2"
-    (click)="newChat.emit()">
-    <i class="bi bi-plus-lg"></i>
-    <span>New Chat</span>
-</button>
+<div class="sub-header">
+    <div class="model-selection">
+        <label for="model" class="model-label">Model</label>
+        <select class="model-dropd" name="model">
+
+        </select>
+    </div>
+
+    <button class="btn-new" (click)="newChat.emit()">
+        <i class="bi bi-plus-lg"></i>
+        <span>New Chat</span>
+    </button>
+</div>
+
+
 
 <!--TODO Fix overflow issue with dropdown-->
 
 <!-- Chat List -->
-<div class="list-group list-group-flush flex-grow-1">
-    <div *ngFor="let c of chats" class="list-group-item d-flex justify-content-between align-items-center chat-title"
-        [class.active]="c.id === currentChat?.id" (click)="getMessages.emit(c)">
+<div class="chat-list">
+    <div *ngFor="let c of chats" class="chat" [class.active]="c.id === currentChat?.id" (click)="getMessages.emit(c)">
         <!-- Chat Title-->
         <div class="flex-grow-1 text-truncate">
             {{ c.title }}
