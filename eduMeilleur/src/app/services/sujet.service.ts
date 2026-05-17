@@ -18,6 +18,7 @@ console.log(domain);
 export class SujetService {
 
   selectedContent = signal<SafeHtml>("")
+  currentItem = signal<Item | null>(null)
 
   constructor(public http: HttpClient, public spinner: SpinnerService, public mdService: MarkdownService, public sanitizer: DomSanitizer) { }
 
@@ -40,15 +41,17 @@ export class SujetService {
   } 
 
   async getAllItems(id: number, type: string): Promise<Item[]>{
-    let x = await lastValueFrom(this.http.get<Item[]>(domain + "/api/" + type + "/GetAll" + type + "/" + id))
+    let x = await lastValueFrom(this.http.get<Item[]>(`${domain}/api/${type}/GetAll${type}/${id}`))
     console.log(x);
 
     return x
   }
 
   async getItem(id: number, type: string): Promise<Item>{
-    let x = await lastValueFrom(this.http.get<Item>(domain + "/api/" + type + "/Get" + type + "/" + id))
+    let x = await lastValueFrom(this.http.get<Item>(`${domain}/api/${type}/Get${type}/${id}`))
     console.log(x);
+
+    this.currentItem.set(x)
     return x
   }
 

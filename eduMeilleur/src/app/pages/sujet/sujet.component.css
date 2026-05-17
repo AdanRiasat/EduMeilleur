@@ -1,4 +1,5 @@
 .scroll-content{
+  position: relative;
   background-color: #f2f2f2;
   padding: 20px clamp(10px, 10vw, 200px);
 }
@@ -22,6 +23,12 @@
 
 .scroll-content {
   min-width: 0;
+}
+
+.content-cta {
+  position: absolute;
+  right: 20px;
+  top: 20px;
 }
 
 app-subject-sidebar {

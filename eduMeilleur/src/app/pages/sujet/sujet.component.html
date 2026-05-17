@@ -3,12 +3,17 @@
         <div id="sujet-sidebar" class="col-2 scroll-sidebar">
 
             <app-subject-sidebar [subject]="sujet" [chapters]="chapters" [allItems]="allItems"
-                [currentItem]="currentItem" (getAllItems)="getAllItems($event)"
+                [currentItem]="sujetService.currentItem()" (getAllItems)="getAllItems($event)"
                 (getCurrentItem)="getCurrentItem($event)"></app-subject-sidebar>
         </div>
 
         <div class="col scroll-content">
             <div [innerHTML]="sujetService.selectedContent()"></div>
+            <button class="content-cta"
+                (click)="refreshItems(sujetService.currentItem()!.relatedItemIds[0], sujetService.currentItem()!.relatedType)">
+                <div *ngIf="currentType == 'Notes'">Exercises for these notes</div>
+                <div *ngIf="currentType == 'Exercises'">Notes for these exercises</div>
+            </button>
         </div>
     </div>
 </div>

@@ -3,6 +3,7 @@ using System;
 using EduMeilleurAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EduMeilleurAPI.Migrations
 {
     [DbContext(typeof(EduMeilleurAPIContext))]
-    partial class EduMeilleurAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20260513225716_what23")]
+    partial class what23
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -576,16 +579,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6f1c459d-3bbc-4bf2-8b0e-b1de733458a4",
+                            ConcurrencyStamp = "9d349de1-12af-4aca-8cdf-1c8ec8e86bfe",
                             Email = "2ariasat@gmail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "2ARIASAT@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBgKJFn5jJyVUsS6mvFrIbzgpMKMjbp/fGIxenKGjQYAgB0pbRyWHU2ZZ2AMm8+y3A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENSfRcAOCYIqiGhxSp3ILLzHAWITzv9cLL5OW6E+qYxWn3dnNawQXGyVMOmg4Zk4rg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b9af4c4d-6ec4-409a-abdf-1db315c6df5c",
+                            SecurityStamp = "22a23e64-da60-4dba-a91d-65adb1de0e6d",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -593,16 +596,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111112",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "51758db9-a57b-410d-a1fe-a516194227b9",
+                            ConcurrencyStamp = "7cd4aace-2963-4bc2-9494-f55ebd84ca34",
                             Email = "bobibo@mail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "BOBIBO@MAIL.COM",
                             NormalizedUserName = "ROBERT LEBOIS",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKXxfKgt0qcSkSjMjd7HGSVSeNEm30XAQCZI8fYCvqB8kA5E+yWOt3fjlT9RNHwt6A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECc3qn0pXgADOnPOkKQl9Y6eIrZ725a9bjAZ6aVyj+PQJN1PaCRd8OW8AN5xCaTF7w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8b60ad0a-7ff2-437f-b54b-7eaf5b24e818",
+                            SecurityStamp = "227b5c87-a62c-4c2b-85fd-5331199cea9d",
                             TwoFactorEnabled = false,
                             UserName = "Robert Lebois"
                         },
@@ -610,16 +613,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111113",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0aa47848-0615-4595-97d1-709048c2366e",
+                            ConcurrencyStamp = "d93d2e16-ea95-4893-83ac-fe64f711e6e7",
                             Email = "hmmm@mail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "HMMM@MAIL.COM",
                             NormalizedUserName = "JEROME LAPLANTE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEB9VdirYGf6AQqNV7/AA0aQAmSJtdQ2tMkFtsBIpkqevPeq24op/DC4hWm5CLoT3lw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENVMRNIs6H6t9+KrXwGug/m30kfiWHCi6yy6brScTx+rukAeqIThb3AYJGyTdau2uA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5ece9236-c083-4435-9c48-5d1bbc19cf51",
+                            SecurityStamp = "bfd99d44-3a6d-4614-bcf1-31088d867033",
                             TwoFactorEnabled = false,
                             UserName = "Jerome Laplante"
                         },
@@ -627,16 +630,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111114",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "28b5a64a-9bea-4f60-a182-a4a7f8c3bf67",
+                            ConcurrencyStamp = "a52e967f-6644-47ea-b56d-9bbb29120369",
                             Email = "teacher3@mail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "TEACHER3@MAIL.COM",
                             NormalizedUserName = "EMILY TREMBLAY",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHRlS3I843iGuE6847+TqJZLsxXdbr7R4gpnwKtt4v4PCg16sG+ypo9UHoi3bDOzOw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDw7HWQDIPhBv3R8UkrugRut5ifShLTH1xQlNWeCMil2zI0HxSGKz+zj53k6sXu0zA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ee1c62c0-a784-44fa-92ca-41b7a2c02488",
+                            SecurityStamp = "e9376ed6-de57-409f-a8aa-1af77ae67450",
                             TwoFactorEnabled = false,
                             UserName = "Emily Tremblay"
                         },
@@ -644,16 +647,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111115",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7dd18ce8-2465-41c2-9d15-4e5c3339d025",
+                            ConcurrencyStamp = "37d4853c-97a3-4ec0-bb5e-569b18b5199c",
                             Email = "teacher4@mail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "teacher4@MAIL.COM",
                             NormalizedUserName = "TYRONE ROCHELIEU",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDsi9PVkEn7H37sbIQ+YTPVwRLvIb9cNITG1BEhWKjxqkaZ38RS/O9rl98H5Pf9SlA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECiUHDe27NYOdJi5xIjuej5win3EnIu3RTmDIIhEBQkNW4WmRQ8iJYWtd7A93Ximyw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "be775f82-f9b8-4ec0-b787-9753df32b405",
+                            SecurityStamp = "b4d7b570-9b09-4a64-a58a-cffdfa00b4f3",
                             TwoFactorEnabled = false,
                             UserName = "Tyrone Rochelieu"
                         },
@@ -661,16 +664,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111116",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a3582a1f-5c41-48f4-93dc-a71274973e84",
+                            ConcurrencyStamp = "531f2596-78bc-48d9-acfe-ca08ff7e81d5",
                             Email = "teacher5@mail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "teacher5@MAIL.COM",
                             NormalizedUserName = "SARAH LAIDE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDZprD1aOwfdLsa+wCjpunEzLhBkaMbTBDLxzFy4+p768Ef22NHP3dPEaDHx9LWeNA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIQ6i3gxGQOp3bwI9JK+8mMrUQMKaazF4lOhtcQfRJ5S0gDeMbZux7AcSn7U2UQu6g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "008bff6c-a07c-418c-a7d6-08fe6aa3c5e6",
+                            SecurityStamp = "5713c888-d9cf-4685-94ba-b3e4d53cdd3b",
                             TwoFactorEnabled = false,
                             UserName = "Sarah Laide"
                         });

@@ -25,25 +25,18 @@ namespace EduMeilleurAPI.Controllers
 
         // GET: api/Notes
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Notes>>> GetAllNotes(int id)
+        public async Task<ActionResult> GetAllNotes(int id)
         {
             List<Notes>? notes = await _notesService.GetAllAsync(id);
             if (notes == null) return StatusCode(StatusCodes.Status500InternalServerError);
 
-            var items = new List<ItemDisplayDTO>();
-
-            foreach (var item in notes)
-            {
-                
-                items.Add(new ItemDisplayDTO(item.Id, item.Title, item.Content, item.Chapter.Title));
-            }
-
+            var items = notes.Select(n => new ItemResponseDTO(n, ItemTypes.Notes, ItemTypes.Exercises, n.NoteExercises.Select(ne => ne.ExerciseId).ToList()));
             return Ok(items);
         }
 
         // GET: api/Notes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Notes>> GetNotes(int id)
+        public async Task<ActionResult> GetNotes(int id)
         {
             var notes = await _notesService.GetAsync(id);
             if (notes == null) return NotFound();
@@ -54,9 +47,9 @@ namespace EduMeilleurAPI.Controllers
             string markdown = await System.IO.File.ReadAllTextAsync(filePath);
 
             notes.Content = markdown;
-            
 
-            return Ok(notes);
+            var item = new ItemResponseDTO(notes, ItemTypes.Notes, ItemTypes.Exercises, notes.NoteExercises.Select(ne => ne.ExerciseId).ToList()); 
+            return Ok(item);
         }
     }
 }

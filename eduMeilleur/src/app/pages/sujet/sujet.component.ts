@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SujetService } from '../../services/sujet.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DisplaySujet } from '../../models/displaySujet';
 import { Item } from '../../models/Item';
 import { CommonModule } from '@angular/common';
@@ -22,7 +22,6 @@ export class SujetComponent implements OnInit{ // TODO might need ro refactor lo
   id: number = 0 //this is subjectId
 
   allItems: Item[] = []
-  currentItem: Item | null = null
   currentType: string = ""
 
   constructor(public sujetService: SujetService, public route: ActivatedRoute, public sanitizer: DomSanitizer, public markdown: MarkdownService){}
@@ -52,9 +51,18 @@ export class SujetComponent implements OnInit{ // TODO might need ro refactor lo
     this.currentType = type
   }
 
-  async getCurrentItem(id: number){
-    this.currentItem = await this.sujetService.getItem(id, this.currentType)
-    this.sujetService.formatMessage(this.currentItem!.content)
+  async getCurrentItem(id: number, type?: string){
+    if (!type) type = this.currentType
+    
+    await this.sujetService.getItem(id, type)
+    this.sujetService.formatMessage(this.sujetService.currentItem()!.content)
+
+    this.currentType = type
+  }
+
+  async refreshItems(id: number, type: string) {
+    await this.getAllItems(type)
+    await this.getCurrentItem(id, type)
   }
 }
 
