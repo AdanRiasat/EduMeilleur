@@ -1,4 +1,5 @@
 ﻿using EduMeilleurAPI.Models.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace EduMeilleurAPI.Models
@@ -8,6 +9,9 @@ namespace EduMeilleurAPI.Models
         public int Id { get; set; }
         public string Title { get; set; } = null!;
         public string Content { get; set; } = null!;
+
+        [NotMapped]
+        public string Code => $"{ChapterId}.{Id}";
 
         public int ChapterId { get; set; }
         [JsonIgnore]

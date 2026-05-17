@@ -148,8 +148,8 @@ namespace EduMeilleurAPI.Data
             );
 
             builder.Entity<Notes>().HasData(
-                new Notes { Id = 1, Title = "1.1 Introduction to Vectors", Content = "SN5_IntroVectors_EN.md", ChapterId = 1,},
-                new Notes {Id = 2, Title = "1.2 Components and Orientation", Content = "SN5_ComponentsandOrientation_EN.md", ChapterId = 1 }
+                new Notes { Id = 1, Title = "Introduction to Vectors", Content = "SN5_IntroVectors_EN.md", ChapterId = 1,},
+                new Notes {Id = 2, Title = "Components and Orientation", Content = "SN5_ComponentsandOrientation_EN.md", ChapterId = 1 }
             );
             
             builder.Entity<Exercise>().HasData(
