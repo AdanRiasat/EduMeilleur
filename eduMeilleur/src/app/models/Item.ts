@@ -4,14 +4,24 @@ export enum ItemType {
     Videos = "Videos"
 }
 
+export class RelatedItem {
+    constructor(
+        public id: number,
+        public code: string
+    ) {}
+}
+
 export class Item{
     constructor(
         public id: number,
         public title: string,
         public content: string,
         public chapter: string,
-        public relatedItemIds: number[],
+        public relatedItems: RelatedItem[],
         public type: ItemType,
-        public relatedType: ItemType
+        public relatedType: ItemType,
+        public code: string
     ) {}
 }
+
+

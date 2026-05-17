@@ -15,7 +15,7 @@
                 <div *ngFor="let n of allItems" class="sub-chapters">
                     <div class="item" [class.active]="n.id == currentItem?.id" *ngIf="n.chapter == c"
                         (click)="getCurrentItem.emit(n.id)">
-                        <p>{{n.title}}</p>
+                        <p>{{n.code}} {{n.title}}</p>
                     </div>
                 </div>
 

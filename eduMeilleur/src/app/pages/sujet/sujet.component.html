@@ -10,9 +10,14 @@
         <div class="col scroll-content">
             <div [innerHTML]="sujetService.selectedContent()"></div>
             <button class="content-cta btn-home"
-                (click)="refreshItems(sujetService.currentItem()!.relatedItemIds[0], sujetService.currentItem()!.relatedType)">
+                (click)="refreshItems(sujetService.currentItem()!.relatedItems[0].id, sujetService.currentItem()!.relatedType)">
                 <div *ngIf="currentType == 'Notes'">Exercises for these notes</div>
-                <div *ngIf="currentType == 'Exercises'">Notes for these exercises</div>
+                <div *ngIf="currentType == 'Exercises'">
+                    Notes:
+                    <span *ngFor="let i of sujetService.currentItem()!.relatedItems; let last = last">
+                        {{i.code}}<span *ngIf="!last">, </span>
+                    </span>
+                </div>
             </button>
         </div>
     </div>
