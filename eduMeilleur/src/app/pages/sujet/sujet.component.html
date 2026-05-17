@@ -9,7 +9,7 @@
 
         <div class="col scroll-content">
             <div [innerHTML]="sujetService.selectedContent()"></div>
-            <button class="content-cta"
+            <button class="content-cta btn-home"
                 (click)="refreshItems(sujetService.currentItem()!.relatedItemIds[0], sujetService.currentItem()!.relatedType)">
                 <div *ngIf="currentType == 'Notes'">Exercises for these notes</div>
                 <div *ngIf="currentType == 'Exercises'">Notes for these exercises</div>
