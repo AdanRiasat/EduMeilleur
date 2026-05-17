@@ -30,7 +30,7 @@ namespace EduMeilleurAPI.Controllers
             List<Notes>? notes = await _notesService.GetAllAsync(id);
             if (notes == null) return StatusCode(StatusCodes.Status500InternalServerError);
 
-            var items = notes.Select(n => new ItemResponseDTO(n, ItemTypes.Notes, ItemTypes.Exercises, n.NoteExercises.Select(ne => ne.ExerciseId).ToList()));
+            var items = notes.Select(n => new ItemResponseDTO(n, ItemTypes.Notes, ItemTypes.Exercises, n.NoteExercises.Select(ne => new RelatedItemDTO(ne.ExerciseId)).ToList(), n.Code));
             return Ok(items);
         }
 
@@ -48,7 +48,7 @@ namespace EduMeilleurAPI.Controllers
 
             notes.Content = markdown;
 
-            var item = new ItemResponseDTO(notes, ItemTypes.Notes, ItemTypes.Exercises, notes.NoteExercises.Select(ne => ne.ExerciseId).ToList()); 
+            var item = new ItemResponseDTO(notes, ItemTypes.Notes, ItemTypes.Exercises, notes.NoteExercises.Select(ne => new RelatedItemDTO(ne.ExerciseId)).ToList(), notes.Code); 
             return Ok(item);
         }
     }

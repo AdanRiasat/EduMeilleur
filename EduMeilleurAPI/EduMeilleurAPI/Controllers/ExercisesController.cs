@@ -30,7 +30,7 @@ namespace EduMeilleurAPI.Controllers
             var exercises = await _exerciseService.GetAllAsync(id);
             if (exercises == null) return StatusCode(StatusCodes.Status500InternalServerError);
 
-            var items = exercises.Select(e => new ItemResponseDTO(e, ItemTypes.Exercises, ItemTypes.Notes, e.NoteExercises.Select(ne => ne.NoteId).ToList()));
+            var items = exercises.Select(e => new ItemResponseDTO(e, ItemTypes.Exercises, ItemTypes.Notes, e.NoteExercises.Select(ne => new RelatedItemDTO(ne.NoteId, ne.Note.Code)).ToList()));
 
             return Ok(items);
         }
@@ -47,7 +47,7 @@ namespace EduMeilleurAPI.Controllers
 
             exercise.Content = await System.IO.File.ReadAllTextAsync(filePath);
 
-            var item = new ItemResponseDTO(exercise, ItemTypes.Exercises, ItemTypes.Notes, exercise.NoteExercises.Select(ne => ne.NoteId).ToList());
+            var item = new ItemResponseDTO(exercise, ItemTypes.Exercises, ItemTypes.Notes, exercise.NoteExercises.Select(ne => new RelatedItemDTO(ne.NoteId, ne.Note.Code)).ToList());
             return Ok(item);
         }
 
