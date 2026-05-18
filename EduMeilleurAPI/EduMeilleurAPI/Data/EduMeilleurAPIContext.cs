@@ -144,12 +144,15 @@ namespace EduMeilleurAPI.Data
             .HasForeignKey("SubjectId");
 
             builder.Entity<Chapter>().HasData(
-                new Chapter {Id = 1, Title = "Vectors", SubjectId = 2}
+                new Chapter {Id = 1, Title = "Vectors", SubjectId = 2},
+                new Chapter { Id = 2, Title = "Vectors2", SubjectId = 2 }
+
             );
 
             builder.Entity<Notes>().HasData(
                 new Notes { Id = 1, Title = "Introduction to Vectors", Content = "SN5_IntroVectors_EN.md", ChapterId = 1,},
-                new Notes {Id = 2, Title = "Components and Orientation", Content = "SN5_ComponentsandOrientation_EN.md", ChapterId = 1 }
+                new Notes {Id = 2, Title = "Components and Orientation", Content = "SN5_ComponentsandOrientation_EN.md", ChapterId = 1 },
+                new Notes { Id = 3, Title = "testing", Content = "", ChapterId = 2 }
             );
             
             builder.Entity<Exercise>().HasData(

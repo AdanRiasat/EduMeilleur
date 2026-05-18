@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EduMeilleurAPI.Migrations
 {
     [DbContext(typeof(EduMeilleurAPIContext))]
-    [Migration("20260517183411_dddd")]
-    partial class dddd
+    [Migration("20260518050821_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,6 +86,12 @@ namespace EduMeilleurAPI.Migrations
                             Id = 1,
                             SubjectId = 2,
                             Title = "Vectors"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            SubjectId = 2,
+                            Title = "Vectors2"
                         });
                 });
 
@@ -285,6 +291,13 @@ namespace EduMeilleurAPI.Migrations
                             ChapterId = 1,
                             Content = "SN5_ComponentsandOrientation_EN.md",
                             Title = "Components and Orientation"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ChapterId = 2,
+                            Content = "",
+                            Title = "testing"
                         });
                 });
 
@@ -579,16 +592,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1c515e5b-b5aa-4301-83fd-d590d84750da",
+                            ConcurrencyStamp = "2319b27c-9f0f-45a0-8e82-bafa95671f61",
                             Email = "2ariasat@gmail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "2ARIASAT@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEP8jU32TEF8wu0pSVWwPDfAbwwzoYthhMEG0C4Pb5pvijlFwLysOFvKB9UzraYxfXQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEfTBoyWsOst3ERYaPOhxzGlvR21tTy0Ycjup22rgsefD7xt7JVo8r/oRDQlzBY2qw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b335ced0-7110-42ec-8e12-84c124086769",
+                            SecurityStamp = "583e96fd-68f7-4a70-b7a8-ce0ae257a54d",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -596,16 +609,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111112",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c6ec03bc-d16f-4167-9cd0-3dc5f88dd5c7",
+                            ConcurrencyStamp = "d48bd647-dbe6-45ff-bf14-10d3fb59cd23",
                             Email = "bobibo@mail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "BOBIBO@MAIL.COM",
                             NormalizedUserName = "ROBERT LEBOIS",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDSPM0pF2kXO9TUnJaYPK/IyCXyUee+RaBqDO1RPqfQ1IFnYoCuPwE0VfULwnKclyw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPDceyhq63vyUYhtW6wTQRr/hkrgp+KuVIGryNiWVMZzAlHwiKwbCl0/nDatJPIX4Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "75b80159-2787-441e-b2d3-30a218b4d3e7",
+                            SecurityStamp = "a1fcf2a9-6979-4845-aebd-3a9aacb456af",
                             TwoFactorEnabled = false,
                             UserName = "Robert Lebois"
                         },
@@ -613,16 +626,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111113",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "76467b3f-5d27-4a1c-8ca0-bb9bb1d68be1",
+                            ConcurrencyStamp = "8b96b726-c3ff-4818-95fa-3407c4e7098c",
                             Email = "hmmm@mail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "HMMM@MAIL.COM",
                             NormalizedUserName = "JEROME LAPLANTE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHvy02iL6s9ZJ0y7UdfcUqTvnik9LP4jtFNo2PmGJ/v9ELq5VEv+pU/p87rFpkHOKg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHuk5k6GwVF5UwBqnjVHxs85GTLDAT6QK4RN63mNGAxfI0bT6KyXO32L0rGM/EiWow==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "448d47ce-171d-4b7f-b006-49fb2c3bc825",
+                            SecurityStamp = "bf24affc-ba80-48e3-a373-f9546bed9005",
                             TwoFactorEnabled = false,
                             UserName = "Jerome Laplante"
                         },
@@ -630,16 +643,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111114",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4bd0c55e-1cea-48d6-b2c5-f47b69d671f1",
+                            ConcurrencyStamp = "7d11f5f1-0c74-478c-b427-9d7cc0a4c071",
                             Email = "teacher3@mail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "TEACHER3@MAIL.COM",
                             NormalizedUserName = "EMILY TREMBLAY",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKqyO/O0nRne4e6s5wcixaic/II/iuMUG5urljJcOjRo35OejOpmviNOls9p8UWJ3w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELAMmHAF5dt8+rUog6OFWknCqoTGwGceGUCaAfHOtge5D12IzL52dcsbPdw/4dJ6Bg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "819ad57e-1f61-43e0-9bc4-3be73e1b3ef1",
+                            SecurityStamp = "7dc90212-ac14-4eb2-93bb-3fb7755967c5",
                             TwoFactorEnabled = false,
                             UserName = "Emily Tremblay"
                         },
@@ -647,16 +660,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111115",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "059ed5b2-c7b6-4064-aae1-e309e0a95eb1",
+                            ConcurrencyStamp = "d4cad0b8-d64c-40b2-aa4f-690b28ae5944",
                             Email = "teacher4@mail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "teacher4@MAIL.COM",
                             NormalizedUserName = "TYRONE ROCHELIEU",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGcU/H9ddNAN5vay5irGWiIwdIZ/qlSSCDHcZ8f5u0nv5+ufFisTDDmNkmjG/dj4pA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPfN4gPE5Efl9X0KAH/zqL/hdEbR/5AGN9DOYkAXYt0yAbVoKPPnOClDaEHvinSzmQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "eeaaf790-255f-492d-9d46-a06ece03b96a",
+                            SecurityStamp = "9b6c2c8c-778e-4f53-9ad4-0e84b0b84626",
                             TwoFactorEnabled = false,
                             UserName = "Tyrone Rochelieu"
                         },
@@ -664,16 +677,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111116",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b9e20139-732f-4dba-aa59-2da0194d7b14",
+                            ConcurrencyStamp = "14b560ff-b731-46ea-9a91-29cf21573703",
                             Email = "teacher5@mail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "teacher5@MAIL.COM",
                             NormalizedUserName = "SARAH LAIDE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFszx7jgH2yhkcZB/12acG5msirJGan2gw9KE6zCEvAFv73JXzPWOjcZLc/VYpLSiQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENColVlZ7KbghOFqBBV+zRq4yyrwEdlWXYp4EsiTgT1txHPJil7j8bxGxWFkmpYRAA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1fced978-50b4-47a8-b1a4-857ab43e2882",
+                            SecurityStamp = "92faf712-3fd2-4b3e-9654-093fe5fe2d35",
                             TwoFactorEnabled = false,
                             UserName = "Sarah Laide"
                         });
