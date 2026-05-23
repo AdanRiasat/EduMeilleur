@@ -89,7 +89,7 @@ export class AiComponent implements OnInit {
   async deleteChat() {
     await this.aiService.deleteChat(this.deleteId);
 
-    let chats = this.chats()
+     let chats = this.chats()
 
     for (let i = 0; i < chats.length; i++) {
       if (chats[i].id == this.deleteId) {
