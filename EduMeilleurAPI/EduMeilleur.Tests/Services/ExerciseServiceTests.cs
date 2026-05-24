@@ -37,7 +37,11 @@ namespace EduMeilleur.Tests.Services
                 {"Jwt:Audience", "http://localhost:4200"},
                 {"Admin:Password", "alloo123" },
                 {"Admin:Email", "hellooo@gmail.com" },
-                {"Teacher:Password", "alloo123" }
+                {"Teacher:Password", "alloo123" },
+                {"Teacher2:Password",  "Test123!"},
+                {"Teacher3:Password",  "Test123!"},
+                {"Teacher4:Password",  "Test123!"},
+                {"Teacher5:Password",  "Test123!"},
             };
 
             IConfiguration config = new ConfigurationBuilder()
