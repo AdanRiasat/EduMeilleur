@@ -11,6 +11,7 @@ using Xunit;
 
 namespace EduMeilleur.Tests.Client
 {
+    [Collection("Sequential")]
     public class QuestionTests : IClassFixture<ApiFixture>
     {
         private readonly HttpClient _client;

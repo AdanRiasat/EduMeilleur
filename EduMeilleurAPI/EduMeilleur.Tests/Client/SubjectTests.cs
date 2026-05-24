@@ -10,6 +10,7 @@ using Xunit;
 
 namespace EduMeilleur.Tests.Client
 {
+    [Collection("Sequential")]
     public class SubjectTests : IClassFixture<ApiFixture>
     {
         private readonly HttpClient _client;
