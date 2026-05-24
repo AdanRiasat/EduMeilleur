@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Headers;
+using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
 using System.Linq;
 
@@ -49,6 +50,12 @@ namespace EduMeilleur.Tests.Client
                     opts.UseNpgsql(connString);
                     opts.UseLazyLoadingProxies();
                 });
+            });
+
+            builder.ConfigureLogging(logging =>
+            {
+                logging.ClearProviders();
+                logging.SetMinimumLevel(LogLevel.Warning);
             });
         }
 
