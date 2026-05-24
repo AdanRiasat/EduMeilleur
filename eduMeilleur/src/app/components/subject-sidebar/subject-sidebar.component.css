@@ -79,6 +79,5 @@ p, button {
 
 .item.active {
   background-color: var(--active);
-  color: white;
 }
 
