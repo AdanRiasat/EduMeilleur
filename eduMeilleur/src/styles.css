@@ -6,12 +6,12 @@
 
   --button: #5fa8d3;
   --btnHover: #4a94c0;
-  --item-hover: rgba(13, 110, 253, 0.5);
-
+  
   --border: #457b9d;
   --border-lite: rgba(69, 123, 157, 0.5);
-
-  --active: #457b9d;
+  
+  --item-hover: #eef4f8;
+  --active: rgba(95, 168, 211, 0.16);
 
   --bg: hsl(202, 46%, 91%);
 
