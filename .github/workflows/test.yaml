@@ -33,13 +33,13 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore ./EduMeilleurAPI/EduMeilleurAPI
+        run: dotnet restore ./EduMeilleurAPI/EduMeilleurAPI.sln
 
       - name: Build
-        run: dotnet build ./EduMeilleurAPI/EduMeilleurAPI --no-restore
+        run: dotnet build ./EduMeilleurAPI/EduMeilleurAPI.sln --no-restore
 
       - name: Run tests
-        run: dotnet test ./EduMeilleurAPI/EduMeilleurAPI --no-build --verbosity normal
+        run: dotnet test ./EduMeilleurAPI/EduMeilleurAPI.sln --no-build --verbosity normal
         env:
           ConnectionStrings__EduMeilleurAPIContext: "Host=localhost;Database=edmeilleur_test;Username=test;Password=alloo"
           JWT__Key: "this-is-a-fake-test-key-32-chars!!"
