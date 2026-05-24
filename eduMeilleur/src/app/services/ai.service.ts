@@ -15,6 +15,7 @@ const domain: string = environment.apiUrl
 export class AiService {
   chats = signal<Chat[]>([]);
   currentChat = signal<Chat | null>(null);
+  selectedModel = signal<string>("");
   dropdownOpen = signal<number | null>(null);
   messages = signal<ChatMessage[]>([]);
 
@@ -23,12 +24,17 @@ export class AiService {
   constructor(public http: HttpClient, public modalService: ModalService, public userService: UserService) { }
 
   async streamMessage(text: string, chat: Chat, onChunk?: () => void): Promise<void> {
-     let dto = {
+     let message = {
       id: 0,
       text: text,
       isUser: true,
       timeStamp: new Date,
       chatId: chat.id,
+    }
+
+    let dto = {
+      message: message,
+      modelName: this.selectedModel()
     }
 
     let res = await fetch(`${domain}/api/Chats/StreamMessage`, {

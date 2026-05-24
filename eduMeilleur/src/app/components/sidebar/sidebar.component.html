@@ -55,8 +55,9 @@
     </div>
 
     <div class="chatbot-sidebar-content" *ngIf="activeSidebarContent === 'chatbot'">
-      <app-chatbot-sidebar [isMobileSidebar]="sidebarStateService.isMobileSidebar" [chats]="aiService.chats()"
-        [currentChat]="aiService.currentChat()" [dropdownOpen]="aiService.dropdownOpen()"
+      <app-chatbot-sidebar [isMobileSidebar]="sidebarStateService.isMobileSidebar"
+        [selectedModel]="aiService.selectedModel()" (selectedModelChange)="aiService.selectedModel.set($event)"
+        [chats]="aiService.chats()" [currentChat]="aiService.currentChat()" [dropdownOpen]="aiService.dropdownOpen()"
         (newChat)="aiService.newChat()" (getMessages)="getMessages($event)"
         (toggleDropdown)="aiService.toggleDropdown($event)"
         (openDeleteModal)="aiService.openDeleteModal($event)"></app-chatbot-sidebar>

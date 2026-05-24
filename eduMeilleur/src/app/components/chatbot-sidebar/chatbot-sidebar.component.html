@@ -14,8 +14,10 @@
 <div class="sub-header">
     <div class="model-selection">
         <label for="model" class="model-label">Model</label>
-        <select class="model-dropd" name="model">
-
+        <select class="model-dropd" name="model" [(ngModel)]="selectedModel" (ngModelChange)="onModelChange($event)">
+            <option value="openai/gpt-oss-120b:free">GPT oss-120</option>
+            <option value="deepseek/deepseek-v4-flash:free">DeepSeek V4 flash</option>
+            <option value="nvidia/nemotron-3-super-120b-a12b:free">Nemotron 3 super</option>
         </select>
     </div>
 
@@ -32,9 +34,15 @@
 <!-- Chat List -->
 <div class="chat-list">
     <div *ngFor="let c of chats" class="chat" [class.active]="c.id === currentChat?.id" (click)="getMessages.emit(c)">
-        <!-- Chat Title-->
-        <div class="flex-grow-1 text-truncate">
-            {{ c.title }}
+
+        <div class="chat-title">
+            <svg id="chat-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2m0 14H5.2L4 17.2V4h16z" />
+            </svg>
+            <div>
+                {{ c.title }}
+            </div>
         </div>
 
         <!-- Dropdown for actions -->

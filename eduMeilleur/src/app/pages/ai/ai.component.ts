@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { SpinnerService } from '../../services/spinner.service';
 import { ModalService } from '../../services/modal.service';
 import { ChatbotSidebarComponent } from '../../components/chatbot-sidebar/chatbot-sidebar.component';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-ai',
@@ -40,7 +41,7 @@ export class AiComponent implements OnInit {
   isNearBottom = true;
   scrollThrottle: any = null;
 
-  constructor(public sanitizer: DomSanitizer, public userService: UserService, public route: Router, public spinner: SpinnerService, public modalService: ModalService) {}
+  constructor(public sanitizer: DomSanitizer, public userService: UserService, public route: Router, public spinner: SpinnerService, public modalService: ModalService, public toastService: ToastService) {}
 
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
 
@@ -120,7 +121,6 @@ export class AiComponent implements OnInit {
     console.log(text);
 
     if (text == '') {
-      console.log('ummmmmm sirr');
       return;
     }
 
@@ -143,7 +143,11 @@ export class AiComponent implements OnInit {
       this.isNearBottom = true;
       this.loadingId = this.currentChat()!.id;
       this.scrollToBottom();
-      await this.aiService.streamMessage(text, this.currentChat()!, () => this.scrollToBottom())
+      try {
+        await this.aiService.streamMessage(text, this.currentChat()!, () => this.scrollToBottom())
+      } catch {
+        this.toastService.error('Something went wrong while sending your message, please try again later');
+      }
     }
 
     this.isLoading = false;
