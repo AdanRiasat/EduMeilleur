@@ -41,9 +41,12 @@ namespace EduMeilleur.Tests.Client
                     d => d.ServiceType == typeof(DbContextOptions<EduMeilleurAPIContext>));
                 if (descriptor != null) services.Remove(descriptor);
 
+                var connString = Environment.GetEnvironmentVariable("ConnectionStrings__EduMeilleurAPIContext")
+                    ?? "Host=localhost;Database=edmeilleur_test;Username=test;Password=alloo";
+
                 services.AddDbContext<EduMeilleurAPIContext>(opts =>
                 {
-                    opts.UseNpgsql("Host=localhost;Database=edmeilleur_test;Username=postgres;Password=zZ1029384756Zz?");
+                    opts.UseNpgsql(connString);
                     opts.UseLazyLoadingProxies();
                 });
             });

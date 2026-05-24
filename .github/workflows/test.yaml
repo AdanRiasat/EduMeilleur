@@ -1,0 +1,54 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: edmeilleur_test
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: alloo
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Run tests
+        run: dotnet test --no-build --verbosity normal
+        env:
+          ConnectionStrings__EduMeilleurAPIContext: "Host=localhost;Database=edmeilleur_test;Username=test;Password=alloo"
+          JWT__Key: "this-is-a-fake-test-key-32-chars!!"
+          JWT__Issuer: "test-issuer"
+          JWT__Audience: "test-audience"
+          Admin__Email: "admin@test.com"
+          Admin__Password: "AdminPass1!"
+          Teacher__Password: "TeacherPass1!"
+          Teacher2__Password: "TeacherPass1!"
+          Teacher3__Password: "TeacherPass1!"
+          Teacher4__Password: "TeacherPass1!"
+          Teacher5__Password: "TeacherPass1!"
