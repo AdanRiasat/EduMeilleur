@@ -1,15 +1,24 @@
-﻿using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
-using EduMeilleurAPI.Data;
+﻿using EduMeilleurAPI.Data;
+using EduMeilleurAPI.Models;
+using EduMeilleurAPI.Models.DTO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using System.Linq;
 
 namespace EduMeilleur.Tests.Client
 {
     public class ApiFixture : WebApplicationFactory<Program>
     {
+        public const string TestUsername = "TestUser1";
+        public const string TestEmail = "Test@email.com";
+        public const string TestPassword = "Test123!";
+
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureAppConfiguration(config =>
@@ -23,9 +32,6 @@ namespace EduMeilleur.Tests.Client
                     ["Teacher3:Password"] = "Test123!",
                     ["Teacher4:Password"] = "Test123!",
                     ["Teacher5:Password"] = "Test123!",
-                    ["JWT:Key"] = "your-test-secret-key-long-enough",
-                    ["JWT:Issuer"] = "test-issuer",
-                    ["JWT:Audience"] = "test-audience",
                 });
             });
 
@@ -41,6 +47,36 @@ namespace EduMeilleur.Tests.Client
                     opts.UseLazyLoadingProxies();
                 });
             });
+        }
+
+        private async Task SeedTestUserAsync()
+        {
+            using var scope = Services.CreateScope();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+
+            if (await userManager.FindByEmailAsync(TestEmail) != null) return;
+
+            var user = new User
+            {
+                UserName = TestUsername,
+                Email = TestEmail,
+                NormalizedUserName = TestUsername.ToUpper(),
+                NormalizedEmail = TestEmail.ToUpper(),
+            };
+
+            await userManager.CreateAsync(user, "Test123!");
+        }
+
+        public async Task<string> GetTokenAsync(HttpClient client)
+        {
+            await SeedTestUserAsync();
+
+            var dto = new LoginDTO { Username = TestEmail, Password = TestPassword };
+            var response = await client.PostAsJsonAsync("/api/Users/Login", dto);
+            response.EnsureSuccessStatusCode();
+
+            var result = await response.Content.ReadFromJsonAsync<LoginResponse>();
+            return result!.Token;
         }
     }
 }
