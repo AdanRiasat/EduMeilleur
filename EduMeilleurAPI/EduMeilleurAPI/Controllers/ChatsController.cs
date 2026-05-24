@@ -32,17 +32,17 @@ namespace EduMeilleurAPI.Controllers
         }
 
         [HttpPost]
-        public async Task StreamMessage(ChatMessage message)
+        public async Task StreamMessage(ChatMessageRequestDTO dto)
         {
             User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             if (user == null) { Response.StatusCode = 404; return; }
-            if (message == null) { Response.StatusCode = 400; return; }
+            if (dto.Message == null) { Response.StatusCode = 400; return; }
 
             Response.ContentType = "text/event-stream";
             Response.Headers["Cache-Control"] = "no-cache";
             Response.Headers["X-Accel-Buffering"] = "no";
 
-            await foreach (var chunk in _chatService.StreamMessage(message))
+            await foreach (var chunk in _chatService.StreamMessage(dto.Message, dto.ModelName))
             {
                 await Response.WriteAsync($"data: {JsonSerializer.Serialize(chunk)}\n\n");
                 await Response.Body.FlushAsync();

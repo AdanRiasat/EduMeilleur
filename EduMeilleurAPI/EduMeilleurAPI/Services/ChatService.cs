@@ -27,7 +27,7 @@ namespace EduMeilleurAPI.Services
             return _context != null && _context.Chat != null && _context.ChatMessages != null; 
         }
 
-        public async IAsyncEnumerable<string> StreamMessage(ChatMessage chatMessage)
+        public async IAsyncEnumerable<string> StreamMessage(ChatMessage chatMessage, string modelName)
         {
             string apiKey = _config["OpenRouter:ApiKey"];
 
@@ -36,7 +36,7 @@ namespace EduMeilleurAPI.Services
 
             var request = new
             {
-                model = "openai/gpt-oss-120b:free",
+                model = modelName,
                 stream = true,
                 messages = new[]
                 {
