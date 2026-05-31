@@ -44,85 +44,103 @@ namespace EduMeilleurAPI.Services
             return feedback;
         }
 
-        public async Task SaveFilesAndAttachements(IFormCollection collection, List<Picture> pictures, List<Attachment> attachments, object targetEntity)
+        public async Task SaveFilesAndAttachments(IFormCollection collection, List<Picture> pictures, List<Attachment> attachments, object targetEntity)
         {
             for (int i = 1; i <= collection.Files.Count; i++)
             {
                 IFormFile? file = collection.Files.GetFile("file" + i);
-                if (file != null)
+                if (file == null) continue;
+                
+                var extension = Path.GetExtension(file.FileName).ToLower();
+                var mimeType = file.ContentType;
+                var safeFileName = Guid.NewGuid().ToString() + extension;
+                var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", safeFileName);
+
+                if (mimeType.StartsWith("image/"))
                 {
-                    var extension = Path.GetExtension(file.FileName).ToLower();
-                    var mimeType = file.ContentType;
-                    var safeFileName = Guid.NewGuid().ToString() + extension;
-                    var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", safeFileName);
-
-                    if (mimeType.StartsWith("image/"))
-                    {
-                        try
-                        {
-                            Image image = Image.Load(file.OpenReadStream());
-                            Picture picture = new Picture
-                            {
-                                Id = 0,
-                                FileName = safeFileName,
-                                MimeType = file.ContentType,
-                                
-                            };
-
-                            if (targetEntity is QuestionTeacher question)
-                            {
-                                picture.QuestionTeacher = question;
-                            }
-
-                            if (targetEntity is Feedback feedback)
-                            {
-                                picture.Feedback = feedback;
-                            }
-
-                            pictures.Add(picture);
-                            image.Save(Directory.GetCurrentDirectory() + "/images/full/" + picture.FileName);
-                            await _pictureService.CreatePicture(picture);
-                        }
-                        catch
-                        {
-                            //log errors
-                        }
+                    try
+                    { 
+                        await SaveImage(file, safeFileName, targetEntity, pictures);
                     }
-                    else
+                    catch
                     {
-                        if (!Directory.Exists(uploadsPath))
-                        {
-                            Directory.CreateDirectory(uploadsPath);
-                        }
-                        var fullPath = Path.Combine(uploadsPath, safeFileName);
-
-                        using (var stream = new FileStream(fullPath, FileMode.Create))
-                        {
-                            await file.CopyToAsync(stream);
-                        }
-
-                        var attachment = new Attachment
-                        {
-                            Id = 0,
-                            Filename = safeFileName,
-                            MimeType = mimeType,
-                        };
-
-                        if (targetEntity is QuestionTeacher question)
-                        {
-                            attachment.QuestionTeacher = question;
-                        }
-
-                        if (targetEntity is Feedback feedback)
-                        {
-                            attachment.Feedback = feedback;
-                        }
-
-                        attachments.Add(attachment);
-                        await _attachmentService.CreateAttachment(attachment);
+                        //log errors
                     }
                 }
+                else
+                {
+                    if (!Directory.Exists(uploadsPath))
+                    {
+                        Directory.CreateDirectory(uploadsPath);
+                    }
+
+                    try
+                    {
+                        await SaveAttachment(uploadsPath, safeFileName, file, mimeType, targetEntity, attachments);
+                    }
+                    catch
+                    {
+                        //log errors
+                    }
+                }
+                
             }
+        }
+
+        private async Task SaveImage(IFormFile file, string safeFileName, object targetEntity, List<Picture> pictures)
+        {
+            Image image = Image.Load(file.OpenReadStream());
+            Picture picture = new Picture
+            {
+                Id = 0,
+                FileName = safeFileName,
+                MimeType = file.ContentType,
+                            
+            };
+
+            if (targetEntity is QuestionTeacher question)
+            {
+                picture.QuestionTeacher = question;
+            }
+
+            if (targetEntity is Feedback feedback)
+            {
+                picture.Feedback = feedback;
+            }
+
+            pictures.Add(picture);
+            image.Save(Directory.GetCurrentDirectory() + "/images/full/" + picture.FileName);
+            await _pictureService.CreatePicture(picture);
+        }
+
+        private async Task SaveAttachment(string uploadsPath, string safeFileName, IFormFile file, string mimeType, object targetEntity, List<Attachment> attachments)
+        {
+            var fullPath = Path.Combine(uploadsPath, safeFileName);
+
+            using (var stream = new FileStream(fullPath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            var attachment = new Attachment
+            {
+                Id = 0,
+                Filename = safeFileName,
+                MimeType = mimeType,
+            };
+
+            if (targetEntity is QuestionTeacher question)
+            {
+                attachment.QuestionTeacher = question;
+            }
+
+            if (targetEntity is Feedback feedback)
+            {
+                attachment.Feedback = feedback;
+            }
+
+            attachments.Add(attachment);
+            await _attachmentService.CreateAttachment(attachment);
         }
     }
 }

@@ -168,7 +168,7 @@ namespace EduMeilleur.Tests.Services
             }
 
             // Act
-            await _questionService.SaveFilesAndAttachements(formCollection, pictures, attachments, entity);
+            await _questionService.SaveFilesAndAttachments(formCollection, pictures, attachments, entity);
 
             // Assert
             if (mimeType.StartsWith("image/"))
