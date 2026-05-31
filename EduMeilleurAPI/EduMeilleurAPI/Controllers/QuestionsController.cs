@@ -27,13 +27,15 @@ namespace EduMeilleurAPI.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IPictureService _pictureService;
         private readonly AttachmentService _attachmentService;
+        private readonly EmailService _emailService; 
 
-        public QuestionsController(QuestionService questionService, UserManager<User> userManager, IPictureService pictureService, AttachmentService attachmentService)
+        public QuestionsController(QuestionService questionService, UserManager<User> userManager, IPictureService pictureService, AttachmentService attachmentService, EmailService emailService)
         {
             _questionService = questionService;
             _userManager = userManager;
             _pictureService = pictureService;
             _attachmentService = attachmentService;
+            _emailService = emailService;
         }
 
         [HttpPost]
@@ -42,41 +44,47 @@ namespace EduMeilleurAPI.Controllers
         {
             User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             if (user == null) return NotFound();
+            
+            var userEmail = user.Email;
+            var userName = user.UserName;
+            
+            if (userEmail == null || userName == null) return BadRequest();
+            
+            string? title = Request.Form["title"];
+            string? message = Request.Form["message"];
 
-            string? Title = Request.Form["title"];
-            string? Message = Request.Form["message"];
-
-            if (Title == null || Message == null) return BadRequest();
+            if (title == null || message == null) return BadRequest();
 
             var pictures = new List<Picture>();
             var attachments = new List<Attachment>();
 
-            QuestionTeacher question = new QuestionTeacher()
+            var question = new QuestionTeacher()
             {
                 Id = 0,
-                Title = Title,
-                Message = Message,
+                Title = title,
+                Message = message,
                 user = user
             };
 
-            var newQuestion = await _questionService.CreateQuestionTeacher(question);
-
             try
             {
+                var newQuestion = await _questionService.CreateQuestionTeacher(question);
+                
                 IFormCollection formcollection = await Request.ReadFormAsync();
                 await _questionService.SaveFilesAndAttachements(formcollection, pictures, attachments, question);
+                await _emailService.SendQuestionConfirmation(userEmail, userName, title, message);
                 
+                newQuestion.Pictures = pictures;
+                newQuestion.Attachments = attachments;
+                
+                question = newQuestion;
             } 
             catch (Exception e)
             {
-                throw;
+                return Problem(e.Message);
             }
-
-            newQuestion.Pictures = pictures;
-            newQuestion.Attachments = attachments;
-
            
-            return Ok(newQuestion);
+            return Ok(question);
         }
 
         [HttpPost]
