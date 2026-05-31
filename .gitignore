@@ -433,7 +433,7 @@ src/environments/environment.*.ts
 images/pfp/*
 !images/pfp/default.png
 !images/notes/*
-/uploads/
+/uploads/*
 
 # Cloudflare
 cloudflared/*.json
