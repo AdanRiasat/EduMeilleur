@@ -1,6 +1,8 @@
-﻿namespace EduMeilleurAPI.Models
+﻿using EduMeilleurAPI.Models.Interfaces;
+
+namespace EduMeilleurAPI.Models
 {
-    public class Picture
+    public class Picture : IAttachmentPicture
     {
         public int Id { get; set; }
         public string FileName { get; set; } = null!;
