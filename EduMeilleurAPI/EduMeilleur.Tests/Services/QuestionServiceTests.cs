@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EduMeilleurAPI.Models.Interfaces;
 using Xunit;
 
 namespace EduMeilleur.Tests.Services
@@ -143,7 +144,7 @@ namespace EduMeilleur.Tests.Services
             var pictures = new List<Picture>();
             var attachments = new List<Attachment>();
 
-            object entity;
+            IQuestionFeedback entity;
             if (targetType == typeof(QuestionTeacher))
             {
                 entity = new QuestionTeacher

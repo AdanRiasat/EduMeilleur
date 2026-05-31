@@ -1,5 +1,6 @@
 ﻿using EduMeilleurAPI.Data;
 using EduMeilleurAPI.Models;
+using EduMeilleurAPI.Models.Interfaces;
 using EduMeilleurAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using SixLabors.ImageSharp;
@@ -10,6 +11,8 @@ namespace EduMeilleurAPI.Services
     {
         private const long MAX_SINGLE_FILE_SIZE = 4194304;
         private const long MAX_TOTAL_SIZE = 15728640;
+        private readonly string _imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", "images");
+        private readonly string _attachmentsPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", "attachments");
         
         private readonly EduMeilleurAPIContext _context;
         private readonly IPictureService _pictureService;
@@ -69,7 +72,7 @@ namespace EduMeilleurAPI.Services
             return (true, null);
         }
 
-        public async Task SaveFilesAndAttachments(IFormCollection collection, List<Picture> pictures, List<Attachment> attachments, object targetEntity)
+        public async Task SaveFilesAndAttachments(IFormCollection collection, List<Picture> pictures, List<Attachment> attachments, IQuestionFeedback targetEntity)
         {
             for (int i = 1; i <= collection.Files.Count; i++)
             {
@@ -79,10 +82,14 @@ namespace EduMeilleurAPI.Services
                 var extension = Path.GetExtension(file.FileName).ToLower();
                 var mimeType = file.ContentType;
                 var safeFileName = Guid.NewGuid().ToString() + extension;
-                var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", safeFileName);
 
                 if (mimeType.StartsWith("image/"))
                 {
+                    if (!Directory.Exists(_imagesPath))
+                    {
+                        Directory.CreateDirectory(_imagesPath);
+                    }
+                    
                     try
                     { 
                         await SaveImage(file, safeFileName, targetEntity, pictures);
@@ -94,14 +101,14 @@ namespace EduMeilleurAPI.Services
                 }
                 else
                 {
-                    if (!Directory.Exists(uploadsPath))
+                    if (!Directory.Exists(_attachmentsPath))
                     {
-                        Directory.CreateDirectory(uploadsPath);
+                        Directory.CreateDirectory(_attachmentsPath);
                     }
 
                     try
                     {
-                        await SaveAttachment(uploadsPath, safeFileName, file, mimeType, targetEntity, attachments);
+                        await SaveAttachment(safeFileName, file, mimeType, targetEntity, attachments);
                     }
                     catch
                     {
@@ -112,12 +119,12 @@ namespace EduMeilleurAPI.Services
             }
         }
 
-        private async Task SaveImage(IFormFile file, string safeFileName, object targetEntity, List<Picture> pictures)
+        private async Task SaveImage(IFormFile file, string safeFileName, IQuestionFeedback targetEntity, List<Picture> pictures)
         {
-            Image image = Image.Load(file.OpenReadStream());
+            var fullPath = Path.Combine(_imagesPath, safeFileName);
+            Image image = await Image.LoadAsync(file.OpenReadStream());
             Picture picture = new Picture
             {
-                Id = 0,
                 FileName = safeFileName,
                 MimeType = file.ContentType,
                             
@@ -134,13 +141,13 @@ namespace EduMeilleurAPI.Services
             }
 
             pictures.Add(picture);
-            image.Save(Directory.GetCurrentDirectory() + "/images/full/" + picture.FileName);
+            await image.SaveAsync(fullPath);
             await _pictureService.CreatePicture(picture);
         }
 
-        private async Task SaveAttachment(string uploadsPath, string safeFileName, IFormFile file, string mimeType, object targetEntity, List<Attachment> attachments)
+        private async Task SaveAttachment(string safeFileName, IFormFile file, string mimeType, IQuestionFeedback targetEntity, List<Attachment> attachments)
         {
-            var fullPath = Path.Combine(uploadsPath, safeFileName);
+            var fullPath = Path.Combine(_attachmentsPath, safeFileName);
 
             using (var stream = new FileStream(fullPath, FileMode.Create))
             {
@@ -149,8 +156,7 @@ namespace EduMeilleurAPI.Services
 
             var attachment = new Attachment
             {
-                Id = 0,
-                Filename = safeFileName,
+                FileName = safeFileName,
                 MimeType = mimeType,
             };
 
@@ -166,6 +172,14 @@ namespace EduMeilleurAPI.Services
 
             attachments.Add(attachment);
             await _attachmentService.CreateAttachment(attachment);
+        }
+        
+        public List<string> GetFilePaths(IQuestionFeedback questionFeedback)
+        {
+            return questionFeedback.Pictures
+                .Select(p => Path.Combine(_imagesPath, p.FileName))
+                .Concat(questionFeedback.Attachments.Select(a => Path.Combine(_attachmentsPath, a.FileName)))
+                .ToList();
         }
     }
 }

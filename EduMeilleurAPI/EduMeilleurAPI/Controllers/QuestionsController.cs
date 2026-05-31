@@ -2,6 +2,7 @@
 using EduMeilleurAPI.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using EduMeilleurAPI.Models.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using EduMeilleurAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -50,11 +51,12 @@ namespace EduMeilleurAPI.Controllers
             try
             {
                 IFormCollection formcollection = await Request.ReadFormAsync();
-                
                 var error = await _questionService.CreateQuestionTeacher(question, formcollection);
                 if (error != null) return StatusCode(StatusCodes.Status413PayloadTooLarge, error);
                 
-                await _emailService.SendQuestionConfirmation(userEmail, userName, title, message);
+                var filePaths = _questionService.GetFilePaths(question);
+                
+                await _emailService.SendQuestionConfirmation(userEmail, userName, title, message, filePaths);
             } 
             catch (Exception e)
             {
@@ -103,7 +105,5 @@ namespace EduMeilleurAPI.Controllers
 
             return Ok(feedback);
         }
-
-
     }
 }
