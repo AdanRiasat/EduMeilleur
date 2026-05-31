@@ -8,6 +8,9 @@ namespace EduMeilleurAPI.Services
 {
     public class QuestionService
     {
+        private const long MAX_SINGLE_FILE_SIZE = 4194304;
+        private const long MAX_TOTAL_SIZE = 15728640;
+        
         private readonly EduMeilleurAPIContext _context;
         private readonly IPictureService _pictureService;
         private readonly AttachmentService _attachmentService;
@@ -24,24 +27,46 @@ namespace EduMeilleurAPI.Services
             return _context != null && _context.QuestionTeacher != null && _context.Feedbacks != null;
         }
 
-        public async Task<QuestionTeacher?> CreateQuestionTeacher(QuestionTeacher question)
+        public async Task<string?> CreateQuestionTeacher(QuestionTeacher question, IFormCollection formCollection)
         {
-            if (!IsConstextValid()) return null;
+            var (valid, error) = ValidateFileSizes(formCollection);
+            if (!valid) return error;
 
             _context.QuestionTeacher.Add(question);
+            await SaveFilesAndAttachments(formCollection, question.Pictures, question.Attachments, question);
             await _context.SaveChangesAsync();
 
-            return question;
+            return null;
         }
 
-        public async Task<Feedback?> CreateFeedback(Feedback feedback)
+        public async Task<string?> CreateFeedback(Feedback feedback, IFormCollection formCollection)
         {
-            if (!IsConstextValid()) return null;
-
+            var (valid, error) = ValidateFileSizes(formCollection);
+            if (!valid) return error;
+            
             _context.Feedbacks.Add(feedback);
+            await SaveFilesAndAttachments(formCollection, feedback.Pictures, feedback.Attachments, feedback);
             await _context.SaveChangesAsync();
 
-            return feedback;
+            return null;
+        }
+        
+        private (bool valid, string? error) ValidateFileSizes(IFormCollection collection)
+        {
+            long totalSize = 0;
+
+            foreach (var file in collection.Files)
+            {
+                if (file.Length >= MAX_SINGLE_FILE_SIZE)
+                    return (false, $"{file.FileName} exceeds the 4MB limit.");
+
+                totalSize += file.Length;
+            }
+
+            if (totalSize > MAX_TOTAL_SIZE)
+                return (false, "Total upload size exceeds the 15MB limit.");
+
+            return (true, null);
         }
 
         public async Task SaveFilesAndAttachments(IFormCollection collection, List<Picture> pictures, List<Attachment> attachments, object targetEntity)

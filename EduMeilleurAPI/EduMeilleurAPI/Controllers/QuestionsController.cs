@@ -1,21 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using EduMeilleurAPI.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using EduMeilleurAPI.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using EduMeilleurAPI.Services;
-using EduMeilleurAPI.Models.DTO;
-using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using SixLabors.ImageSharp;
-using EduMeilleurAPI.Services.Interfaces;
 
 namespace EduMeilleurAPI.Controllers
 {
@@ -25,16 +14,12 @@ namespace EduMeilleurAPI.Controllers
     {
         private readonly QuestionService _questionService;
         private readonly UserManager<User> _userManager;
-        private readonly IPictureService _pictureService;
-        private readonly AttachmentService _attachmentService;
         private readonly EmailService _emailService; 
 
-        public QuestionsController(QuestionService questionService, UserManager<User> userManager, IPictureService pictureService, AttachmentService attachmentService, EmailService emailService)
+        public QuestionsController(QuestionService questionService, UserManager<User> userManager, EmailService emailService)
         {
             _questionService = questionService;
             _userManager = userManager;
-            _pictureService = pictureService;
-            _attachmentService = attachmentService;
             _emailService = emailService;
         }
 
@@ -55,12 +40,8 @@ namespace EduMeilleurAPI.Controllers
 
             if (title == null || message == null) return BadRequest();
 
-            var pictures = new List<Picture>();
-            var attachments = new List<Attachment>();
-
-            var question = new QuestionTeacher()
+            var question = new QuestionTeacher
             {
-                Id = 0,
                 Title = title,
                 Message = message,
                 user = user
@@ -68,16 +49,12 @@ namespace EduMeilleurAPI.Controllers
 
             try
             {
-                var newQuestion = await _questionService.CreateQuestionTeacher(question);
-                
                 IFormCollection formcollection = await Request.ReadFormAsync();
-                await _questionService.SaveFilesAndAttachements(formcollection, pictures, attachments, question);
+                
+                var error = await _questionService.CreateQuestionTeacher(question, formcollection);
+                if (error != null) return StatusCode(StatusCodes.Status413PayloadTooLarge, error);
+                
                 await _emailService.SendQuestionConfirmation(userEmail, userName, title, message);
-                
-                newQuestion.Pictures = pictures;
-                newQuestion.Attachments = attachments;
-                
-                question = newQuestion;
             } 
             catch (Exception e)
             {
@@ -93,41 +70,38 @@ namespace EduMeilleurAPI.Controllers
         {
             User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             if (user == null) return NotFound();
+            
+            var userEmail = user.Email;
+            var userName = user.UserName;
+            
+            if (userEmail == null || userName == null) return BadRequest();
 
-            string? Title = Request.Form["title"];
-            string? Message = Request.Form["message"];
+            string? title = Request.Form["title"];
+            string? message = Request.Form["message"];
 
-            if (Title == null || Message == null) return BadRequest();
-
-            var pictures = new List<Picture>();
-            var attachments = new List<Attachment>();
+            if (title == null || message == null) return BadRequest();
 
             Feedback feedback = new Feedback()
             {
-                Id = 0,
-                Title = Title,
-                Message = Message,
+                Title = title,
+                Message = message,
                 user = user
             };
-
-            var newFeedback = await _questionService.CreateFeedback(feedback);
 
             try
             {
                 IFormCollection formcollection = await Request.ReadFormAsync();
-                await _questionService.SaveFilesAndAttachements(formcollection, pictures, attachments, feedback);
+                var error = await _questionService.CreateFeedback(feedback, formcollection);
+                if (error != null) return StatusCode(StatusCodes.Status413PayloadTooLarge, error);
 
             }
             catch (Exception e)
             {
-                throw;
+                return Problem(e.Message);
             }
 
-            newFeedback.Pictures = pictures;
-            newFeedback.Attachments = attachments;
 
-
-            return Ok(newFeedback);
+            return Ok(feedback);
         }
 
 
