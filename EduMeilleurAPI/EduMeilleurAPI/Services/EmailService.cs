@@ -18,33 +18,42 @@ public class EmailService
 
     public EmailService(IConfiguration config)
     {
-        var apiKey = config["BREVO_API_KEY"] ?? throw new InvalidOperationException("BREVO_API_KEY missing");
+        var apiKey = config["BREVO:API:KEY"] ?? throw new InvalidOperationException("BREVO_API_KEY missing");
 
         Configuration.Default.ApiKey["api-key"] = apiKey;
         _api = new TransactionalEmailsApi();
 
-        _senderEmail  = config["BREVO_SENDER_EMAIL"]  ?? throw new InvalidOperationException("BREVO_SENDER_EMAIL missing");
-        _senderName   = config["BREVO_SENDER_NAME"]   ?? "EduMeilleur";
-        _adminEmail   = config["Admin_Email"]   ?? throw new InvalidOperationException("BREVO_ADMIN_EMAIL missing");
-        _adminName    = config["BREVO_ADMIN_NAME"]    ?? "EduMeilleur Support";
+        _senderEmail  = config["BREVO:SENDER:EMAIL"]  ?? throw new InvalidOperationException("BREVO_SENDER_EMAIL missing");
+        _senderName   = config["BREVO:SENDER:NAME"]   ?? "EduMeilleur";
+        _adminEmail   = config["Admin:Email"]   ?? throw new InvalidOperationException("BREVO_ADMIN_EMAIL missing");
+        _adminName    = config["BREVO:ADMIN:NAME"]    ?? "EduMeilleur Support";
     }
 
-    private async Task SendWithTemplate(string toEmail, string toName, long templateId, object templateParams, CancellationToken ct = default)
+    private async Task SendWithTemplate(string toEmail, string toName, long templateId, object templateParams, List<string>? filePaths = null, CancellationToken ct = default)
     {
+        var emailAttachments = new List<SendSmtpEmailAttachment>();
+
+        if (filePaths != null)
+        {
+            foreach (var path in filePaths)
+            {
+                var bytes = await File.ReadAllBytesAsync(path, ct);
+                emailAttachments.Add(new SendSmtpEmailAttachment(null, bytes, Path.GetFileName(path)));
+            }
+        }
+        
         var email = new SendSmtpEmail(
             sender: new SendSmtpEmailSender(_senderName, _senderEmail),
             to: new List<SendSmtpEmailTo> { new SendSmtpEmailTo(toEmail, toName) },
             templateId: templateId,
-            _params: templateParams
+            _params: templateParams,
+            attachment: emailAttachments.Any() ? emailAttachments : null
         );
 
         await Task.Run(() => _api.SendTransacEmail(email), ct);
     }
     
-    public async Task SendQuestionConfirmation(
-        string userEmail, string userName,
-        string questionTitle, string questionMessage,
-        CancellationToken ct = default)
+    public async Task SendQuestionConfirmation(string userEmail, string userName, string questionTitle, string questionMessage, List<string>? attachmentPaths = null, CancellationToken ct = default)
     {
         await SendWithTemplate(
             toEmail: userEmail,
@@ -56,6 +65,7 @@ public class EmailService
                 questionTitle = questionTitle,
                 questionMessage = questionMessage
             },
+            filePaths: attachmentPaths,
             ct: ct
         );
     }
