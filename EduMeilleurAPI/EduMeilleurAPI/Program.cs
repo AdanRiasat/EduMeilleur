@@ -99,6 +99,7 @@ builder.Services.AddScoped<IPictureService, PictureService>();
 builder.Services.AddScoped<AttachmentService>();
 builder.Services.AddScoped<ChatService>();
 builder.Services.AddScoped<ISchoolService, SchoolService>();
+builder.Services.AddSingleton<EmailService>();
 
 var app = builder.Build();
 
