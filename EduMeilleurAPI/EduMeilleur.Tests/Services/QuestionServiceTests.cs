@@ -71,18 +71,18 @@ namespace EduMeilleur.Tests.Services
             // Arrange
             var question = new QuestionTeacher
             {
-                Id = 0,
                 Title = "CreateValidQuestionOK",
                 Message = "Test",
                 user = _user,
             };
+            
+            IFormCollection emptyForm = new FormCollection(new Dictionary<string, StringValues>());
 
             // Act
-            var result = await _questionService.CreateQuestionTeacher(question);
+            var result = await _questionService.CreateQuestionTeacher(question, emptyForm);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal("CreateValidQuestionOK", result.Title);
+            Assert.Equal("CreateValidQuestionOK", question.Title);
 
             var fromDb = await _context.QuestionTeacher.FindAsync(1);
 
@@ -96,20 +96,18 @@ namespace EduMeilleur.Tests.Services
             // Arrange
             var feedback = new Feedback
             {
-                Id = 0,
                 Title = "CreateValidFeedbackOK",
                 Message = "Test",
                 user = _user,
             };
 
-            //Assert.Equal(0, _context.Feedbacks.Count());
+            IFormCollection emptyForm = new FormCollection(new Dictionary<string, StringValues>());
 
             // Act
-            var result = await _questionService.CreateFeedback(feedback);
+            var result = await _questionService.CreateFeedback(feedback, emptyForm);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal("CreateValidFeedbackOK", result.Title);
+            Assert.Equal("CreateValidFeedbackOK", feedback.Title);
 
             var fromDb = await _context.Feedbacks.FindAsync(1);
 
