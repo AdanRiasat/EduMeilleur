@@ -11,6 +11,10 @@ using System.Net.Http.Headers;
 using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
 using System.Linq;
+using EduMeilleur.Tests.Models;
+using EduMeilleurAPI.Services;
+using EduMeilleurAPI.Services.Interfaces;
+using Moq;
 
 namespace EduMeilleur.Tests.Client
 {
@@ -33,11 +37,18 @@ namespace EduMeilleur.Tests.Client
                     ["Teacher3:Password"] = "Test123!",
                     ["Teacher4:Password"] = "Test123!",
                     ["Teacher5:Password"] = "Test123!",
+                    ["BREVO:API:KEY"] = "test-key",
+                    ["BREVO:SENDER:EMAIL"] = "test@test.com",
+                    ["BREVO:SENDER:NAME"] = "Test",
                 });
             });
 
             builder.ConfigureServices(services =>
             {
+                var emailDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IEmailService));
+                if (emailDescriptor != null) services.Remove(emailDescriptor);
+                services.AddSingleton<IEmailService, MockEmailService>();
+                
                 var descriptor = services.SingleOrDefault(
                     d => d.ServiceType == typeof(DbContextOptions<EduMeilleurAPIContext>));
                 if (descriptor != null) services.Remove(descriptor);
