@@ -86,9 +86,9 @@ ingress:
 ```
 # .env
 
-EDUMEILLEUR_POSTGRES_DATABASE='postgres'
+EDUMEILLEUR_POSTGRES_DATABASE='EduMeilleurAPIContext'
 EDUMEILLEUR_POSTGRES_PASSWORD='edumeilleur'
-EDUMEILLEUR_POSTGRES_USER='edumeilleur'
+EDUMEILLEUR_POSTGRES_USER='postgres'
 EDUMEILLEUR_POSTGRES_HOST='db'
 
 JWT__Key='superduperkey'
@@ -105,6 +105,10 @@ Teacher2__Password='somepassword'
 Teacher3__Password='somepassword'
 Teacher4__Password='somepassword'
 Teacher5__Password='somepassword'
+
+BREVO__API__KEY='api-key-hurray'
+BREVO__SENDER__EMAIL='support@edumeilleur.ca'
+BREVO__SENDER__NAME='EduMeilleur Team'
 ```
 
 
