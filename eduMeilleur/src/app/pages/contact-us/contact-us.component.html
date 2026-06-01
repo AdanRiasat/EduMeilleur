@@ -6,9 +6,12 @@
     <div class="row">
       <div class="card-content col-md-8">
         <input id="titleTeacher" type="text" name="titleTeacher" placeholder="Title" class="form-control"
-          [(ngModel)]="titleTeacher" />
-        <textarea id="messageTeacher" placeholder="Message" rows="5" name="messageTeacher" class="form-control"
-          [(ngModel)]="messageTeacher"></textarea>
+          [(ngModel)]="titleTeacher" maxlength="50" />
+        <div class="textarea-wrapper">
+          <textarea id="messageTeacher" placeholder="Message" rows="5" textarea maxlength="1500" name="messageTeacher" class="form-control"
+            [(ngModel)]="messageTeacher" (ngModelChange)="onTeacherMessageChange($event)"></textarea>
+          <span class="char-counter">{{ teacherMessageCount() }}/{{ MAX_MESSAGE_LENGTH }}</span>
+        </div>
 
         <!--Teacher Files-->
         <input #fileInputTeacher multiple type="file" class="d-none" name="attachments"
@@ -78,9 +81,12 @@
     <div class="row">
       <div class="card-content col-md-8">
         <input id="titleAdmin" type="text" name="titleAdmin" placeholder="Title" class="form-control"
-          [(ngModel)]="titleAdmin" />
-        <textarea id="messageAdmin" placeholder="Message" rows="5" name="messageAdmin" class="form-control"
-          [(ngModel)]="messageAdmin"></textarea>
+          [(ngModel)]="titleAdmin" maxlength="50" />
+        <div class="textarea-wrapper">
+          <textarea id="messageAdmin" placeholder="Message" rows="5" textarea maxlength="1500" name="messageAdmin" class="form-control"
+            [(ngModel)]="messageAdmin" (ngModelChange)="onAdminMessageChange($event)"></textarea>
+          <span class="char-counter">{{ adminMessageCount() }}/{{ MAX_MESSAGE_LENGTH }}</span>
+        </div>
 
         <!--Admin Files-->
         <input #fileInputAdmin multiple type="file" class="d-none" name="attachments"

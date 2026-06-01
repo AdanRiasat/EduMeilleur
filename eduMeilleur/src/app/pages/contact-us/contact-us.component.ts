@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, signal } from '@angular/core';
 import { ContactService } from '../../services/contact.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -18,10 +18,14 @@ import { ToastService } from '../../services/toast.service';
   styleUrl: './contact-us.component.css',
 })
 export class ContactUsComponent {
+  readonly MAX_MESSAGE_LENGTH = 1500;
   titleTeacher: string = '';
   messageTeacher: string = '';
   titleAdmin: string = '';
   messageAdmin: string = '';
+
+  teacherMessageCount = signal<number>(0);
+  adminMessageCount = signal<number>(0);
 
   userIsConnected: boolean = false;
 
@@ -39,6 +43,16 @@ export class ContactUsComponent {
 
   updateAdminFiles() {
     this.updateSelectedFiles(this.fileInputAdmin, this.adminFiles);
+  }
+
+  onTeacherMessageChange(value: string) {
+    this.messageTeacher = value;
+    this.teacherMessageCount.set(value ? value.length : 0);
+  }
+
+  onAdminMessageChange(value: string) {
+    this.messageAdmin = value;
+    this.adminMessageCount.set(value ? value.length : 0);
   }
 
   updateSelectedFiles(input: ElementRef<HTMLInputElement>, fileList: File[]) {
@@ -94,6 +108,7 @@ export class ContactUsComponent {
       // reset
       this.titleTeacher = '';
       this.messageTeacher = '';
+      this.teacherMessageCount.set(0);
       this.teacherFiles = [];
       if (this.fileInputTeacher) {
         this.fileInputTeacher.nativeElement.value = '';
@@ -138,6 +153,7 @@ export class ContactUsComponent {
       // reset
       this.titleAdmin = '';
       this.messageAdmin = '';
+      this.adminMessageCount.set(0);
       this.adminFiles = [];
       if (this.fileInputAdmin) {
         this.fileInputAdmin.nativeElement.value = '';
