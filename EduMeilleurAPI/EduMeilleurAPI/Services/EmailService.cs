@@ -3,12 +3,13 @@ using System.Text;
 using System.Text.Json;
 using brevo_csharp.Api;
 using brevo_csharp.Model;
+using EduMeilleurAPI.Services.Interfaces;
 using Configuration = brevo_csharp.Client.Configuration;
 using Task = System.Threading.Tasks.Task;
 
 namespace EduMeilleurAPI.Services;
 
-public class EmailService
+public class EmailService : IEmailService
 {
     private readonly TransactionalEmailsApi _api;
     private readonly string _senderEmail;
@@ -29,7 +30,7 @@ public class EmailService
         _adminName    = config["BREVO:ADMIN:NAME"]    ?? "EduMeilleur Support";
     }
 
-    private async Task SendWithTemplate(string toEmail, string toName, long templateId, object templateParams, List<string>? filePaths = null, CancellationToken ct = default)
+    private async Task SendEmail(string toEmail, string toName, long templateId, object templateParams, List<string>? filePaths = null, CancellationToken ct = default)
     {
         var emailAttachments = new List<SendSmtpEmailAttachment>();
 
@@ -55,7 +56,7 @@ public class EmailService
     
     public async Task SendQuestionConfirmation(string userEmail, string userName, string questionTitle, string questionMessage, List<string>? attachmentPaths = null, CancellationToken ct = default)
     {
-        await SendWithTemplate(
+        await SendEmail(
             toEmail: userEmail,
             toName: userName,
             templateId: 4,

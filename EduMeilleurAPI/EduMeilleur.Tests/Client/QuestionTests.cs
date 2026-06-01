@@ -102,6 +102,96 @@ namespace EduMeilleur.Tests.Client
             var response = await _client.PostAsync("/api/Questions/PostFeedback", form);
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
+        
+        [Fact]
+        public async Task PostQuestionTeacher_TitleTooLong_ReturnsBadRequest()
+        {
+            var token = await _fixture.GetTokenAsync(_client);
+            _client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", token);
+
+            var form = new MultipartFormDataContent();
+            form.Add(new StringContent(new string('a', 51)), "title");
+            form.Add(new StringContent("Test Message"), "message");
+
+            var response = await _client.PostAsync("/api/Questions/PostQuestionTeacher", form);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task PostQuestionTeacher_MessageTooLong_ReturnsBadRequest()
+        {
+            var token = await _fixture.GetTokenAsync(_client);
+            _client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", token);
+
+            var form = new MultipartFormDataContent();
+            form.Add(new StringContent("Test Title"), "title");
+            form.Add(new StringContent(new string('a', 1501)), "message");
+
+            var response = await _client.PostAsync("/api/Questions/PostQuestionTeacher", form);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task PostQuestionTeacher_TitleAtLimit_ReturnsOk()
+        {
+            var token = await _fixture.GetTokenAsync(_client);
+            _client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", token);
+
+            var form = new MultipartFormDataContent();
+            form.Add(new StringContent(new string('a', 50)), "title");
+            form.Add(new StringContent("Test Message"), "message");
+
+            var response = await _client.PostAsync("/api/Questions/PostQuestionTeacher", form);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task PostQuestionTeacher_MessageAtLimit_ReturnsOk()
+        {
+            var token = await _fixture.GetTokenAsync(_client);
+            _client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", token);
+
+            var form = new MultipartFormDataContent();
+            form.Add(new StringContent("Test Title"), "title");
+            form.Add(new StringContent(new string('a', 1500)), "message");
+
+            var response = await _client.PostAsync("/api/Questions/PostQuestionTeacher", form);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task PostFeedback_TitleTooLong_ReturnsBadRequest()
+        {
+            var token = await _fixture.GetTokenAsync(_client);
+            _client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", token);
+
+            var form = new MultipartFormDataContent();
+            form.Add(new StringContent(new string('a', 51)), "title");
+            form.Add(new StringContent("Test Message"), "message");
+
+            var response = await _client.PostAsync("/api/Questions/PostFeedback", form);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task PostFeedback_MessageTooLong_ReturnsBadRequest()
+        {
+            var token = await _fixture.GetTokenAsync(_client);
+            _client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", token);
+
+            var form = new MultipartFormDataContent();
+            form.Add(new StringContent("Test Title"), "title");
+            form.Add(new StringContent(new string('a', 1501)), "message");
+
+            var response = await _client.PostAsync("/api/Questions/PostFeedback", form);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
     }
 
     public record LoginResponse(string Token, DateTime ValidTo, object Profile, string RefreshToken, List<string> Roles);
