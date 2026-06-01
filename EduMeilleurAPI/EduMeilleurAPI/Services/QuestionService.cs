@@ -32,9 +32,12 @@ namespace EduMeilleurAPI.Services
 
         public async Task<string?> CreateQuestionTeacher(QuestionTeacher question, IFormCollection formCollection)
         {
-            var (valid, error) = ValidateFileSizes(formCollection);
+            var (valid, error) = ValidateTextLength(question.Title, question.Message);
             if (!valid) return error;
-
+            
+            (valid, error) = ValidateFileSizes(formCollection);
+            if (!valid) return error;
+            
             _context.QuestionTeacher.Add(question);
             await SaveFilesAndAttachments(formCollection, question.Pictures, question.Attachments, question);
             await _context.SaveChangesAsync();
@@ -44,7 +47,10 @@ namespace EduMeilleurAPI.Services
 
         public async Task<string?> CreateFeedback(Feedback feedback, IFormCollection formCollection)
         {
-            var (valid, error) = ValidateFileSizes(formCollection);
+            var (valid, error) = ValidateTextLength(feedback.Title, feedback.Message);
+            if (!valid) return error;
+            
+            (valid, error) = ValidateFileSizes(formCollection);
             if (!valid) return error;
             
             _context.Feedbacks.Add(feedback);
@@ -68,6 +74,17 @@ namespace EduMeilleurAPI.Services
 
             if (totalSize > MAX_TOTAL_SIZE)
                 return (false, "Total upload size exceeds the 15MB limit.");
+
+            return (true, null);
+        }
+        
+        private (bool valid, string? error) ValidateTextLength(string title, string message)
+        {
+            if (title.Length > 50)
+                return (false, "Title cannot exceed 50 characters.");
+
+            if (message.Length > 1500)
+                return (false, "Message cannot exceed 1500 characters.");
 
             return (true, null);
         }

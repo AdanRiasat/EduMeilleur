@@ -5,6 +5,7 @@ using System.Security.Claims;
 using EduMeilleurAPI.Models.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using EduMeilleurAPI.Services;
+using EduMeilleurAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace EduMeilleurAPI.Controllers
@@ -15,9 +16,9 @@ namespace EduMeilleurAPI.Controllers
     {
         private readonly QuestionService _questionService;
         private readonly UserManager<User> _userManager;
-        private readonly EmailService _emailService; 
+        private readonly IEmailService _emailService; 
 
-        public QuestionsController(QuestionService questionService, UserManager<User> userManager, EmailService emailService)
+        public QuestionsController(QuestionService questionService, UserManager<User> userManager, IEmailService emailService)
         {
             _questionService = questionService;
             _userManager = userManager;
@@ -36,6 +37,7 @@ namespace EduMeilleurAPI.Controllers
             
             if (userEmail == null || userName == null) return BadRequest();
             
+            IFormCollection formCollection = await Request.ReadFormAsync();
             string? title = Request.Form["title"];
             string? message = Request.Form["message"];
 
@@ -50,9 +52,8 @@ namespace EduMeilleurAPI.Controllers
 
             try
             {
-                IFormCollection formcollection = await Request.ReadFormAsync();
-                var error = await _questionService.CreateQuestionTeacher(question, formcollection);
-                if (error != null) return StatusCode(StatusCodes.Status413PayloadTooLarge, error);
+                var error = await _questionService.CreateQuestionTeacher(question, formCollection);
+                if (error != null) return BadRequest(error);
                 
                 var filePaths = _questionService.GetFilePaths(question);
                 
@@ -78,6 +79,7 @@ namespace EduMeilleurAPI.Controllers
             
             if (userEmail == null || userName == null) return BadRequest();
 
+            IFormCollection formCollection = await Request.ReadFormAsync();
             string? title = Request.Form["title"];
             string? message = Request.Form["message"];
 
@@ -92,9 +94,8 @@ namespace EduMeilleurAPI.Controllers
 
             try
             {
-                IFormCollection formcollection = await Request.ReadFormAsync();
-                var error = await _questionService.CreateFeedback(feedback, formcollection);
-                if (error != null) return StatusCode(StatusCodes.Status413PayloadTooLarge, error);
+                var error = await _questionService.CreateFeedback(feedback, formCollection);
+                if (error != null) return BadRequest(error);
 
             }
             catch (Exception e)
