@@ -5,27 +5,26 @@
 
     <div class="row">
       <div class="card-content col-md-8">
-        <input id="titleTeacher" type="text" name="titleTeacher" placeholder="Title" class="form-control"
-          [(ngModel)]="titleTeacher" maxlength="50" />
+        <input id="titleTeacher" type="text" name="titleTeacher" placeholder="Title" class="form-control" [(ngModel)]="titleTeacher" maxlength="50" />
         <div class="textarea-wrapper">
-          <textarea id="messageTeacher" placeholder="Message" rows="5" textarea maxlength="1500" name="messageTeacher" class="form-control"
-            [(ngModel)]="messageTeacher" (ngModelChange)="onTeacherMessageChange($event)"></textarea>
+          <textarea id="messageTeacher" placeholder="Message" rows="5" textarea maxlength="1500" name="messageTeacher" class="form-control" [(ngModel)]="messageTeacher" (ngModelChange)="onTeacherMessageChange($event)"></textarea>
           <span class="char-counter">{{ teacherMessageCount() }}/{{ MAX_MESSAGE_LENGTH }}</span>
         </div>
 
         <!--Teacher Files-->
-        <input #fileInputTeacher multiple type="file" class="d-none" name="attachments"
-          accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.txt" (change)="updateTeacherFiles()" />
+        <input #fileInputTeacher multiple type="file" class="d-none" name="attachments" accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.txt" (change)="updateTeacherFiles()" />
         <button id="attachementsTeacher" class="btn btn-secondary" type="button" (click)="fileInputTeacher.click()">
           <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 1024 1024">
-            <path fill="#E5E5EB"
-              d="M779.3 196.6c-94.2-94.2-247.6-94.2-341.7 0l-261 260.8c-1.7 1.7-2.6 4-2.6 6.4s.9 4.7 2.6 6.4l36.9 36.9a9 9 0 0 0 12.7 0l261-260.8c32.4-32.4 75.5-50.2 121.3-50.2s88.9 17.8 121.2 50.2c32.4 32.4 50.2 75.5 50.2 121.2c0 45.8-17.8 88.8-50.2 121.2l-266 265.9l-43.1 43.1c-40.3 40.3-105.8 40.3-146.1 0c-19.5-19.5-30.2-45.4-30.2-73s10.7-53.5 30.2-73l263.9-263.8c6.7-6.6 15.5-10.3 24.9-10.3h.1c9.4 0 18.1 3.7 24.7 10.3c6.7 6.7 10.3 15.5 10.3 24.9c0 9.3-3.7 18.1-10.3 24.7L372.4 653c-1.7 1.7-2.6 4-2.6 6.4s.9 4.7 2.6 6.4l36.9 36.9a9 9 0 0 0 12.7 0l215.6-215.6c19.9-19.9 30.8-46.3 30.8-74.4s-11-54.6-30.8-74.4c-41.1-41.1-107.9-41-149 0L463 364L224.8 602.1A172.22 172.22 0 0 0 174 724.8c0 46.3 18.1 89.8 50.8 122.5c33.9 33.8 78.3 50.7 122.7 50.7s88.8-16.9 122.6-50.7l309.2-309C824.8 492.7 850 432 850 367.5c.1-64.6-25.1-125.3-70.7-170.9" />
+            <path
+              fill="#E5E5EB"
+              d="M779.3 196.6c-94.2-94.2-247.6-94.2-341.7 0l-261 260.8c-1.7 1.7-2.6 4-2.6 6.4s.9 4.7 2.6 6.4l36.9 36.9a9 9 0 0 0 12.7 0l261-260.8c32.4-32.4 75.5-50.2 121.3-50.2s88.9 17.8 121.2 50.2c32.4 32.4 50.2 75.5 50.2 121.2c0 45.8-17.8 88.8-50.2 121.2l-266 265.9l-43.1 43.1c-40.3 40.3-105.8 40.3-146.1 0c-19.5-19.5-30.2-45.4-30.2-73s10.7-53.5 30.2-73l263.9-263.8c6.7-6.6 15.5-10.3 24.9-10.3h.1c9.4 0 18.1 3.7 24.7 10.3c6.7 6.7 10.3 15.5 10.3 24.9c0 9.3-3.7 18.1-10.3 24.7L372.4 653c-1.7 1.7-2.6 4-2.6 6.4s.9 4.7 2.6 6.4l36.9 36.9a9 9 0 0 0 12.7 0l215.6-215.6c19.9-19.9 30.8-46.3 30.8-74.4s-11-54.6-30.8-74.4c-41.1-41.1-107.9-41-149 0L463 364L224.8 602.1A172.22 172.22 0 0 0 174 724.8c0 46.3 18.1 89.8 50.8 122.5c33.9 33.8 78.3 50.7 122.7 50.7s88.8-16.9 122.6-50.7l309.2-309C824.8 492.7 850 432 850 367.5c.1-64.6-25.1-125.3-70.7-170.9"
+            />
           </svg>
-          Attach files</button>
+          Attach files
+        </button>
 
         <ul *ngIf="teacherFiles.length > 0" class="list-group mb-3">
-          <li *ngFor="let file of teacherFiles; let i = index"
-            class="list-group-item d-flex justify-content-between align-items-center">
+          <li *ngFor="let file of teacherFiles; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
             {{ file.name }}
             <div class="d-flex align-items-center gap-2">
               <span class="badge bg-secondary"> {{ (file.size / 1024).toFixed(1) }} KB </span>
@@ -37,8 +36,7 @@
         <button class="btn btn-send" (click)="postQuestion()">
           <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 16 16">
             <defs>
-              <path id="SVG2jlUvrhl"
-                d="M12.97 2.67a.5.5 0 0 0-.64-.64l-11 4a.5.5 0 0 0-.016.934l4.433 1.773l2.9-3.09l.707.707l-2.98 3.176l1.662 4.156a.5.5 0 0 0 .934-.015z" />
+              <path id="SVG2jlUvrhl" d="M12.97 2.67a.5.5 0 0 0-.64-.64l-11 4a.5.5 0 0 0-.016.934l4.433 1.773l2.9-3.09l.707.707l-2.98 3.176l1.662 4.156a.5.5 0 0 0 .934-.015z" />
             </defs>
             <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
               <use href="#SVG2jlUvrhl" />
@@ -54,16 +52,13 @@
         <p class="mb-1">
           <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24">
             <path fill="#000" d="M20 6H4l8 4.99zM4 8v10h16V8l-8 5z" opacity="0.3" />
-            <path fill="#000"
-              d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 2l-8 4.99L4 6zm0 12H4V8l8 5l8-5z" />
+            <path fill="#000" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 2l-8 4.99L4 6zm0 12H4V8l8 5l8-5z" />
           </svg>
           {{ global.teacherEmail }}
         </p>
         <p>
           <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24">
-            <path fill="#000" fill-opacity="0" stroke="#000" stroke-dasharray="62" stroke-linecap="round"
-              stroke-linejoin="round" stroke-width="2"
-              d="M8 3c0.5 0 2.5 4.5 2.5 5c0 1 -1.5 2 -2 3c-0.5 1 0.5 2 1.5 3c0.39 0.39 2 2 3 1.5c1 -0.5 2 -2 3 -2c0.5 0 5 2 5 2.5c0 2 -1.5 3.5 -3 4c-1.5 0.5 -2.5 0.5 -4.5 0c-2 -0.5 -3.5 -1 -6 -3.5c-2.5 -2.5 -3 -4 -3.5 -6c-0.5 -2 -0.5 -3 0 -4.5c0.5 -1.5 2 -3 4 -3Z">
+            <path fill="#000" fill-opacity="0" stroke="#000" stroke-dasharray="62" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 3c0.5 0 2.5 4.5 2.5 5c0 1 -1.5 2 -2 3c-0.5 1 0.5 2 1.5 3c0.39 0.39 2 2 3 1.5c1 -0.5 2 -2 3 -2c0.5 0 5 2 5 2.5c0 2 -1.5 3.5 -3 4c-1.5 0.5 -2.5 0.5 -4.5 0c-2 -0.5 -3.5 -1 -6 -3.5c-2.5 -2.5 -3 -4 -3.5 -6c-0.5 -2 -0.5 -3 0 -4.5c0.5 -1.5 2 -3 4 -3Z">
               <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="62;0" />
               <animate fill="freeze" attributeName="fill-opacity" begin="0.7s" dur="0.15s" to="0.3" />
             </path>
@@ -80,27 +75,26 @@
 
     <div class="row">
       <div class="card-content col-md-8">
-        <input id="titleAdmin" type="text" name="titleAdmin" placeholder="Title" class="form-control"
-          [(ngModel)]="titleAdmin" maxlength="50" />
+        <input id="titleAdmin" type="text" name="titleAdmin" placeholder="Title" class="form-control" [(ngModel)]="titleAdmin" maxlength="50" />
         <div class="textarea-wrapper">
-          <textarea id="messageAdmin" placeholder="Message" rows="5" textarea maxlength="1500" name="messageAdmin" class="form-control"
-            [(ngModel)]="messageAdmin" (ngModelChange)="onAdminMessageChange($event)"></textarea>
+          <textarea id="messageAdmin" placeholder="Message" rows="5" textarea maxlength="1500" name="messageAdmin" class="form-control" [(ngModel)]="messageAdmin" (ngModelChange)="onAdminMessageChange($event)"></textarea>
           <span class="char-counter">{{ adminMessageCount() }}/{{ MAX_MESSAGE_LENGTH }}</span>
         </div>
 
         <!--Admin Files-->
-        <input #fileInputAdmin multiple type="file" class="d-none" name="attachments"
-          accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.txt" (change)="updateAdminFiles()" />
+        <input #fileInputAdmin multiple type="file" class="d-none" name="attachments" accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.txt" (change)="updateAdminFiles()" />
         <button id="attachementsAdmin" class="btn btn-secondary" type="button" (click)="fileInputAdmin.click()">
           <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 1024 1024">
-            <path fill="#E5E5EB"
-              d="M779.3 196.6c-94.2-94.2-247.6-94.2-341.7 0l-261 260.8c-1.7 1.7-2.6 4-2.6 6.4s.9 4.7 2.6 6.4l36.9 36.9a9 9 0 0 0 12.7 0l261-260.8c32.4-32.4 75.5-50.2 121.3-50.2s88.9 17.8 121.2 50.2c32.4 32.4 50.2 75.5 50.2 121.2c0 45.8-17.8 88.8-50.2 121.2l-266 265.9l-43.1 43.1c-40.3 40.3-105.8 40.3-146.1 0c-19.5-19.5-30.2-45.4-30.2-73s10.7-53.5 30.2-73l263.9-263.8c6.7-6.6 15.5-10.3 24.9-10.3h.1c9.4 0 18.1 3.7 24.7 10.3c6.7 6.7 10.3 15.5 10.3 24.9c0 9.3-3.7 18.1-10.3 24.7L372.4 653c-1.7 1.7-2.6 4-2.6 6.4s.9 4.7 2.6 6.4l36.9 36.9a9 9 0 0 0 12.7 0l215.6-215.6c19.9-19.9 30.8-46.3 30.8-74.4s-11-54.6-30.8-74.4c-41.1-41.1-107.9-41-149 0L463 364L224.8 602.1A172.22 172.22 0 0 0 174 724.8c0 46.3 18.1 89.8 50.8 122.5c33.9 33.8 78.3 50.7 122.7 50.7s88.8-16.9 122.6-50.7l309.2-309C824.8 492.7 850 432 850 367.5c.1-64.6-25.1-125.3-70.7-170.9" />
+            <path
+              fill="#E5E5EB"
+              d="M779.3 196.6c-94.2-94.2-247.6-94.2-341.7 0l-261 260.8c-1.7 1.7-2.6 4-2.6 6.4s.9 4.7 2.6 6.4l36.9 36.9a9 9 0 0 0 12.7 0l261-260.8c32.4-32.4 75.5-50.2 121.3-50.2s88.9 17.8 121.2 50.2c32.4 32.4 50.2 75.5 50.2 121.2c0 45.8-17.8 88.8-50.2 121.2l-266 265.9l-43.1 43.1c-40.3 40.3-105.8 40.3-146.1 0c-19.5-19.5-30.2-45.4-30.2-73s10.7-53.5 30.2-73l263.9-263.8c6.7-6.6 15.5-10.3 24.9-10.3h.1c9.4 0 18.1 3.7 24.7 10.3c6.7 6.7 10.3 15.5 10.3 24.9c0 9.3-3.7 18.1-10.3 24.7L372.4 653c-1.7 1.7-2.6 4-2.6 6.4s.9 4.7 2.6 6.4l36.9 36.9a9 9 0 0 0 12.7 0l215.6-215.6c19.9-19.9 30.8-46.3 30.8-74.4s-11-54.6-30.8-74.4c-41.1-41.1-107.9-41-149 0L463 364L224.8 602.1A172.22 172.22 0 0 0 174 724.8c0 46.3 18.1 89.8 50.8 122.5c33.9 33.8 78.3 50.7 122.7 50.7s88.8-16.9 122.6-50.7l309.2-309C824.8 492.7 850 432 850 367.5c.1-64.6-25.1-125.3-70.7-170.9"
+            />
           </svg>
-          Attach files</button>
+          Attach files
+        </button>
 
         <ul *ngIf="adminFiles.length > 0" class="list-group mb-3">
-          <li *ngFor="let file of adminFiles; let i = index"
-            class="list-group-item d-flex justify-content-between align-items-center">
+          <li *ngFor="let file of adminFiles; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
             {{ file.name }}
             <div class="d-flex align-items-center gap-2">
               <span class="badge bg-secondary"> {{ (file.size / 1024).toFixed(1) }} KB </span>
@@ -112,8 +106,7 @@
         <button class="btn btn-send" (click)="postFeedback()">
           <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 16 16">
             <defs>
-              <path id="SVG2jlUvrhl"
-                d="M12.97 2.67a.5.5 0 0 0-.64-.64l-11 4a.5.5 0 0 0-.016.934l4.433 1.773l2.9-3.09l.707.707l-2.98 3.176l1.662 4.156a.5.5 0 0 0 .934-.015z" />
+              <path id="SVG2jlUvrhl" d="M12.97 2.67a.5.5 0 0 0-.64-.64l-11 4a.5.5 0 0 0-.016.934l4.433 1.773l2.9-3.09l.707.707l-2.98 3.176l1.662 4.156a.5.5 0 0 0 .934-.015z" />
             </defs>
             <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
               <use href="#SVG2jlUvrhl" />
@@ -129,16 +122,13 @@
         <p class="mb-1">
           <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24">
             <path fill="#000" d="M20 6H4l8 4.99zM4 8v10h16V8l-8 5z" opacity="0.3" />
-            <path fill="#000"
-              d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 2l-8 4.99L4 6zm0 12H4V8l8 5l8-5z" />
+            <path fill="#000" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 2l-8 4.99L4 6zm0 12H4V8l8 5l8-5z" />
           </svg>
           {{ global.adminEmail }}
         </p>
         <p>
           <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24">
-            <path fill="#000" fill-opacity="0" stroke="#000" stroke-dasharray="62" stroke-linecap="round"
-              stroke-linejoin="round" stroke-width="2"
-              d="M8 3c0.5 0 2.5 4.5 2.5 5c0 1 -1.5 2 -2 3c-0.5 1 0.5 2 1.5 3c0.39 0.39 2 2 3 1.5c1 -0.5 2 -2 3 -2c0.5 0 5 2 5 2.5c0 2 -1.5 3.5 -3 4c-1.5 0.5 -2.5 0.5 -4.5 0c-2 -0.5 -3.5 -1 -6 -3.5c-2.5 -2.5 -3 -4 -3.5 -6c-0.5 -2 -0.5 -3 0 -4.5c0.5 -1.5 2 -3 4 -3Z">
+            <path fill="#000" fill-opacity="0" stroke="#000" stroke-dasharray="62" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 3c0.5 0 2.5 4.5 2.5 5c0 1 -1.5 2 -2 3c-0.5 1 0.5 2 1.5 3c0.39 0.39 2 2 3 1.5c1 -0.5 2 -2 3 -2c0.5 0 5 2 5 2.5c0 2 -1.5 3.5 -3 4c-1.5 0.5 -2.5 0.5 -4.5 0c-2 -0.5 -3.5 -1 -6 -3.5c-2.5 -2.5 -3 -4 -3.5 -6c-0.5 -2 -0.5 -3 0 -4.5c0.5 -1.5 2 -3 4 -3Z">
               <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="62;0" />
               <animate fill="freeze" attributeName="fill-opacity" begin="0.7s" dur="0.15s" to="0.3" />
             </path>
@@ -150,8 +140,6 @@
   </div>
 </div>
 
-<app-modal modalId="errorConnectionModal" title="Must be logged in" body="Please log in or create an account"
-  cancelText="Cancel" confirmText="Log in" (confirmed)="redirectLogin()"></app-modal>
+<app-modal modalId="errorConnectionModal" title="Must be logged in" body="Please log in or create an account" cancelText="Cancel" confirmText="Log in" (confirmed)="redirectLogin()"></app-modal>
 
-<app-modal modalId="errorEmptyModal" title="Empty Fields" body="Please enter a title and a message" cancelText="Cancel"
-  confirmText="Ok"></app-modal>
+<app-modal modalId="errorEmptyModal" title="Empty Fields" body="Please enter a title and a message" cancelText="Cancel" confirmText="Ok"></app-modal>

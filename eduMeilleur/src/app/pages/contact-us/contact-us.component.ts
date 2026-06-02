@@ -19,6 +19,9 @@ import { ToastService } from '../../services/toast.service';
 })
 export class ContactUsComponent {
   readonly MAX_MESSAGE_LENGTH = 1500;
+  readonly MAX_SINGLE_FILE_SIZE = 4194304;
+  readonly MAX_TOTAL_SIZE = 15728640;
+
   titleTeacher: string = '';
   messageTeacher: string = '';
   titleAdmin: string = '';
@@ -35,7 +38,15 @@ export class ContactUsComponent {
   teacherFiles: File[] = [];
   adminFiles: File[] = [];
 
-  constructor(public contactService: ContactService, public spinner: SpinnerService, public global: GlobalService, public userService: UserService, public modalService: ModalService, public route: Router, public toastService: ToastService) {}
+  constructor(
+    public contactService: ContactService,
+    public spinner: SpinnerService,
+    public global: GlobalService,
+    public userService: UserService,
+    public modalService: ModalService,
+    public route: Router,
+    public toastService: ToastService,
+  ) {}
 
   updateTeacherFiles() {
     this.updateSelectedFiles(this.fileInputTeacher, this.teacherFiles);
@@ -56,14 +67,25 @@ export class ContactUsComponent {
   }
 
   updateSelectedFiles(input: ElementRef<HTMLInputElement>, fileList: File[]) {
-    if (input.nativeElement.files) {
-      for (let f of Array.from(input.nativeElement.files)) {
-        if (!fileList.includes(f)) {
-          fileList.push(f);
-        }
+    if (!input.nativeElement.files) return;
+
+    for (let f of Array.from(input.nativeElement.files)) {
+      if (fileList.includes(f)) continue;
+
+      if (f.size > this.MAX_SINGLE_FILE_SIZE) {
+        this.toastService.error(`${f.name} exceeds the 4MB file size limit.`);
+        continue;
       }
-      input.nativeElement.value = '';
+
+      const currentTotal = fileList.reduce((sum, file) => sum + file.size, 0);
+      if (currentTotal + f.size > this.MAX_TOTAL_SIZE) {
+        this.toastService.error(`Adding ${f.name} would exceed the 15MB total limit.`);
+        break;
+      }
+
+      fileList.push(f);
     }
+    input.nativeElement.value = '';
   }
 
   removeTeacherFile(index: number) {
