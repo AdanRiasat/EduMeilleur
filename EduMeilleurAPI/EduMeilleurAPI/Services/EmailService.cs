@@ -11,6 +11,11 @@ namespace EduMeilleurAPI.Services;
 
 public class EmailService : IEmailService
 {
+    private const int QUESTION_CONFIRMATION_TEMPLATE_ID = 4;
+    private const int FEEDBACK_CONFIRMATION_TEMPLATE_ID = 9;
+    private const int FOR_TEACHER_TEMPLATE_ID = 10;
+    private const int FOR_ADMIN_TEMPLATE_ID = 11;
+    
     private readonly TransactionalEmailsApi _api;
     private readonly string _senderEmail;
     private readonly string _senderName;
@@ -27,7 +32,7 @@ public class EmailService : IEmailService
         _senderEmail  = config["BREVO:SENDER:EMAIL"]  ?? throw new InvalidOperationException("BREVO_SENDER_EMAIL missing");
         _senderName   = config["BREVO:SENDER:NAME"]   ?? "EduMeilleur";
         _adminEmail   = config["Admin:Email"]   ?? throw new InvalidOperationException("BREVO_ADMIN_EMAIL missing");
-        _adminName    = config["BREVO:ADMIN:NAME"]    ?? "EduMeilleur Support";
+        _adminName    = config["ADMIN:NAME"]    ?? "Admin";
     }
 
     private async Task SendEmail(string toEmail, string toName, long templateId, object templateParams, List<string>? filePaths = null, CancellationToken ct = default)
@@ -59,7 +64,7 @@ public class EmailService : IEmailService
         await SendEmail(
             toEmail: userEmail,
             toName: userName,
-            templateId: 4,
+            templateId: QUESTION_CONFIRMATION_TEMPLATE_ID,
             templateParams: new
             {
                 userName = userName,
@@ -70,4 +75,61 @@ public class EmailService : IEmailService
             ct: ct
         );
     }
+    
+    public async Task SendQuestionToTeacher(string questionTitle, string questionMessage, string studentUserName, string studentEmail, List<string>? attachmentPaths = null, string userName = "Amir", string userEmail = "amirhal@outlook.fr", CancellationToken ct = default)
+    {
+        await SendEmail(
+            toEmail: userEmail,
+            toName: userName,
+            templateId: FOR_TEACHER_TEMPLATE_ID,
+            templateParams: new
+            {
+                userName = userName,
+                questionTitle = questionTitle,
+                questionMessage = questionMessage,
+                studentUserName = studentUserName,
+                studentEmail = studentEmail
+            },
+            filePaths: attachmentPaths,
+            ct: ct
+        );
+    }
+    
+    public async Task SendFeedbackConfirmation(string userEmail, string userName, string feedbackTitle, string feedbackMessage, List<string>? attachmentPaths = null, CancellationToken ct = default)
+    {
+        await SendEmail(
+            toEmail: userEmail,
+            toName: userName,
+            templateId: FEEDBACK_CONFIRMATION_TEMPLATE_ID,
+            templateParams: new
+            {
+                userName = userName,
+                feedbackTitle = feedbackTitle,
+                feedbackMessage = feedbackMessage
+            },
+            filePaths: attachmentPaths,
+            ct: ct
+        );
+    }
+    
+    public async Task SendFeedbackToAdmin(string feedbackTitle, string feedbackMessage, string studentUserName, string studentEmail, List<string>? attachmentPaths = null, CancellationToken ct = default)
+    {
+        await SendEmail(
+            toEmail: _adminEmail,
+            toName: _adminName,
+            templateId: FOR_ADMIN_TEMPLATE_ID,
+            templateParams: new
+            {
+                userName = _adminName,
+                feedbackTitle = feedbackTitle,
+                feedbackMessage = feedbackMessage,
+                studentUserName = studentUserName,
+                studentEmail = studentEmail
+            },
+            filePaths: attachmentPaths,
+            ct: ct
+        );
+    }
+    
+    
 }

@@ -58,6 +58,7 @@ namespace EduMeilleurAPI.Controllers
                 var filePaths = _questionService.GetFilePaths(question);
                 
                 await _emailService.SendQuestionConfirmation(userEmail, userName, title, message, filePaths);
+                await _emailService.SendQuestionToTeacher(title, message, userName, userEmail, filePaths);
             } 
             catch (Exception e)
             {
@@ -97,6 +98,10 @@ namespace EduMeilleurAPI.Controllers
                 var error = await _questionService.CreateFeedback(feedback, formCollection);
                 if (error != null) return BadRequest(error);
 
+                var filePaths = _questionService.GetFilePaths(feedback);
+                
+                await _emailService.SendFeedbackConfirmation(userEmail, userName, title, message, filePaths);
+                await _emailService.SendFeedbackToAdmin(title, message, userName, userEmail, filePaths);
             }
             catch (Exception e)
             {
