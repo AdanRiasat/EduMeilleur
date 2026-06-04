@@ -1,3 +1,14 @@
+#logo {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+#logo img {
+  position: relative;
+  top: -4px;
+}
+
 #main-row {
   height: 70px;
 }
@@ -51,7 +62,10 @@
 
 .user-nav .btn .bi {
   color: #fff;
-  transition: transform 0.18s ease, color 0.18s ease, fill 0.18s ease;
+  transition:
+    transform 0.18s ease,
+    color 0.18s ease,
+    fill 0.18s ease;
 }
 
 .user-nav .btn:hover .bi {
@@ -64,8 +78,6 @@ a {
   color: white;
   cursor: pointer;
 }
-
-
 
 .row {
   margin: 0;
