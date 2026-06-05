@@ -8,15 +8,14 @@
     <router-outlet></router-outlet>
   </main>
 
-  <app-footer *ngIf="!showMainOnly && router.url !='/ai'"></app-footer>
+  <app-footer *ngIf="!showMainOnly && router.url != '/ai'"></app-footer>
 
   <app-toast></app-toast>
 
   <!-- Modals -->
-  <app-modal modalId="disconnectModal" title="Disconnect" body="Are you sure you want to disconnect?"
-    confirmText="Disconnect" (confirmed)="disconnect()"></app-modal>
+  <app-modal modalId="disconnectModal" title="Disconnect" body="Are you sure you want to disconnect?" confirmText="Disconnect" (confirmed)="disconnect()"></app-modal>
 
-  <app-modal modalId="ExploreDevModal" title="In development"
-    body="Our Explore page is still being worked on, please check again another time." cancelText="Cancel"
-    confirmText="Ok"></app-modal>
+  <app-modal modalId="ExploreDevModal" title="In development" body="Our Explore page is still being worked on, please check again another time." cancelText="Cancel" confirmText="Ok"></app-modal>
+
+  <app-modal modalId="error500Modal" title="Something went wrong" body="Our servers are currently having issues, please try again later" cancelText="Ok" confirmText="Try again" (confirmed)="retryRequest()"></app-modal>
 </div>

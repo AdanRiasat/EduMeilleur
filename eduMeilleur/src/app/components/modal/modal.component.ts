@@ -18,12 +18,20 @@ export class ModalComponent {
   @Output() confirmed = new EventEmitter<void>();
 
   confirm() {
-    this.confirmed.emit();
-
-    let modalElement = document.getElementById(this.modalId)
-    if (modalElement){
-      let modal = Modal.getInstance(modalElement) || new Modal(modalElement);
-      modal.hide()
+    const modalElement = document.getElementById(this.modalId);
+    if (!modalElement) {
+      this.confirmed.emit();
+      return;
     }
+
+    const modal = Modal.getInstance(modalElement) || new Modal(modalElement);
+    modalElement.addEventListener(
+      'hidden.bs.modal',
+      () => {
+        this.confirmed.emit();
+      },
+      { once: true },
+    );
+    modal.hide();
   }
 }

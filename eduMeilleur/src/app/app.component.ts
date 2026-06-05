@@ -20,15 +20,22 @@ import { ToastComponent } from './components/toast/toast.component';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  showMainOnly: boolean = false
-  mainOnlyUrls: string[] = ['/login', '/signup']
+  showMainOnly: boolean = false;
+  mainOnlyUrls: string[] = ['/login', '/signup'];
 
-  constructor(public modalService: ModalService, public global: GlobalService, public router: Router, public userService: UserService) {
-   this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        this.showMainOnly = this.mainOnlyUrls.includes(event.urlAfterRedirects);
-      });
+  constructor(
+    public modalService: ModalService,
+    public global: GlobalService,
+    public router: Router,
+    public userService: UserService,
+  ) {
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+      this.showMainOnly = this.mainOnlyUrls.includes(event.urlAfterRedirects);
+    });
+  }
+
+  retryRequest() {
+    this.modalService.executeRetry();
   }
 
   disconnect() {
