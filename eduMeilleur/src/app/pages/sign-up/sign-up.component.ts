@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SpinnerService } from '../../services/spinner.service';
 import { ModalComponent } from '../../components/modal/modal.component';
@@ -14,7 +14,7 @@ import { ModalService } from '../../services/modal.service';
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [FormsModule, CommonModule, ModalComponent, SignUpMainComponent, SignUpExtraComponent, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, RouterLink, SignUpMainComponent, SignUpExtraComponent, ReactiveFormsModule],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css',
 })

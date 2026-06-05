@@ -4,7 +4,8 @@ a {
   cursor: pointer;
 }
 
-h2, p {
+h2,
+p {
   padding: 0;
   margin: 0;
 }
@@ -40,6 +41,3 @@ h2, p {
 .login-btn:hover {
   background: var(--btnHover);
 }
-
-
-

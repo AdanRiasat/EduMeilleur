@@ -6,10 +6,10 @@
 
   --button: #5fa8d3;
   --btnHover: #4a94c0;
-  
+
   --border: #457b9d;
   --border-lite: rgba(69, 123, 157, 0.5);
-  
+
   --item-hover: #eef4f8;
   --active: rgba(95, 168, 211, 0.16);
 
@@ -37,12 +37,12 @@ body {
   height: auto;
 }
 
-ul{
+ul {
   padding: 0;
 }
 
 li {
- list-style-type: none;
+  list-style-type: none;
 }
 
 h1 {
@@ -57,7 +57,10 @@ h3 {
   font-size: var(--h3-text-size);
 }
 
-p, input, label, a {
+p,
+input,
+label,
+a {
   font-size: var(--reg-text-size);
 }
 
@@ -104,6 +107,13 @@ button:disabled {
   align-items: center;
   width: 50vw;
   height: 100vh;
+}
+
+#auth-logo {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+  cursor: pointer;
 }
 
 .right-side {
@@ -166,9 +176,3 @@ button:disabled {
     width: 100vw;
   }
 }
-
-
-
-
-
-
