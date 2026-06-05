@@ -1,7 +1,6 @@
 <div class="auth-container">
   <div class="left-side">
     <div class="login-forms">
-
       <h2>Log in</h2>
 
       <form [formGroup]="formGroup" (ngSubmit)="login()">
@@ -9,25 +8,21 @@
 
         <div class="auth-form-fields">
           <div class="auth-field">
-            <label style="font-weight: 600;" for="username">Username or email</label>
+            <label style="font-weight: 600" for="username">Username or email</label>
             <input id="username" type="text" name="username" formControlName="username" />
-            <div *ngIf="formGroup.get('username')?.hasError('required') && formGroup.get('username')?.touched"
-              class="text-danger">
-              <p>Username or email is
-                required</p>
+            <div *ngIf="formGroup.get('username')?.hasError('required') && formGroup.get('username')?.touched" class="text-danger">
+              <p>Username or email is required</p>
             </div>
           </div>
 
           <div class="auth-field">
-            <label style="font-weight: 600;" for=" password">Password</label>
+            <label style="font-weight: 600" for=" password">Password</label>
             <input id="password" type="password" name="password" formControlName="password" />
-            <div *ngIf="formGroup.get('password')?.hasError('required') && formGroup.get('password')?.touched"
-              class="text-danger">
+            <div *ngIf="formGroup.get('password')?.hasError('required') && formGroup.get('password')?.touched" class="text-danger">
               <p>Password is required</p>
             </div>
           </div>
         </div>
-
 
         <a>Forgot password?</a>
 
@@ -43,25 +38,12 @@
           <a [routerLink]="['/signup']">Don't have an account? Create one</a>
         </div>
 
-        <div style="align-self: center;">
+        <div style="align-self: center">
           <button type="submit" class="login-btn" [disabled]="!formGroup.valid">Log in</button>
         </div>
       </form>
-
-
-
     </div>
-
   </div>
 
-  <div class="right-side">
-
-  </div>
+  <div class="right-side"></div>
 </div>
-
-
-
-
-<app-modal modalId="error500Modal" title="Something went wrong"
-  body="Our servers are currently having issues, please try again later" cancelText="Ok" confirmText="Try again"
-  (confirmed)="login()"></app-modal>

@@ -1,3 +1,5 @@
+<app-home-loader [visible]="isLoading"></app-home-loader>
+
 <!-- Hero Section -->
 <div class="container-fluid hero-section text-white">
   <video autoplay muted loop playsinline webkit-playsinline class="hero-video">
@@ -27,10 +29,7 @@
           <h2>About us</h2>
         </div>
         <div class="centered-content">
-          <p class="paragraph-overlay">ÉduMeilleur is a free educational platform for secondary school students. We
-            offer notes, exercises, and videos for every subject, along with direct help from our teachers. All content
-            on ÉduMeilleur is completely free. Our goal is to help students overcome challenges, improve their grades,
-            and grow their knowledge.</p>
+          <p class="paragraph-overlay">ÉduMeilleur is a free educational platform for secondary school students. We offer notes, exercises, and videos for every subject, along with direct help from our teachers. All content on ÉduMeilleur is completely free. Our goal is to help students overcome challenges, improve their grades, and grow their knowledge.</p>
         </div>
       </div>
     </ng-template>
@@ -43,10 +42,9 @@
         </div>
         <div class="centered-content">
           <p class="paragraph-overlay">
-            Join our team and help shape the future of student learning. We’re looking for passionate individuals to
-            help write notes, create exercises, and even produce educational videos. If you're interested in
-            contributing to our platform and making a difference, contact us at:<br />
-            📧 <i>{{ global.adminEmail }}</i><br />
+            Join our team and help shape the future of student learning. We’re looking for passionate individuals to help write notes, create exercises, and even produce educational videos. If you're interested in contributing to our platform and making a difference, contact us at:<br />
+            📧 <i>{{ global.adminEmail }}</i
+            ><br />
             <!--📞 123-765-092-->
           </p>
         </div>
@@ -71,8 +69,7 @@
   <div class="row align-items-center justify-content-center">
     <div id="explore-content" class="col-lg-8">
       <h1>Explore</h1>
-      <p class="description">Dive into interactive activities, challenge yourself, and contribute to a growing knowledge
-        base.</p>
+      <p class="description">Dive into interactive activities, challenge yourself, and contribute to a growing knowledge base.</p>
 
       <div class="row">
         <div class="col-md-4 mb-3">
@@ -113,7 +110,6 @@
     <div>
       <button class="btn-home" (click)="modalService.openModal('ExploreDevModal')">Get Started</button>
     </div>
-
   </div>
 </div>
 
@@ -128,8 +124,7 @@
 
   <div class="d-flex flex-wrap justify-content-center gap-5 mt-4">
     <div *ngFor="let t of teachersNames" class="text-center">
-      <img class="teacher-img" [src]="domain + '/api/Users/GetProfilePicture/' + t + '?t=' + timestamp"
-        alt="image of teacher" />
+      <img class="teacher-img" [src]="domain + '/api/Users/GetProfilePicture/' + t + '?t=' + timestamp" alt="image of teacher" />
       <p>{{ t }}</p>
     </div>
   </div>

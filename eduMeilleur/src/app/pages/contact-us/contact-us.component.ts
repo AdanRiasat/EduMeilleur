@@ -135,8 +135,6 @@ export class ContactUsComponent {
       if (this.fileInputTeacher) {
         this.fileInputTeacher.nativeElement.value = '';
       }
-    } catch (e) {
-      this.toastService.error('Something went wrong while sending your question, try again later');
     } finally {
       this.spinner.hide();
     }
