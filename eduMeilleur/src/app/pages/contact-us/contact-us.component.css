@@ -32,8 +32,12 @@ textarea {
   margin-bottom: 30px;
 }
 
-.card-content{
-  padding-bottom: 20px;
+.contact-card-content {
+  display: flex;
+}
+
+.contact-form {
+  width: 65%;
 }
 
 .form-control,
@@ -55,7 +59,32 @@ textarea {
   background-color: var(--btnHover);
 }
 
+.contact-info {
+  width: 35% !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.contact-cta {
+  width: 65%;
+}
+
 #attachementsTeacher,
 #attachementsAdmin {
   margin-bottom: 10px;
+}
+
+@media screen and (max-width: 867px) {
+  .contact-card-content {
+    flex-direction: column;
+  }
+  .contact-cta,
+  .contact-info,
+  .contact-form,
+  .contact-card-content {
+    width: 100% !important;
+  }
 }
