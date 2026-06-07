@@ -1,69 +1,63 @@
 <form class="auth-form-wrapper" [formGroup]="formGroup()!" (ngSubmit)="formGroup()!.valid && next.emit()">
-    <div class="auth-form-fields">
-        <div class="auth-field">
-            <label for="email">Email</label>
-            <input id="email" type="text" name="email" formControlName="email" />
-            <div *ngIf="formGroup()!.get('email')?.hasError('required') && formGroup()!.get('email')?.touched"
-                class="text-danger">
-                <p>Email is required</p>
-            </div>
-            <div *ngIf="formGroup()!.get('email')?.hasError('email') && formGroup()!.get('email')?.touched"
-                class="text-danger">
-                <p>Email is not valid</p>
-            </div>
+  <div class="auth-form-fields">
+    <div class="auth-field">
+      <label for="email">Email</label>
+      <input id="email" type="text" name="email" formControlName="email" />
+      <div *ngIf="formGroup()!.get('email')?.hasError('required') && formGroup()!.get('email')?.touched" class="error-message">
+        <p>Email is required</p>
+      </div>
+      <div *ngIf="formGroup()!.get('email')?.hasError('email') && formGroup()!.get('email')?.touched" class="error-message">
+        <p>Email is not valid</p>
+      </div>
+    </div>
+
+    <div class="password-field-wrapper">
+      <div class="auth-field">
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" formControlName="password" (focus)="passwordFieldFocused.set(true)" (blur)="passwordFieldFocused.set(false)" />
+        <div *ngIf="passwordRequiredError()" class="error-message">
+          <p>Password is required</p>
         </div>
-
-        <div class="password-field-wrapper">
-            <div class="auth-field">
-                <label for="password">Password</label>
-                <input id="password" type="password" name="password" formControlName="password"
-                    (focus)="passwordFieldFocused.set(true)" (blur)="passwordFieldFocused.set(false)" />
-                <div *ngIf="passwordRequiredError()" class="text-danger">
-                    <p>Password is required</p>
-                </div>
-                <div *ngIf="passwordInvalidError()" class="text-danger">
-                    <p>Password format is invalid</p>
-                </div>
-            </div>
-
-            <!-- Password Validation Drawer -->
-            <div class="password-requirements" *ngIf="passwordFieldFocused()">
-                <h4>Password must contain:</h4>
-                <div class="requirement" [class.valid]="hasMinLength()" [class.invalid]="!hasMinLength()">
-                    <span class="icon">{{ hasMinLength() ? '✓' : '✗' }}</span>
-                    <span>At least 5 characters</span>
-                </div>
-                <div class="requirement" [class.valid]="hasDigit()" [class.invalid]="!hasDigit()">
-                    <span class="icon">{{ hasDigit() ? '✓' : '✗' }}</span>
-                    <span>At least one number</span>
-                </div>
-            </div>
+        <div *ngIf="passwordInvalidError()" class="error-message">
+          <p>Password format is invalid</p>
         </div>
+      </div>
 
-        <div class="auth-field">
-            <label for="confirmPassword">Confirm Password</label>
-            <input id="confirmPassword" type="password" name="confirmPassword" formControlName="confirmPassword" />
-            <div *ngIf="formGroup()!.get('confirmPassword')?.hasError('required') && formGroup()!.get('confirmPassword')?.touched"
-                class="text-danger">Confirm Password is required</div>
-            <div class="text-danger" *ngIf="passwordMatchError()">
-                Passwords do not match
-            </div>
+      <!-- Password Validation Drawer -->
+      <div class="password-requirements" *ngIf="passwordFieldFocused()">
+        <h4>Password must contain:</h4>
+        <div class="requirement" [class.valid]="hasMinLength()" [class.invalid]="!hasMinLength()">
+          <span class="icon">{{ hasMinLength() ? "✓" : "✗" }}</span>
+          <span>At least 5 characters</span>
         </div>
+        <div class="requirement" [class.valid]="hasDigit()" [class.invalid]="!hasDigit()">
+          <span class="icon">{{ hasDigit() ? "✓" : "✗" }}</span>
+          <span>At least one number</span>
+        </div>
+      </div>
     </div>
 
-    <div class="divider">
-        <div class="line"></div>
-        <p>Or</p>
-        <div class="line"></div>
+    <div class="auth-field">
+      <label for="confirmPassword">Confirm Password</label>
+      <input id="confirmPassword" type="password" name="confirmPassword" formControlName="confirmPassword" />
+      <div *ngIf="formGroup()!.get('confirmPassword')?.hasError('required') && formGroup()!.get('confirmPassword')?.touched" class="error-message"><p>Confirm Password is required</p></div>
+      <div class="error-message" *ngIf="passwordMatchError()">Passwords do not match</div>
     </div>
+  </div>
 
-    <app-auth-extra-options></app-auth-extra-options>
+  <div class="divider">
+    <div class="line"></div>
+    <p>Or</p>
+    <div class="line"></div>
+  </div>
 
-    <div id="signup-link">
-        <a [routerLink]="['/login']">Already have an account? Sign in</a>
-    </div>
+  <app-auth-extra-options></app-auth-extra-options>
 
-    <div style="align-self: center;">
-        <button type="submit" [disabled]="!formGroup()!.valid">Next step</button>
-    </div>
+  <div id="signup-link">
+    <a [routerLink]="['/login']">Already have an account? Sign in</a>
+  </div>
+
+  <div style="align-self: center">
+    <button type="submit" [disabled]="!formGroup()!.valid">Next step</button>
+  </div>
 </form>

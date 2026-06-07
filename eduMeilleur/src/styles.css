@@ -123,6 +123,7 @@ button:disabled {
 }
 
 .auth-field {
+  position: relative;
   align-self: stretch;
   display: flex;
   flex-direction: column;
@@ -153,7 +154,7 @@ button:disabled {
 .auth-form-fields {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 30px;
 }
 
 #signup-link {
@@ -165,6 +166,15 @@ button:disabled {
   flex-direction: column;
   gap: 30px;
   width: 100%;
+}
+
+.error-message {
+  position: absolute;
+  bottom: -26px;
+}
+
+.error-message p {
+  color: red;
 }
 
 @media screen and (max-width: 1200px) {

@@ -14,7 +14,7 @@
           <div class="auth-field">
             <label style="font-weight: 600" for="username">Username or email</label>
             <input id="username" type="text" name="username" formControlName="username" />
-            <div *ngIf="formGroup.get('username')?.hasError('required') && formGroup.get('username')?.touched" class="text-danger">
+            <div *ngIf="formGroup.get('username')?.hasError('required') && formGroup.get('username')?.touched" class="error-message">
               <p>Username or email is required</p>
             </div>
           </div>
@@ -22,13 +22,15 @@
           <div class="auth-field">
             <label style="font-weight: 600" for=" password">Password</label>
             <input id="password" type="password" name="password" formControlName="password" />
-            <div *ngIf="formGroup.get('password')?.hasError('required') && formGroup.get('password')?.touched" class="text-danger">
+            <div *ngIf="formGroup.get('password')?.hasError('required') && formGroup.get('password')?.touched" class="error-message">
               <p>Password is required</p>
             </div>
           </div>
-        </div>
 
-        <a>Forgot password?</a>
+          <div>
+            <a>Forgot password?</a>
+          </div>
+        </div>
 
         <div class="divider">
           <div class="line"></div>
