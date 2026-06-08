@@ -13,8 +13,6 @@ using EduMeilleurAPI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var jwtKey = builder.Configuration["JWT:Key"];
-
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
@@ -32,9 +30,8 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
-
-    options.SaveToken = true; 
-    options.RequireHttpsMetadata = false; // Lors du développement on peut laisser à false
+    options.SaveToken = true;
+    options.RequireHttpsMetadata = false;
     options.TokenValidationParameters = new TokenValidationParameters()
     {
         ValidateAudience = true,
@@ -43,10 +40,16 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = builder.Configuration["JWT:Issuer"], // Issuer : Serveur 
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-            .GetBytes(jwtKey)), 
+            .GetBytes(builder.Configuration["JWT:Key"]!)),
 
         ClockSkew = TimeSpan.Zero
     };
+}).AddGoogle(options =>
+{
+    options.ClientId = builder.Configuration["AUTH:GOOGLE:CLIENT:ID"];
+    options.ClientSecret = builder.Configuration["AUTH:GOOGLE:CLIENT:SECRET"];
+    options.CallbackPath = "/api/Users/GoogleCallback";
+
 });
 
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<EduMeilleurAPIContext>().AddDefaultTokenProviders();
