@@ -57,9 +57,7 @@ namespace EduMeilleur.Tests.Controllers
                 SchoolId = schoolId,
                 SchoolYear = schoolYear
             };
-
-            _mockSchoolService.Setup(s => s.IsSchoolIdValid(It.IsAny<int>())).ReturnsAsync(true);
-            _mockSchoolService.Setup(s => s.IsSchoolIdValid(null)).ReturnsAsync(false);
+            
             _mockSchoolService.Setup(s => s.GetSchool(It.IsAny<int>())).ReturnsAsync(new School { Id = 1, Name = "Test School" });
 
             _mockUserManager.Setup(u => u.CreateAsync(It.IsAny<User>(), registerDTO.Password)).ReturnsAsync(IdentityResult.Success);
