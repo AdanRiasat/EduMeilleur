@@ -15,6 +15,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Authentication;
 
 namespace EduMeilleurAPI.Controllers
 {
@@ -22,6 +23,9 @@ namespace EduMeilleurAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        private const int MINIMUM_SCHOOL_YEAR = 1;
+        private const int MAXIMUM_SCHOOL_YEAR = 5;
+        
         private readonly UserManager<User> _userManager;
         private readonly IPictureService _pictureService;
         private readonly ISchoolService _schoolService;
@@ -44,55 +48,24 @@ namespace EduMeilleurAPI.Controllers
                 Email = register.Email,
                 IQPoints = 0,
             };
-
-            var isIdValid = await _schoolService.IsSchoolIdValid(register.SchoolId);
-            if (isIdValid == null) return StatusCode(StatusCodes.Status500InternalServerError);
-
-            if ((bool)isIdValid)
+            
+            if (register.SchoolId.HasValue)
             {
-                var school = await _schoolService.GetSchool((int)register.SchoolId);
+                var school = await _schoolService.GetSchool(register.SchoolId.Value);
                 if (school == null) return StatusCode(StatusCodes.Status500InternalServerError);
-
+                
                 user.School = school;
             }
 
-            if (register.SchoolYear >= 1 && register.SchoolYear <= 5)
+            if (register.SchoolYear >= MINIMUM_SCHOOL_YEAR && register.SchoolYear <= MAXIMUM_SCHOOL_YEAR)
             {
                 user.SchoolYear = register.SchoolYear;
             }
 
-            var errors = new List<IdentityError>();
+            IdentityResult result = await _userManager.CreateAsync(user, register.Password);
 
-            foreach (var validator in _userManager.UserValidators)
-            {
-                var result = await validator.ValidateAsync(_userManager, user);
-                if (!result.Succeeded)
-                    errors.AddRange(result.Errors);
-            }
-
-            foreach (var validator in _userManager.PasswordValidators)
-            {
-                var result = await validator.ValidateAsync(_userManager, user, register.Password);
-                if (!result.Succeeded)
-                    errors.AddRange(result.Errors);
-            }
-
-            if (errors.Count > 0)
-                return BadRequest(errors.Select(e => new { e.Code, e.Description }));
-
-            IdentityResult identityResult = await _userManager.CreateAsync(user, register.Password);
-
-            if (!identityResult.Succeeded)
-                errors.AddRange(identityResult.Errors);
-
-            if (errors.Count > 0)
-            {
-                return BadRequest(identityResult.Errors.Select(e => new
-                {
-                    Code = e.Code,
-                    Description = e.Description
-                }));
-            }
+            if (!result.Succeeded)
+                return BadRequest(result.Errors.Select(e => new { e.Code, e.Description }));
 
             return Ok(await GenerateLoginResponse(user));
         }
@@ -100,34 +73,76 @@ namespace EduMeilleurAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> Login(LoginDTO login)
         {
-            User? user = await _userManager.FindByNameAsync(login.Username);
-            if (user == null)
-                user = await _userManager.FindByEmailAsync(login.Username);
+            User? user = await _userManager.FindByNameAsync(login.Username) ?? await _userManager.FindByEmailAsync(login.Username);
 
             if (user != null && await _userManager.CheckPasswordAsync(user, login.Password))
             {
-                return await GenerateLoginResponse(user);
-            }
-            else
-            {
-                return StatusCode(StatusCodes.Status400BadRequest,
-                    new { Message = "Le nom d'utilisateur ou le mot de passe est invalide." });
-            }
+                return Ok(await GenerateLoginResponse(user));
+            } 
+            
+            return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Le nom d'utilisateur ou le mot de passe est invalide." });
+        }
+        
+        [HttpGet]
+        public IActionResult GoogleLogin(string? returnUrl = null)
+        {
+            var redirectUrl = Url.Action(nameof(GoogleCallback));
+            var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
+            return Challenge(properties, "Google");
         }
 
-        private async Task<ActionResult> GenerateLoginResponse(User user)
+        [HttpGet]
+        public async Task<IActionResult> GoogleCallback()
+        {
+            var result = await HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
+            if (!result.Succeeded)
+                return BadRequest(new { Message = "Google authentication failed." });
+
+            var claims    = result.Principal!;
+            var email     = claims.FindFirstValue(ClaimTypes.Email)!;
+            var externalId = claims.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var name      = claims.FindFirstValue(ClaimTypes.Name) ?? email;
+            
+            var user = await _userManager.FindByLoginAsync("Google", externalId); // check if already linked
+
+            if (user == null)
+            {
+                user = await _userManager.FindByEmailAsync(email);
+
+                if (user == null)
+                {
+                    user = new User
+                    {
+                        UserName = name.Replace(" ", "_"),
+                        Email    = email,
+                        IQPoints = 0,
+                        EmailConfirmed = true,
+                    };
+
+                    var createResult = await _userManager.CreateAsync(user);
+                    if (!createResult.Succeeded)
+                        return BadRequest(createResult.Errors.Select(e => new { e.Code, e.Description }));
+                }
+                
+                await _userManager.AddLoginAsync(user, new UserLoginInfo("Google", externalId, "Google"));
+            }
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+            var data = await GenerateLoginResponse(user);
+            return Redirect($"{_config["JWT:Audience"]}/oauth-callback?token={data.Token}&refreshToken={data.RefreshToken}&username={data.Username}&roles={data.Roles}");
+        }
+
+        private async Task<LoginResponseDTO> GenerateLoginResponse(User user)
         {
             IList<string> roles = await _userManager.GetRolesAsync(user);
             List<Claim> authClaims = new List<Claim>();
             foreach (string role in roles)
             {
                 authClaims.Add(new Claim(ClaimTypes.Role, role));
-
             }
             authClaims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
 
-            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8
-                .GetBytes(_config["JWT:Key"])); 
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8 .GetBytes(_config["JWT:Key"])); 
             JwtSecurityToken token = new JwtSecurityToken(
                 issuer: _config["JWT:Issuer"],
                 audience: _config["JWT:Audience"],
@@ -140,14 +155,14 @@ namespace EduMeilleurAPI.Controllers
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(14);
             await _userManager.UpdateAsync(user);
 
-            return Ok(new
+            return new LoginResponseDTO
             {
-                token = new JwtSecurityTokenHandler().WriteToken(token),
-                validTo = token.ValidTo,
-                profile = new ProfileDisplayDTO(user),
-                refreshToken = user.RefreshToken,
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                ValidTo = token.ValidTo,
+                RefreshToken = user.RefreshToken,
+                Username = user.UserName,
                 Roles = roles
-            });
+            };
         }
 
         private string GenerateRefreshToken()
@@ -166,7 +181,7 @@ namespace EduMeilleurAPI.Controllers
             if (user == null || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
                 return Unauthorized();
 
-            return await GenerateLoginResponse(user);
+            return Ok(await GenerateLoginResponse(user));
         }
 
         [HttpGet("{username}")]
@@ -185,6 +200,16 @@ namespace EduMeilleurAPI.Controllers
                 byte[] bytes = System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() + "/images/pfp/" + user.FileName);
                 return File(bytes, user.MimeType);
             }
+        }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> GetProfile()
+        {
+            User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            if (user == null) return NotFound();
+            
+            return Ok(new ProfileDisplayDTO(user));
         }
 
         [HttpPut]

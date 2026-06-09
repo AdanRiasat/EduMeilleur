@@ -23,6 +23,8 @@ builder.Services.AddDbContext<EduMeilleurAPIContext>(options =>
     options.UseLazyLoadingProxies(); 
 });
 
+builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<EduMeilleurAPIContext>().AddDefaultTokenProviders();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -48,11 +50,8 @@ builder.Services.AddAuthentication(options =>
 {
     options.ClientId = builder.Configuration["AUTH:GOOGLE:CLIENT:ID"];
     options.ClientSecret = builder.Configuration["AUTH:GOOGLE:CLIENT:SECRET"];
-    options.CallbackPath = "/api/Users/GoogleCallback";
-
+    options.SignInScheme = IdentityConstants.ExternalScheme;
 });
-
-builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<EduMeilleurAPIContext>().AddDefaultTokenProviders();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -110,7 +109,12 @@ app.UseRouting();
 
 app.UseCors("AllowAll");
 
-// Configure the HTTP request pipeline.
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.None,
+    Secure = CookieSecurePolicy.SameAsRequest
+});
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
