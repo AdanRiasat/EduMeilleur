@@ -10,16 +10,18 @@ import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 import { authPagesGuard } from './guards/auth-pages.guard';
 import { authGuard } from './guards/auth.guard';
+import { OauthCallbackComponent } from './components/oauth-callback/oauth-callback.component';
 
 export const routes: Routes = [
-    {path: "", redirectTo: "/home", pathMatch: "full"},
-    {path: "home", component: HomeComponent},
-    {path: "signup", component: SignUpComponent, canActivate: [authPagesGuard]},
-    {path: "login", component: LoginComponent, canActivate: [authPagesGuard]},
-    {path: "profile", component: ProfileComponent, canActivate: [authGuard]},
-    {path: "profile/:username", component: EditProfileComponent, canActivate: [authGuard]},
-    {path: "ai", component: AiComponent},
-    {path: "sujets", component: SujetsComponent},
-    {path: "sujets/:id", component: SujetComponent},
-    {path: "contactUs", component: ContactUsComponent}
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'signup', component: SignUpComponent, canActivate: [authPagesGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [authPagesGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
+  { path: 'profile/:username', component: EditProfileComponent, canActivate: [authGuard] },
+  { path: 'ai', component: AiComponent },
+  { path: 'sujets', component: SujetsComponent },
+  { path: 'sujets/:id', component: SujetComponent },
+  { path: 'contactUs', component: ContactUsComponent },
+  { path: 'oauth-callback', component: OauthCallbackComponent },
 ];
