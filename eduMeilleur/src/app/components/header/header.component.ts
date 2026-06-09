@@ -12,7 +12,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
   standalone: true,
   imports: [RouterLink, CommonModule, SidebarComponent, RouterLinkActive, RouterModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrl: './header.component.css',
 })
 export class HeaderComponent {
   title = 'eduMeilleur';
@@ -20,22 +20,18 @@ export class HeaderComponent {
   username: string | null = '';
   userIsConnected: boolean = false;
 
-  isSidebarOpen: boolean = false
+  isSidebarOpen: boolean = false;
 
   timestamp: number = Date.now();
 
-  constructor(public userService: UserService, public route: Router, public global: GlobalService, public modalService: ModalService) {
+  constructor(
+    public userService: UserService,
+    public route: Router,
+    public global: GlobalService,
+    public modalService: ModalService,
+  ) {
     effect(() => {
-      let token: string | null = userService.token();
-      if (token) {
-        let profileString: string | null = localStorage.getItem('profile');
-        if (profileString) {
-          let profile: Profile = JSON.parse(profileString);
-          this.username = profile.username;
-        }
-      } else {
-        this.username = null;
-      }
+      this.username = userService.username();
     });
   }
 
@@ -61,12 +57,11 @@ export class HeaderComponent {
   }
 
   openSidebar() {
-    this.isSidebarOpen = true
+    this.isSidebarOpen = true;
     console.log(this.isSidebarOpen);
-    
   }
 
   closeSidebar() {
-    this.isSidebarOpen = false
+    this.isSidebarOpen = false;
   }
 }

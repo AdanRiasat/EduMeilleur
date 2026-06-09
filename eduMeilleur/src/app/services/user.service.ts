@@ -25,6 +25,7 @@ export class UserService {
   token: Signal<string | null> = this.tokenSignal.asReadonly();
   refreshToken: Signal<string | null> = this.refreshTokenSignal.asReadonly();
   roles: Signal<string[]> = this.rolesSignal.asReadonly();
+  username = signal<string | null>(localStorage.getItem('username'));
 
   private logoutTimer: any;
 
@@ -73,18 +74,25 @@ export class UserService {
     this.refreshTokenSignal.set(null);
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
-    localStorage.removeItem('profile');
+    localStorage.removeItem('username');
     localStorage.removeItem('roles');
   }
 
   isLoggedIn(): boolean {
-    return this.tokenSignal() != null
+    return this.tokenSignal() != null;
   }
 
   async editProfile(dto: FormData) {
     let x = await lastValueFrom(this.http.put<Profile>(domain + '/api/Users/EditProfile', dto));
     console.log(x);
     localStorage.setItem('profile', JSON.stringify(x));
+  }
+
+  async getProfile(): Promise<Profile> {
+    let res = await lastValueFrom(this.http.get<Profile>(`${domain}/api/Users/GetProfile`));
+    console.log(res);
+
+    return res;
   }
 
   async refreshExpiredToken() {
@@ -104,10 +112,11 @@ export class UserService {
     this.tokenSignal.set(data.token);
     this.refreshTokenSignal.set(data.refreshToken);
     this.rolesSignal.set(data.roles);
+    this.username.set(data.username);
     localStorage.setItem('roles', JSON.stringify(data.roles));
     localStorage.setItem('refreshToken', data.refreshToken);
+    localStorage.setItem('username', data.username);
     localStorage.setItem('token', data.token);
-    localStorage.setItem('profile', JSON.stringify(data.profile));
 
     this.startLogoutTimer();
   }
