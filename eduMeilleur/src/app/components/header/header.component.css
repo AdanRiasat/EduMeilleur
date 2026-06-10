@@ -109,7 +109,7 @@ a {
 }
 
 .nav-bar-active {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(201, 232, 255, 0.2);
   color: #f8f9fa;
   border-radius: 0;
   text-decoration: underline;
