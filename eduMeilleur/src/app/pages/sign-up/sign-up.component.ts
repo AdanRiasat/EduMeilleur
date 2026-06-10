@@ -10,6 +10,7 @@ import { SignUpMainComponent } from '../../components/sign-up-main/sign-up-main.
 import { SignUpExtraComponent } from '../../components/sign-up-extra/sign-up-extra.component';
 import { passwordsMatch } from '../../validators/passwords-match';
 import { ModalService } from '../../services/modal.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -33,6 +34,7 @@ export class SignUpComponent implements AfterViewInit {
     public spinner: SpinnerService,
     public formBuilder: FormBuilder,
     public modalService: ModalService,
+    public toastService: ToastService,
   ) {
     this.formGroupMain = formBuilder.group(
       {
@@ -85,16 +87,13 @@ export class SignUpComponent implements AfterViewInit {
       }
     } catch (error: any) {
       if (error.error) {
-        console.log(error);
-        if (error.status === 0) {
+        if (error.status === 0 || error.status === 500) {
           this.modalService.openErrorModal(() => this.register());
           this.spinner.hide();
           return;
+        } else {
+          this.toastService.error(error.error[0].description);
         }
-        for (let e of error.error) {
-        }
-      } else {
-        this.errors['general'] = 'An unexpected error occurred.';
       }
     } finally {
       this.spinner.hide();
