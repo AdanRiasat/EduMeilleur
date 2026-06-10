@@ -72,6 +72,7 @@ export class UserService {
     this.tokenSignal.set(null);
     this.rolesSignal.set([]);
     this.refreshTokenSignal.set(null);
+    this.username.set(null);
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('username');
