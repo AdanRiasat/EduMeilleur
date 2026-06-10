@@ -1,4 +1,4 @@
-.scroll-content{
+.scroll-content {
   position: relative;
   background-color: #f2f2f2;
   padding: 20px clamp(10px, 10vw, 200px);
@@ -11,7 +11,7 @@
   overflow-y: auto;
   padding: 1rem;
   border-right: 1px solid #ddd;
-  background-color: hsl(202, 46%, 91%);
+  background-color: white;
 }
 
 #sujet-sidebar {
@@ -59,4 +59,3 @@ app-subject-sidebar {
     display: none !important;
   }
 }
-

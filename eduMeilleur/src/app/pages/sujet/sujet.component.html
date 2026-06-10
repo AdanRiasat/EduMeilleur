@@ -1,40 +1,31 @@
 <div class="container-fluid">
-    <div class="row">
-        <div id="sujet-sidebar" class="col-2 scroll-sidebar">
-
-            <app-subject-sidebar [subject]="sujet" [chapters]="chapters" [allItems]="allItems"
-                [currentItem]="sujetService.currentItem()" (getAllItems)="getAllItems($event)"
-                (getCurrentItem)="getCurrentItem($event)"></app-subject-sidebar>
-        </div>
-
-        <div class="col scroll-content">
-            <div [innerHTML]="sujetService.selectedContent()"></div>
-
-            <div class="not-available" *ngIf="!isLoadingContent() && sujetService.selectedContent() == ''">
-                <p>
-                    There's no available content here.<br> You can find all existing content on the footer under
-                    'Existing resources'.
-                </p>
-                <svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" viewBox="0 0 24 24">
-                    <path fill="currentColor"
-                        d="M12 20a8 8 0 0 1-8-8H2c0 5.523 4.477 10 10 10zm0-16a8 8 0 0 1 8 8h2c0-5.523-4.477-10-10-10zm-8 8a7.97 7.97 0 0 1 2.343-5.657L4.93 4.93A9.97 9.97 0 0 0 2 11.999zm2.343-5.657A7.97 7.97 0 0 1 12 4V2a9.97 9.97 0 0 0-7.071 2.929zm-1.414 0l12.728 12.728l1.414-1.414L6.343 4.929zM20 12a7.97 7.97 0 0 1-2.343 5.657l1.414 1.414A9.97 9.97 0 0 0 22 12zm-2.343 5.657A7.97 7.97 0 0 1 12 20v2a9.97 9.97 0 0 0 7.071-2.929z" />
-                </svg>
-            </div>
-
-            <div class="skeleton-loading" *ngIf="isLoadingContent()">
-                LOADINGGG!!!!
-            </div>
-
-            <button class="content-cta btn-home"
-                (click)="refreshItems(sujetService.currentItem()!.relatedItems[0].id, sujetService.currentItem()!.relatedType)">
-                <div *ngIf="currentType == 'Notes'">Exercises for these notes</div>
-                <div *ngIf="currentType == 'Exercises'">
-                    Notes:
-                    <span *ngFor="let i of sujetService.currentItem()!.relatedItems; let last = last">
-                        {{i.code}}<span *ngIf="!last">, </span>
-                    </span>
-                </div>
-            </button>
-        </div>
+  <div class="row">
+    <div id="sujet-sidebar" class="col-2 scroll-sidebar">
+      <app-subject-sidebar [subject]="sujet" [chapters]="chapters" [allItems]="allItems" [currentItemId]="sujetService.currentItemId()" [currentType]="sujetService.currentType()" (getAllItems)="getAllItems($event)" (getCurrentItem)="getCurrentItem($event)"></app-subject-sidebar>
     </div>
+
+    <div class="col scroll-content">
+      <div [innerHTML]="sujetService.selectedContent()"></div>
+
+      <div class="not-available" *ngIf="!isLoadingContent() && sujetService.selectedContent() == ''">
+        <p>
+          There's no available content here.<br />
+          You can find all existing content on the footer under 'Existing resources'.
+        </p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M12 20a8 8 0 0 1-8-8H2c0 5.523 4.477 10 10 10zm0-16a8 8 0 0 1 8 8h2c0-5.523-4.477-10-10-10zm-8 8a7.97 7.97 0 0 1 2.343-5.657L4.93 4.93A9.97 9.97 0 0 0 2 11.999zm2.343-5.657A7.97 7.97 0 0 1 12 4V2a9.97 9.97 0 0 0-7.071 2.929zm-1.414 0l12.728 12.728l1.414-1.414L6.343 4.929zM20 12a7.97 7.97 0 0 1-2.343 5.657l1.414 1.414A9.97 9.97 0 0 0 22 12zm-2.343 5.657A7.97 7.97 0 0 1 12 20v2a9.97 9.97 0 0 0 7.071-2.929z" />
+        </svg>
+      </div>
+
+      <div class="skeleton-loading" *ngIf="isLoadingContent()">LOADINGGG!!!!</div>
+
+      <button class="content-cta btn-home" (click)="refreshItems(sujetService.currentItem()!.relatedItems[0].id, sujetService.currentItem()!.relatedType)">
+        <div *ngIf="currentType == 'Notes'">Exercises for these notes</div>
+        <div *ngIf="currentType == 'Exercises'">
+          Notes:
+          <span *ngFor="let i of sujetService.currentItem()!.relatedItems; let last = last"> {{ i.code }}<span *ngIf="!last">, </span> </span>
+        </div>
+      </button>
+    </div>
+  </div>
 </div>
