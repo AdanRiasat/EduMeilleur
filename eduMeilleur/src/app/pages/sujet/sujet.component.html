@@ -19,11 +19,19 @@
 
       <div class="skeleton-loading" *ngIf="isLoadingContent()">LOADINGGG!!!!</div>
 
-      <button class="content-cta btn-home" (click)="refreshItems(sujetService.currentItem()!.relatedItems[0].id, sujetService.currentItem()!.relatedType)">
-        <div *ngIf="currentType == 'Notes'">Exercises for these notes</div>
-        <div *ngIf="currentType == 'Exercises'">
-          Notes:
-          <span *ngFor="let i of sujetService.currentItem()!.relatedItems; let last = last"> {{ i.code }}<span *ngIf="!last">, </span> </span>
+      <button class="content-cta" [class.expanded]="isExpanded" (click)="onCtaClick($event)">
+        <svg class="cta-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M9.183 6.117a6 6 0 1 0 4.511 3.986" />
+            <path d="M14.813 17.883a6 6 0 1 0-4.496-3.954" />
+          </g>
+        </svg>
+        <div class="cta-text">
+          <div *ngIf="sujetService.currentType() == 'Notes'">Exercises for these notes</div>
+          <div *ngIf="sujetService.currentType() == 'Exercises'">
+            Notes:
+            <span *ngFor="let i of sujetService.currentItem()!.relatedItems; let last = last"> {{ i.code }}<span *ngIf="!last">, </span> </span>
+          </div>
         </div>
       </button>
     </div>

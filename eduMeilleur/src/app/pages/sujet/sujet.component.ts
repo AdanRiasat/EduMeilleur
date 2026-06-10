@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, HostListener, OnInit, signal } from '@angular/core';
 import { SujetService } from '../../services/sujet.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DisplaySujet } from '../../models/displaySujet';
@@ -25,6 +25,7 @@ export class SujetComponent implements OnInit {
   currentType: string = '';
 
   isLoadingContent = signal<boolean>(true);
+  isExpanded: boolean = false;
 
   constructor(
     public sujetService: SujetService,
@@ -87,5 +88,22 @@ export class SujetComponent implements OnInit {
   async refreshItems(id: number, type: string) {
     await this.getAllItems(type);
     await this.getCurrentItem(id, type);
+  }
+
+  onCtaClick(event: MouseEvent) {
+    if (window.innerWidth <= 867 && !this.isExpanded) {
+      this.isExpanded = true;
+      event.stopPropagation();
+      return;
+    }
+
+    this.isExpanded = false;
+    const item = this.sujetService.currentItem()!;
+    this.refreshItems(item.relatedItems[0].id, item.relatedType);
+  }
+
+  @HostListener('document:click')
+  onDocumentClick() {
+    if (this.isExpanded) this.isExpanded = false;
   }
 }

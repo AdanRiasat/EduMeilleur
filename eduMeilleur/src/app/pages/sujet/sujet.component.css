@@ -29,6 +29,17 @@
   position: absolute;
   right: 20px;
   top: 20px;
+  padding: 10px;
+
+  color: white;
+  background: var(--button);
+  border: none;
+  border-radius: 5px;
+}
+
+/* The icon-only view is exclusive to the mobile breakpoint below. */
+.content-cta .cta-icon {
+  display: none;
 }
 
 .not-available {
@@ -57,5 +68,32 @@ app-subject-sidebar {
 @media screen and (max-width: 867px) {
   #sujet-sidebar {
     display: none !important;
+  }
+
+  .content-cta {
+    display: flex;
+    align-items: center;
+  }
+
+  .content-cta .cta-icon {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .content-cta .cta-text {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition:
+      max-width 0.35s ease,
+      opacity 0.3s ease,
+      margin-left 0.35s ease;
+  }
+
+  .content-cta.expanded .cta-text {
+    max-width: 70vw;
+    opacity: 1;
+    margin-left: 6px;
   }
 }
