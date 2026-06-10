@@ -13,76 +13,79 @@ import { SubjectSidebarComponent } from '../../components/subject-sidebar/subjec
   standalone: true,
   imports: [CommonModule, SubjectSidebarComponent],
   templateUrl: './sujet.component.html',
-  styleUrl: './sujet.component.css'
+  styleUrl: './sujet.component.css',
 })
-export class SujetComponent implements OnInit{
+export class SujetComponent implements OnInit {
   // TODO might need ro refactor logic into service
-  sujet: DisplaySujet | null = null
-  chapters: string[] = []
-  id: number = 0 //this is subjectId
+  sujet: DisplaySujet | null = null;
+  chapters: string[] = [];
+  id: number = 0;
 
-  allItems: Item[] = []
-  currentType: string = ""
+  allItems: Item[] = [];
+  currentType: string = '';
 
-  isLoadingContent = signal<boolean>(true)
+  isLoadingContent = signal<boolean>(true);
 
-  constructor(public sujetService: SujetService, public route: ActivatedRoute, public sanitizer: DomSanitizer, public markdown: MarkdownService){}
+  constructor(
+    public sujetService: SujetService,
+    public route: ActivatedRoute,
+    public sanitizer: DomSanitizer,
+    public markdown: MarkdownService,
+  ) {}
 
   async ngOnInit() {
-    let sujetIdStringData: string | null = this.route.snapshot.paramMap.get("id")
-    if (!sujetIdStringData){
+    let sujetIdStringData: string | null = this.route.snapshot.paramMap.get('id');
+    if (!sujetIdStringData) {
       // TODO reroute
-      return
+      return;
     }
 
-    if (window.innerWidth <= 876) return
+    if (window.innerWidth <= 876) return;
     console.log('web interface');
 
-    this.sujetService.selectedContent.set("")
+    this.sujetService.selectedContent.set('');
 
     try {
-      await this.loadItems(sujetIdStringData)
-    } catch (e){
+      await this.loadItems(sujetIdStringData);
+    } catch (e) {
       console.log(e);
     }
-    
-    this.isLoadingContent.set(false)
+
+    this.isLoadingContent.set(false);
   }
 
-  async loadItems(idData: string){
-    this.id = parseFloat(idData)
-    this.sujet = await this.sujetService.getSujet(this.id)
-    this.chapters = this.sujet.chapters
-    await this.getAllItems("Notes")
-    await this.getCurrentItem(this.allItems[0].id)
+  async loadItems(idData: string) {
+    this.id = parseFloat(idData);
+    this.sujet = await this.sujetService.getSujet(this.id);
+    this.chapters = this.sujet.chapters;
+    await this.getAllItems('Notes');
+    await this.getCurrentItem(this.allItems[0].id);
   }
 
-  async getAllItems(type: string){
-    this.allItems = await this.sujetService.getAllItems(this.id, type)
-    this.currentType = type
+  async getAllItems(type: string) {
+    this.allItems = await this.sujetService.getAllItems(this.id, type);
+    this.currentType = type;
   }
 
-  async getCurrentItem(id: number, type?: string){
-    this.isLoadingContent.set(true)
+  async getCurrentItem(id: number, type?: string) {
+    this.isLoadingContent.set(true);
 
-    if (!type) type = this.currentType
+    if (!type) type = this.currentType;
 
     try {
-      await this.sujetService.getItem(id, type)
-      this.sujetService.formatMessage(this.sujetService.currentItem()!.content)
+      await this.sujetService.getItem(id, type);
+      this.sujetService.formatMessage(this.sujetService.currentItem()!.content);
     } catch (e) {
-      this.sujetService.selectedContent.set("")
-      console.log(e); 
+      this.sujetService.selectedContent.set('');
+      console.log(e);
     }
 
-    this.isLoadingContent.set(false)
-    this.currentType = type
+    this.isLoadingContent.set(false);
+    this.currentType = type;
   }
 
   async refreshItems(id: number, type: string) {
-    await this.getAllItems(type)
-    await this.getCurrentItem(id, type)
+    await this.getAllItems(type);
+    await this.getCurrentItem(id, type);
   }
 }
-
-
