@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-oauth-callback',
@@ -20,16 +21,15 @@ export class OauthCallbackComponent implements OnInit {
     let token = this.route.snapshot.queryParamMap.get('token');
     let refreshToken = this.route.snapshot.queryParamMap.get('refreshToken');
     let username = this.route.snapshot.queryParamMap.get('username');
-    let roles = this.route.snapshot.queryParamMap.get('roles');
 
-    let data = {
+    let data: any = {
       token: token,
       refreshToken: refreshToken,
       username: username,
-      roles: roles,
     };
 
-    if (token && refreshToken && username && roles) {
+    if (token && refreshToken && username) {
+      data.roles = this.retrieveRoles(token);
       this.userService.updateSignals(data);
 
       window.history.replaceState({}, '', '/');
@@ -37,5 +37,13 @@ export class OauthCallbackComponent implements OnInit {
     } else {
       this.router.navigate(['/login']);
     }
+  }
+
+  retrieveRoles(token: string): string[] {
+    let decoded: any = jwtDecode(token);
+    let rawRoles = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    let roles: string[] = Array.isArray(rawRoles) ? rawRoles : rawRoles ? [rawRoles] : [];
+
+    return roles;
   }
 }
