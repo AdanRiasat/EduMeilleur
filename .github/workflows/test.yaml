@@ -30,7 +30,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: "8.0.x"
 
       - name: Restore dependencies
         run: dotnet restore ./EduMeilleurAPI/EduMeilleurAPI.sln
@@ -52,3 +52,5 @@ jobs:
           Teacher3__Password: "TeacherPass1!"
           Teacher4__Password: "TeacherPass1!"
           Teacher5__Password: "TeacherPass1!"
+          AUTH__GOOGLE__CLIENT__ID: "crazy-cool-id"
+          AUTH__GOOGLE__CLIENT__SECRET: "shhhh-this-is-my-secret"
