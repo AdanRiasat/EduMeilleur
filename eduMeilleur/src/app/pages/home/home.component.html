@@ -59,7 +59,7 @@
     <div class="col text-center">
       <h1>Find your subject</h1>
       <h2>We have notes, exercises and videos for each</h2>
-      <app-image-slider></app-image-slider>
+      <app-image-slider (doneLoading)="handleSubjectsReady($event)"></app-image-slider>
     </div>
   </div>
 </div>

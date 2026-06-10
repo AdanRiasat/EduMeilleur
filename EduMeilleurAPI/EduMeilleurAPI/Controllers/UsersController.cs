@@ -129,7 +129,7 @@ namespace EduMeilleurAPI.Controllers
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             var data = await GenerateLoginResponse(user);
-            return Redirect($"{_config["JWT:Audience"]}/oauth-callback?token={data.Token}&refreshToken={data.RefreshToken}&username={data.Username}&roles={data.Roles}");
+            return Redirect($"{_config["JWT:Audience"]}/oauth-callback?token={data.Token}&refreshToken={data.RefreshToken}&username={data.Username}");
         }
 
         private async Task<LoginResponseDTO> GenerateLoginResponse(User user)

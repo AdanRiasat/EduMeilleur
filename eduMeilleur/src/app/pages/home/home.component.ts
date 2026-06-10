@@ -27,8 +27,9 @@ export class HomeComponent implements OnInit {
   timestamp: number = Date.now();
 
   isLoading: boolean = true;
-  isApiReady: boolean = false;
+  isTeachersReady: boolean = false;
   isVideoReady: boolean = false;
+  isSubjectsReady: boolean = false;
 
   constructor(
     public global: GlobalService,
@@ -40,7 +41,7 @@ export class HomeComponent implements OnInit {
     document.body.style.overflow = 'hidden';
 
     this.teachersNames = await this.userService.getTeachers();
-    this.isApiReady = true;
+    this.isTeachersReady = true;
     this.tryHideLoader();
   }
 
@@ -67,8 +68,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  handleSubjectsReady(value: boolean) {
+    this.isSubjectsReady = value;
+    this.tryHideLoader();
+  }
+
   tryHideLoader() {
-    if (!this.isApiReady || !this.isVideoReady) return;
+    if (!this.isTeachersReady || !this.isVideoReady || !this.isSubjectsReady) return;
     this.isLoading = false;
     document.body.style.overflow = '';
   }
