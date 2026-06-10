@@ -8,8 +8,6 @@
       <h2>Log in</h2>
 
       <form [formGroup]="formGroup" (ngSubmit)="login()">
-        <div *ngIf="errors['badRequest']" class="text-danger">{{ errors["badRequest"] }}</div>
-
         <div class="auth-form-fields">
           <div class="auth-field">
             <label style="font-weight: 600" for="username">Username or email</label>

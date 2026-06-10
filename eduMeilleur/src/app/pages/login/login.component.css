@@ -10,6 +10,10 @@ p {
   margin: 0;
 }
 
+form {
+  position: relative;
+}
+
 .login-forms {
   width: clamp(350px, 75%, 500px);
   display: flex;

@@ -7,6 +7,8 @@ import { SpinnerService } from '../../services/spinner.service';
 import { Modal } from 'bootstrap';
 import { AuthExtraOptionsComponent } from '../../components/auth-extra-options/auth-extra-options.component';
 import { ModalService } from '../../services/modal.service';
+import { ToastService } from '../../services/toast.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +28,7 @@ export class LoginComponent {
     public router: Router,
     private formBuilder: FormBuilder,
     public modalService: ModalService,
+    public toastService: ToastService,
   ) {
     this.formGroup = formBuilder.group({
       username: ['', [Validators.required]],
@@ -54,7 +57,7 @@ export class LoginComponent {
         this.modalService.openErrorModal(() => this.login());
         return;
       }
-      this.errors['badRequest'] = error.error.message;
+      this.toastService.error(error.error.message);
     }
 
     this.spinnerService.hide();
