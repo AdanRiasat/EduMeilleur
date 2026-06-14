@@ -1,8 +1,9 @@
 ﻿using System.Text.Json.Serialization;
+using EduMeilleurAPI.Models.Interfaces;
 
 namespace EduMeilleurAPI.Models
 {
-    public class Feedback
+    public class Feedback : IQuestionFeedback
     {
         public int Id { get; set; }
         public string Title { get; set; } = null!;

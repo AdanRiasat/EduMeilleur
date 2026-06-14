@@ -1,8 +1,9 @@
 ﻿using System.Text.Json.Serialization;
+using EduMeilleurAPI.Models.Interfaces;
 
 namespace EduMeilleurAPI.Models
 {
-    public class QuestionTeacher
+    public class QuestionTeacher : IQuestionFeedback
     {
         public int Id { get; set; }
         public string Title { get; set; } = null!;
@@ -13,6 +14,6 @@ namespace EduMeilleurAPI.Models
         [JsonIgnore]
         public virtual List<Picture> Pictures { get; set; } = new List<Picture>();
         [JsonIgnore]
-        public virtual List<Attachment> Attachments { get; set;} = new List<Attachment>();
+        public virtual List<Attachment> Attachments { get; set; } = new List<Attachment>();
     }
 }

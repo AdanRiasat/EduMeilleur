@@ -22,7 +22,11 @@ namespace EduMeilleur.Tests.Services
                 {"Jwt:Audience", "http://localhost:4200"},
                 {"Admin:Password", "alloo123" },
                 {"Admin:Email", "hellooo@gmail.com" },
-                {"Teacher:Password", "alloo123" }
+                {"Teacher:Password", "alloo123" },
+                {"Teacher2:Password",  "Test123!"},
+                {"Teacher3:Password",  "Test123!"},
+                {"Teacher4:Password",  "Test123!"},
+                {"Teacher5:Password",  "Test123!"},
             };
 
             IConfiguration config = new ConfigurationBuilder()
@@ -42,7 +46,7 @@ namespace EduMeilleur.Tests.Services
             var attachment = new Attachment
             {
                 Id = 0,
-                Filename = "test.pdf",
+                FileName = "test.pdf",
                 MimeType = "application/pdf"
             };
 
@@ -51,11 +55,11 @@ namespace EduMeilleur.Tests.Services
 
             //Asert
             Assert.NotNull(result);
-            Assert.Equal(attachment.Filename, result.Filename);
+            Assert.Equal(attachment.FileName, result.FileName);
 
             var fromDb = await context.Attachments.FindAsync(result.Id);
             Assert.NotNull(fromDb);
-            Assert.Equal(attachment.Filename, fromDb.Filename);
+            Assert.Equal(attachment.FileName, fromDb.FileName);
         }
 
         [Fact]
@@ -67,7 +71,7 @@ namespace EduMeilleur.Tests.Services
             var attachment = new Attachment
             {
                 Id = 0,
-                Filename = "test2.pdf",
+                FileName = "test2.pdf",
                 MimeType = "application/pdf"
             };
 

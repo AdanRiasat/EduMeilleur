@@ -5,37 +5,34 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SpinnerService } from '../../services/spinner.service';
 import { GlobalService } from '../../services/global.service';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  styleUrl: './profile.component.css',
 })
-export class ProfileComponent implements OnInit{
-  profile: Profile | null = null
-  username: string | undefined = ""
-  bio: string | undefined = ""
-  email: string | undefined = ""
-  school: string | undefined | null = ""
-  schoolYear: number | undefined | null
+export class ProfileComponent implements OnInit {
+  profile: Profile | null = null;
 
   timestamp: number = Date.now();
 
-  constructor(public userService: UserService, public spinner: SpinnerService, public global: GlobalService) {}
-  
-  ngOnInit() {
-    this.spinner.hide()
-     let profileStringData = localStorage.getItem("profile")
-     if (profileStringData != null){
-      this.profile = JSON.parse(profileStringData)
-      this.username = this.profile?.username
-      this.bio = this.profile?.bio
-      this.email = this.profile?.email
-      this.school = this.profile?.school
-      this.schoolYear = this.profile?.schoolYear
-     }
-     
+  constructor(
+    public userService: UserService,
+    public spinner: SpinnerService,
+    public global: GlobalService,
+    public modalService: ModalService,
+  ) {}
+
+  async ngOnInit() {
+    this.spinner.show();
+    try {
+      this.profile = await this.userService.getProfile();
+    } catch {
+      this.modalService.openErrorModal(() => this.ngOnInit());
+    }
+    this.spinner.hide();
   }
 }

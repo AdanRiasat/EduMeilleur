@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { SpinnerService } from '../../services/spinner.service';
 import { ModalService } from '../../services/modal.service';
 import { ChatbotSidebarComponent } from '../../components/chatbot-sidebar/chatbot-sidebar.component';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-ai',
@@ -37,22 +38,37 @@ export class AiComponent implements OnInit {
 
   userIsConnected: boolean = false;
 
-  constructor(public sanitizer: DomSanitizer, public userService: UserService, public route: Router, public spinner: SpinnerService, public modalService: ModalService) {}
+  isNearBottom = true;
+  scrollThrottle: any = null;
+
+  constructor(public sanitizer: DomSanitizer, public userService: UserService, public route: Router, public spinner: SpinnerService, public modalService: ModalService, public toastService: ToastService) {}
 
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
 
   async ngOnInit() {
     this.spinner.show();
     await this.getChats();
+    this.scrollToBottom()
     this.spinner.hide();
   }
 
+  ngAfterViewInit() {
+    const el = this.scrollContainer.nativeElement;
+    el.addEventListener('scroll', () => {
+      this.isNearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 50;
+    });
+  }
+
   scrollToBottom() {
-    try {
-      setTimeout(() => {
-        this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
-      }, 50);
-    } catch (err) {}
+    if (!this.isNearBottom) return;
+    if (this.scrollThrottle) return;
+    this.scrollThrottle = setTimeout(() => {
+      this.scrollContainer.nativeElement.scrollTo({
+        top: this.scrollContainer.nativeElement.scrollHeight,
+        behavior: 'smooth'
+      });
+      this.scrollThrottle = null;
+    }, 100);
   }
 
   async getChats() {
@@ -74,7 +90,7 @@ export class AiComponent implements OnInit {
   async deleteChat() {
     await this.aiService.deleteChat(this.deleteId);
 
-    let chats = this.chats()
+     let chats = this.chats()
 
     for (let i = 0; i < chats.length; i++) {
       if (chats[i].id == this.deleteId) {
@@ -105,7 +121,6 @@ export class AiComponent implements OnInit {
     console.log(text);
 
     if (text == '') {
-      console.log('ummmmmm sirr');
       return;
     }
 
@@ -125,10 +140,14 @@ export class AiComponent implements OnInit {
     }
 
     if (this.currentChat() != null) {
+      this.isNearBottom = true;
       this.loadingId = this.currentChat()!.id;
-      let botReply = await this.aiService.sendMessage(text, this.currentChat()!);
-      this.messages().push(botReply);
       this.scrollToBottom();
+      try {
+        await this.aiService.streamMessage(text, this.currentChat()!, () => this.scrollToBottom())
+      } catch {
+        this.toastService.error('Something went wrong while sending your message, please try again later');
+      }
     }
 
     this.isLoading = false;

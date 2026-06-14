@@ -17,7 +17,7 @@ namespace EduMeilleurAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.16")
+                .HasAnnotation("ProductVersion", "8.0.27")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -36,7 +36,7 @@ namespace EduMeilleurAPI.Migrations
                     b.Property<int?>("FeedbackId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Filename")
+                    b.Property<string>("FileName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -83,6 +83,12 @@ namespace EduMeilleurAPI.Migrations
                             Id = 1,
                             SubjectId = 2,
                             Title = "Vectors"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            SubjectId = 2,
+                            Title = "Vectors2"
                         });
                 });
 
@@ -107,20 +113,6 @@ namespace EduMeilleurAPI.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Chat");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Title = "My first Chat",
-                            UserId = "11111111-1111-1111-1111-111111111111"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Title = "My second Chat",
-                            UserId = "11111111-1111-1111-1111-111111111111"
-                        });
                 });
 
             modelBuilder.Entity("EduMeilleurAPI.Models.ChatMessage", b =>
@@ -175,6 +167,22 @@ namespace EduMeilleurAPI.Migrations
                     b.HasIndex("ChapterId");
 
                     b.ToTable("Exercise");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ChapterId = 1,
+                            Content = "SN5_IntroVectors_EN.md",
+                            Title = "Introduction to Vectors"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ChapterId = 1,
+                            Content = "SN5_Components_EN.md",
+                            Title = "Vectors and Components"
+                        });
                 });
 
             modelBuilder.Entity("EduMeilleurAPI.Models.Feedback", b =>
@@ -201,6 +209,44 @@ namespace EduMeilleurAPI.Migrations
                     b.HasIndex("userId");
 
                     b.ToTable("Feedbacks");
+                });
+
+            modelBuilder.Entity("EduMeilleurAPI.Models.NoteExercise", b =>
+                {
+                    b.Property<int>("NoteId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.HasKey("NoteId", "ExerciseId");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.ToTable("NoteExercise");
+
+                    b.HasData(
+                        new
+                        {
+                            NoteId = 1,
+                            ExerciseId = 1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            NoteId = 1,
+                            ExerciseId = 2,
+                            Id = 0
+                        },
+                        new
+                        {
+                            NoteId = 2,
+                            ExerciseId = 2,
+                            Id = 0
+                        });
                 });
 
             modelBuilder.Entity("EduMeilleurAPI.Models.Notes", b =>
@@ -234,14 +280,21 @@ namespace EduMeilleurAPI.Migrations
                             Id = 1,
                             ChapterId = 1,
                             Content = "SN5_IntroVectors_EN.md",
-                            Title = "1.1 Introduction to Vectors"
+                            Title = "Introduction to Vectors"
                         },
                         new
                         {
                             Id = 2,
                             ChapterId = 1,
                             Content = "SN5_ComponentsandOrientation_EN.md",
-                            Title = "1.2 Components and Orientation"
+                            Title = "Components and Orientation"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ChapterId = 2,
+                            Content = "",
+                            Title = "testing"
                         });
                 });
 
@@ -536,16 +589,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "339d1e38-c9af-48e5-86de-8e5b43b9c327",
+                            ConcurrencyStamp = "80e324a9-d322-44b0-a7b8-7892db320292",
                             Email = "2ariasat@gmail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "2ARIASAT@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKnYiXvYgeRQT2HOIpD/RsZTkZEuxuL02rLcg04XCmfVZ86mfMUb7Z5D5nmfXQwhCQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBPYszBKzKFdpuSjn3ZbiP5fXYRiUGP6fbYQ+NVas+pET7Xagp9I3cl9XKfJIUjzUQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9ed6d73e-dc90-4deb-8007-6126979b595c",
+                            SecurityStamp = "e4f75087-e88e-4c9d-8b2f-2ec9e026cf12",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -553,16 +606,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111112",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2e6158de-f06c-4072-bb1c-139c8e66e212",
+                            ConcurrencyStamp = "de0d52af-64fc-4322-be9a-9e2073959f99",
                             Email = "bobibo@mail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "BOBIBO@MAIL.COM",
                             NormalizedUserName = "ROBERT LEBOIS",
-                            PasswordHash = "AQAAAAIAAYagAAAAENVvTqmYC7JBlCJsKVdoESJsGPagBXep22gHCiXdC7mSLjBVdgnnXJFvLPipZ94SJg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECmH47nZt2Hasw1WoThXUybubIesj/sIAz7vwsqqm1eLxZw4uixxZhQvAdtf5yJ17Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b1d1bd6a-048d-4494-b8a4-24607c87a9d3",
+                            SecurityStamp = "50edf7fa-3327-4b36-8881-7c84f708d5ef",
                             TwoFactorEnabled = false,
                             UserName = "Robert Lebois"
                         },
@@ -570,16 +623,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111113",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "11c8d6f0-bdfd-4df0-bb85-dc3eb9a5a930",
+                            ConcurrencyStamp = "1a9a5a5a-366b-420d-bfc2-6de59da86207",
                             Email = "hmmm@mail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "HMMM@MAIL.COM",
                             NormalizedUserName = "JEROME LAPLANTE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAUFCbypvdeGXZ4Ez7Dnk6bdw+kompLcyTjneUO7BVfdGowP3EoNOVRBqFIOlcZWzQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK5JxVI0fvk0mTa5xbqzlE4UlJpu0IXF3J6uACiOvYdYgv0LcO9bVIARxVym6kGOHQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f0f0978c-a314-4397-81de-03c73b0d46b4",
+                            SecurityStamp = "65b7f503-c45e-40c1-ae69-a22c30fc4647",
                             TwoFactorEnabled = false,
                             UserName = "Jerome Laplante"
                         },
@@ -587,16 +640,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111114",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "45dd391d-e92d-4184-ae1d-591742cb8db2",
+                            ConcurrencyStamp = "d3f13382-0356-4ce2-9a05-1bc63fdb40cf",
                             Email = "teacher3@mail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "TEACHER3@MAIL.COM",
                             NormalizedUserName = "EMILY TREMBLAY",
-                            PasswordHash = "AQAAAAIAAYagAAAAEB0xWFkQzVtL084wenLwqkH4n3145hDScP38tKiV8guu9xFZjNWSgW03+YGwv6fo/A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBvx4ueNFBm3KrdkFAY/78EFOS8i727DwlV6MDidYUrgz1AYxknENG47Innjp2HuOw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "72426117-cd4e-4b0d-a1b6-52097831f1c0",
+                            SecurityStamp = "2f7cd94b-9957-496c-9f25-3f271dc68a23",
                             TwoFactorEnabled = false,
                             UserName = "Emily Tremblay"
                         },
@@ -604,16 +657,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111115",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4f6b27ed-2f16-435b-94ff-df05a2bb1365",
+                            ConcurrencyStamp = "dbe59bc2-c0c2-4816-bbae-a2f487e4f1c8",
                             Email = "teacher4@mail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "teacher4@MAIL.COM",
                             NormalizedUserName = "TYRONE ROCHELIEU",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGGsuV9VDb+F2oePcWyA1vlSfQka4if9X3GZlPc7SgzJos8s2FGqjIskvR5xJQKOJQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAr8efj7I+zfWHhRyrfCT0yMosTE+KVkkEGmiQVmrIRk0NOf0fkuz35iG+790bVaUQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fa4bcf46-5662-4e27-974f-1c7ff063db22",
+                            SecurityStamp = "2cdbd9b7-6310-4abf-95e0-24f9d7c08fa1",
                             TwoFactorEnabled = false,
                             UserName = "Tyrone Rochelieu"
                         },
@@ -621,16 +674,16 @@ namespace EduMeilleurAPI.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111116",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "23b6a824-c8a4-4253-8d4d-09b627fa6fd4",
+                            ConcurrencyStamp = "6b476634-69c6-4abf-a3a9-933a9570f246",
                             Email = "teacher5@mail.com",
                             EmailConfirmed = false,
                             IQPoints = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "teacher5@MAIL.COM",
                             NormalizedUserName = "SARAH LAIDE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKD9hKi32WJdbmTNX6Bt0tGNX2JJ53iNl5i1CwFoNab5YbA1nSI7tGOpcgi2x5lLew==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGfpEqB8uYxoprPbt4u+tW9b17gSVauf/qdGFmxhBuqbXbjYWJDu4zTwEPGkv6kSLQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e06cf7c6-7300-4d12-b506-d3fb44e8c859",
+                            SecurityStamp = "16e917c4-a997-48d6-91e2-4836eb302c6b",
                             TwoFactorEnabled = false,
                             UserName = "Sarah Laide"
                         });
@@ -908,6 +961,25 @@ namespace EduMeilleurAPI.Migrations
                     b.Navigation("user");
                 });
 
+            modelBuilder.Entity("EduMeilleurAPI.Models.NoteExercise", b =>
+                {
+                    b.HasOne("EduMeilleurAPI.Models.Exercise", "Exercise")
+                        .WithMany("NoteExercises")
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EduMeilleurAPI.Models.Notes", "Note")
+                        .WithMany("NoteExercises")
+                        .HasForeignKey("NoteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exercise");
+
+                    b.Navigation("Note");
+                });
+
             modelBuilder.Entity("EduMeilleurAPI.Models.Notes", b =>
                 {
                     b.HasOne("EduMeilleurAPI.Models.Chapter", "Chapter")
@@ -1028,11 +1100,21 @@ namespace EduMeilleurAPI.Migrations
                     b.Navigation("Messages");
                 });
 
+            modelBuilder.Entity("EduMeilleurAPI.Models.Exercise", b =>
+                {
+                    b.Navigation("NoteExercises");
+                });
+
             modelBuilder.Entity("EduMeilleurAPI.Models.Feedback", b =>
                 {
                     b.Navigation("Attachments");
 
                     b.Navigation("Pictures");
+                });
+
+            modelBuilder.Entity("EduMeilleurAPI.Models.Notes", b =>
+                {
+                    b.Navigation("NoteExercises");
                 });
 
             modelBuilder.Entity("EduMeilleurAPI.Models.QuestionTeacher", b =>

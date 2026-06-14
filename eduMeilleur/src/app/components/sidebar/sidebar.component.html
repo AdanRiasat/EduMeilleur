@@ -6,12 +6,8 @@
 
   <div class="sidebar-content-wrapper">
     <div class="extra-sidebars">
-      <button class="btn-home" *ngIf="router.url == '/ai' && activeSidebarContent != 'chatbot'"
-        (click)="openChatbotSidebar()">Chatbot
-        sidebar</button>
-      <button class="btn-home" *ngIf="hasSubjectId() && activeSidebarContent != 'subject'"
-        (click)="openSubjectSidebar()">Subject
-        sidebar</button>
+      <button class="btn-home" *ngIf="router.url == '/ai' && activeSidebarContent != 'chatbot'" (click)="openChatbotSidebar()">Chatbot sidebar</button>
+      <button class="btn-home" *ngIf="hasSubjectId() && activeSidebarContent != 'subject'" (click)="openSubjectSidebar()">Subject sidebar</button>
       <button class="btn-home" *ngIf="activeSidebarContent != 'base'" (click)="openBaseSidebar()">Base sidebar</button>
     </div>
 
@@ -36,8 +32,6 @@
             <li><a [routerLink]="['/profile']">Profile</a></li>
             <li><a (click)="openDisconnectModal()">Log out</a></li>
           </div>
-
-
         </ul>
 
         <div>
@@ -50,19 +44,13 @@
     </div>
 
     <div class="subject-sidebar-content" *ngIf="activeSidebarContent === 'subject'">
-      <app-subject-sidebar [subject]="subject" [chapters]="chapters" [allItems]="allItems" [currentItem]="currentItem"
-        (getAllItems)="getAllItems($event)" (getCurrentItem)="getCurrentItem($event)"></app-subject-sidebar>
+      <app-subject-sidebar [subject]="subject" [chapters]="chapters" [allItems]="allItems" [currentType]="subjectService.currentType()" [currentItemId]="subjectService.currentItemId()" (getAllItems)="getAllItems($event)" (getCurrentItem)="getCurrentItem($event)"></app-subject-sidebar>
     </div>
 
     <div class="chatbot-sidebar-content" *ngIf="activeSidebarContent === 'chatbot'">
-      <app-chatbot-sidebar [isMobileSidebar]="sidebarStateService.isMobileSidebar" [chats]="aiService.chats()"
-        [currentChat]="aiService.currentChat()" [dropdownOpen]="aiService.dropdownOpen()"
-        (newChat)="aiService.newChat()" (getMessages)="getMessages($event)"
-        (toggleDropdown)="aiService.toggleDropdown($event)"
-        (openDeleteModal)="aiService.openDeleteModal($event)"></app-chatbot-sidebar>
+      <app-chatbot-sidebar [isMobileSidebar]="sidebarStateService.isMobileSidebar" [selectedModel]="aiService.selectedModel()" (selectedModelChange)="aiService.selectedModel.set($event)" [chats]="aiService.chats()" [currentChat]="aiService.currentChat()" [dropdownOpen]="aiService.dropdownOpen()" (newChat)="aiService.newChat()" (getMessages)="getMessages($event)" (toggleDropdown)="aiService.toggleDropdown($event)" (openDeleteModal)="aiService.openDeleteModal($event)"></app-chatbot-sidebar>
     </div>
   </div>
-
 </div>
 
 <div *ngIf="isOpen" class="sidebar-overlay" (click)="closeSidebar()"></div>

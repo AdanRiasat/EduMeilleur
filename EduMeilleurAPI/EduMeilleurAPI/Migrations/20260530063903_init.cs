@@ -417,6 +417,31 @@ namespace EduMeilleurAPI.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "NoteExercise",
+                columns: table => new
+                {
+                    NoteId = table.Column<int>(type: "integer", nullable: false),
+                    ExerciseId = table.Column<int>(type: "integer", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NoteExercise", x => new { x.NoteId, x.ExerciseId });
+                    table.ForeignKey(
+                        name: "FK_NoteExercise_Exercise_ExerciseId",
+                        column: x => x.ExerciseId,
+                        principalTable: "Exercise",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NoteExercise_Notes_NoteId",
+                        column: x => x.NoteId,
+                        principalTable: "Notes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -431,12 +456,12 @@ namespace EduMeilleurAPI.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "Bio", "ConcurrencyStamp", "Email", "EmailConfirmed", "FileName", "IQPoints", "LockoutEnabled", "LockoutEnd", "MimeType", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiryTime", "SchoolId", "SchoolYear", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "11111111-1111-1111-1111-111111111111", 0, null, "339d1e38-c9af-48e5-86de-8e5b43b9c327", "2ariasat@gmail.com", false, null, 0, false, null, null, "2ARIASAT@GMAIL.COM", "ADMIN", "AQAAAAIAAYagAAAAEKnYiXvYgeRQT2HOIpD/RsZTkZEuxuL02rLcg04XCmfVZ86mfMUb7Z5D5nmfXQwhCQ==", null, false, null, null, null, null, "9ed6d73e-dc90-4deb-8007-6126979b595c", false, "admin" },
-                    { "11111111-1111-1111-1111-111111111112", 0, null, "2e6158de-f06c-4072-bb1c-139c8e66e212", "bobibo@mail.com", false, null, 0, false, null, null, "BOBIBO@MAIL.COM", "ROBERT LEBOIS", "AQAAAAIAAYagAAAAENVvTqmYC7JBlCJsKVdoESJsGPagBXep22gHCiXdC7mSLjBVdgnnXJFvLPipZ94SJg==", null, false, null, null, null, null, "b1d1bd6a-048d-4494-b8a4-24607c87a9d3", false, "Robert Lebois" },
-                    { "11111111-1111-1111-1111-111111111113", 0, null, "11c8d6f0-bdfd-4df0-bb85-dc3eb9a5a930", "hmmm@mail.com", false, null, 0, false, null, null, "HMMM@MAIL.COM", "JEROME LAPLANTE", "AQAAAAIAAYagAAAAEAUFCbypvdeGXZ4Ez7Dnk6bdw+kompLcyTjneUO7BVfdGowP3EoNOVRBqFIOlcZWzQ==", null, false, null, null, null, null, "f0f0978c-a314-4397-81de-03c73b0d46b4", false, "Jerome Laplante" },
-                    { "11111111-1111-1111-1111-111111111114", 0, null, "45dd391d-e92d-4184-ae1d-591742cb8db2", "teacher3@mail.com", false, null, 0, false, null, null, "TEACHER3@MAIL.COM", "EMILY TREMBLAY", "AQAAAAIAAYagAAAAEB0xWFkQzVtL084wenLwqkH4n3145hDScP38tKiV8guu9xFZjNWSgW03+YGwv6fo/A==", null, false, null, null, null, null, "72426117-cd4e-4b0d-a1b6-52097831f1c0", false, "Emily Tremblay" },
-                    { "11111111-1111-1111-1111-111111111115", 0, null, "4f6b27ed-2f16-435b-94ff-df05a2bb1365", "teacher4@mail.com", false, null, 0, false, null, null, "teacher4@MAIL.COM", "TYRONE ROCHELIEU", "AQAAAAIAAYagAAAAEGGsuV9VDb+F2oePcWyA1vlSfQka4if9X3GZlPc7SgzJos8s2FGqjIskvR5xJQKOJQ==", null, false, null, null, null, null, "fa4bcf46-5662-4e27-974f-1c7ff063db22", false, "Tyrone Rochelieu" },
-                    { "11111111-1111-1111-1111-111111111116", 0, null, "23b6a824-c8a4-4253-8d4d-09b627fa6fd4", "teacher5@mail.com", false, null, 0, false, null, null, "teacher5@MAIL.COM", "SARAH LAIDE", "AQAAAAIAAYagAAAAEKD9hKi32WJdbmTNX6Bt0tGNX2JJ53iNl5i1CwFoNab5YbA1nSI7tGOpcgi2x5lLew==", null, false, null, null, null, null, "e06cf7c6-7300-4d12-b506-d3fb44e8c859", false, "Sarah Laide" }
+                    { "11111111-1111-1111-1111-111111111111", 0, null, "3b6ac133-b312-4f70-9c3f-b998fdb435ba", "2ariasat@gmail.com", false, null, 0, false, null, null, "2ARIASAT@GMAIL.COM", "ADMIN", "AQAAAAIAAYagAAAAENN5MvB0CZhomQoxJPFUOpjFgrsJ4/+lJUub7hcat4zFfKDZGquAkigXuHV8OGOrlw==", null, false, null, null, null, null, "974d509c-a2d5-443a-b3eb-a39f56fe909b", false, "admin" },
+                    { "11111111-1111-1111-1111-111111111112", 0, null, "71f71bdb-b648-4149-b046-22fd86d6edea", "bobibo@mail.com", false, null, 0, false, null, null, "BOBIBO@MAIL.COM", "ROBERT LEBOIS", "AQAAAAIAAYagAAAAEJHBaz91+mTSOP9O0+w7R2YmlAFOYt0eatqQV5RBqnsgaUWxQtLmd7IYbouMb7RYMw==", null, false, null, null, null, null, "0b1e5caa-1a57-4035-ac88-3a21970aa17a", false, "Robert Lebois" },
+                    { "11111111-1111-1111-1111-111111111113", 0, null, "b32e2a51-4897-46f4-96ed-d78817cf7498", "hmmm@mail.com", false, null, 0, false, null, null, "HMMM@MAIL.COM", "JEROME LAPLANTE", "AQAAAAIAAYagAAAAEKvvCBVdqOJaUPQtaPPAsQOIrtSpu8hpL1TSPzKsJiqpcU68nX6u73hHyqGmPGv/xg==", null, false, null, null, null, null, "e58da28c-c35d-4463-9be0-dea7caab697b", false, "Jerome Laplante" },
+                    { "11111111-1111-1111-1111-111111111114", 0, null, "4f07b7f7-fd11-419a-9038-e76010fb9777", "teacher3@mail.com", false, null, 0, false, null, null, "TEACHER3@MAIL.COM", "EMILY TREMBLAY", "AQAAAAIAAYagAAAAELe+G/JaX1hSc27NskZBmzb7sXh9i1F/NWeLkV2Dh+eA//QjWiG133wvtvmsJOJtCA==", null, false, null, null, null, null, "24fd9d20-d654-4319-b0a3-d49f145bea64", false, "Emily Tremblay" },
+                    { "11111111-1111-1111-1111-111111111115", 0, null, "85cd124b-6970-4e9a-bd07-d9fab0024732", "teacher4@mail.com", false, null, 0, false, null, null, "teacher4@MAIL.COM", "TYRONE ROCHELIEU", "AQAAAAIAAYagAAAAEFlOgpg9wHgmjbNmMevi4WANV6GlXnkM7HvcmQB4Tap5YYgrLU6qQbuZgfxX77n2WA==", null, false, null, null, null, null, "b8bca621-9a9d-4ef1-9e1e-2306accb7a02", false, "Tyrone Rochelieu" },
+                    { "11111111-1111-1111-1111-111111111116", 0, null, "1e867c66-28f8-462b-a198-777c5b9fdf68", "teacher5@mail.com", false, null, 0, false, null, null, "teacher5@MAIL.COM", "SARAH LAIDE", "AQAAAAIAAYagAAAAEBoO5Eg9LCNi4Qh1R+pBgYk8fkbMMbFcmay861S7WyCbsTGVOH4OqODyrNokmdnkPg==", null, false, null, null, null, null, "654b6f04-28e8-43d5-9989-03361675c273", false, "Sarah Laide" }
                 });
 
             migrationBuilder.InsertData(
@@ -490,15 +515,19 @@ namespace EduMeilleurAPI.Migrations
             migrationBuilder.InsertData(
                 table: "Chapters",
                 columns: new[] { "Id", "SubjectId", "Title" },
-                values: new object[] { 1, 2, "Vectors" });
-
-            migrationBuilder.InsertData(
-                table: "Chat",
-                columns: new[] { "Id", "Title", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "My first Chat", "11111111-1111-1111-1111-111111111111" },
-                    { 2, "My second Chat", "11111111-1111-1111-1111-111111111111" }
+                    { 1, 2, "Vectors" },
+                    { 2, 2, "Vectors2" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Exercise",
+                columns: new[] { "Id", "ChapterId", "Content", "Title" },
+                values: new object[,]
+                {
+                    { 1, 1, "SN5_IntroVectors_EN.md", "Introduction to Vectors" },
+                    { 2, 1, "SN5_Components_EN.md", "Vectors and Components" }
                 });
 
             migrationBuilder.InsertData(
@@ -506,8 +535,19 @@ namespace EduMeilleurAPI.Migrations
                 columns: new[] { "Id", "ChapterId", "Content", "Title" },
                 values: new object[,]
                 {
-                    { 1, 1, "SN5_IntroVectors_EN.md", "1.1 Introduction to Vectors" },
-                    { 2, 1, "SN5_ComponentsandOrientation_EN.md", "1.2 Components and Orientation" }
+                    { 1, 1, "SN5_IntroVectors_EN.md", "Introduction to Vectors" },
+                    { 2, 1, "SN5_ComponentsandOrientation_EN.md", "Components and Orientation" },
+                    { 3, 2, "", "testing" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "NoteExercise",
+                columns: new[] { "ExerciseId", "NoteId", "Id" },
+                values: new object[,]
+                {
+                    { 1, 1, 0 },
+                    { 2, 1, 0 },
+                    { 2, 2, 0 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -588,6 +628,11 @@ namespace EduMeilleurAPI.Migrations
                 column: "userId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_NoteExercise_ExerciseId",
+                table: "NoteExercise",
+                column: "ExerciseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Notes_ChapterId",
                 table: "Notes",
                 column: "ChapterId");
@@ -638,10 +683,7 @@ namespace EduMeilleurAPI.Migrations
                 name: "ChatMessages");
 
             migrationBuilder.DropTable(
-                name: "Exercise");
-
-            migrationBuilder.DropTable(
-                name: "Notes");
+                name: "NoteExercise");
 
             migrationBuilder.DropTable(
                 name: "Picture");
@@ -654,6 +696,12 @@ namespace EduMeilleurAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Chat");
+
+            migrationBuilder.DropTable(
+                name: "Exercise");
+
+            migrationBuilder.DropTable(
+                name: "Notes");
 
             migrationBuilder.DropTable(
                 name: "Feedbacks");

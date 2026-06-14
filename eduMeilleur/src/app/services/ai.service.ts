@@ -5,6 +5,7 @@ import { ChatMessage } from '../models/chatMessage';
 import { Chat } from '../models/chat';
 import { environment } from '../../environments/environment';
 import { ModalService } from './modal.service';
+import { UserService } from './user.service';
 
 const domain: string = environment.apiUrl
 
@@ -14,15 +15,16 @@ const domain: string = environment.apiUrl
 export class AiService {
   chats = signal<Chat[]>([]);
   currentChat = signal<Chat | null>(null);
+  selectedModel = signal<string>("");
   dropdownOpen = signal<number | null>(null);
   messages = signal<ChatMessage[]>([]);
 
   deleteId: number = -1
 
-  constructor(public http: HttpClient, public modalService: ModalService) { }
+  constructor(public http: HttpClient, public modalService: ModalService, public userService: UserService) { }
 
-  async sendMessage(text: string, chat: Chat): Promise<ChatMessage> {
-    let dto = {
+  async streamMessage(text: string, chat: Chat, onChunk?: () => void): Promise<void> {
+     let message = {
       id: 0,
       text: text,
       isUser: true,
@@ -30,10 +32,48 @@ export class AiService {
       chatId: chat.id,
     }
 
-    let x = await lastValueFrom(this.http.post<ChatMessage>(domain + "/api/Chats/SendMessage", dto))
-    console.log(x);
+    let dto = {
+      message: message,
+      modelName: this.selectedModel()
+    }
 
-    return x
+    let res = await fetch(`${domain}/api/Chats/StreamMessage`, {
+      method: 'POST',
+      headers : {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.userService.token()}`
+      },
+      body: JSON.stringify(dto),
+    })
+
+    if (!res.ok || !res.body) {
+      throw new Error(`Stream request failed: ${res.status}`);
+    }
+
+    let botMsg = new ChatMessage("", false, new Date)
+    this.messages().push(botMsg)
+
+    let reader = res.body.getReader()
+    let decoder = new TextDecoder()
+
+    while (true) {
+      let { done, value} = await reader.read()
+      if (done) break
+
+      let raw = decoder.decode(value, { stream: true });
+
+       for (let line of raw.split('\n')) {
+        if (line.startsWith('data: ')) {
+          try {
+            botMsg.text += JSON.parse(line.slice(6));
+          } catch {
+            // skip malformed lines
+          }
+        }
+      }
+
+      onChunk?.();
+    }
   }
 
   async postChat(message: string): Promise<Chat>{

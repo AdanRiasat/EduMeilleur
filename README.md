@@ -12,14 +12,6 @@ Link : https://edumeilleur.ca
 
 ÉduMeilleur is an educational platform designed for secondary school students. Many students struggle with the advanced courses they’re required to take to pursue their career goals. Finding help can be challenging, tutors are expensive, support from teachers may not always be enough, and students often lack access to sufficient practice materials. Our platform addresses all of these issues.
 
-After selecting a subject, students can access detailed written notes, educational videos, and a revision cheat sheet for each chapter all in one place. They’ll also find a variety of exercises tied to each chapter, complete with answers for self-assessment. A dedicated video page offers extra resources, including important explanations, helpful insights, and study tips.
-
-Students can also reach out to us via the contact page to ask questions. They can include images or attachments, and our team of teachers will respond with reliable answers.
-
-Additionally, the site features an AI chatbot to assist with quick and simple questions.
-
-Our Explore page, currently in development, will allow students and teachers to share notes and exercises with the community.
-
 ## Features
 
 - Notes, exercises, and videos served with markdown files provided by the backend.
@@ -28,44 +20,99 @@ Our Explore page, currently in development, will allow students and teachers to 
 
 - Loading screen during API calls using ngx-spinner.
 
-- Chatbot powered by an OpenRouter API key.
-
 - Users can send images and attachments along with their questions on the Contact Us page.
 
 - Website will be fully translated into English and French (translation not yet implemented).
+
+### Email service
+
+Email service powered by Brevo for automatically sending notifications to users and staff. Custom email templates are built using HTML and CSS.
+
+### Chatbot
+
+AI chatbot powered by the OpenRouter API, supporting multiple LLMs, persistent multi-conversation history, and real-time message streaming for responsive interactions. All conversations are stored locally in postgres.
+
+### Basic auth
+
+Login with username or email and password, api returns JWT to be stored in local storage on client. Sign up also logs user in.
+
+### OAuth
+
+Use external providers to login (ex: google). If account already exists with base auth, we simply add the provider to the existing identity as loginInfo. If the user doesn't exist we create them without password, only accessible with the provider.
 
 ## Tech Stack
 
 - Frontend: Angular
 - Backend: ASP.NET CORE
 - Database: PostgreSQL
-- Hosting: NGINX, Raspberry Pi 4
-
-## Lessons Learned
-
-This was my first experience developing a full-stack web application entirely from scratch. Setting up the backend, frontend, dependencies, and database was a significant initial challenge, but it laid the foundation for rapid feature development.
-
-I learned the importance of considering performance, code quality (DRY principles), and security from the start. Factors that aren’t as heavily emphasized in school projects but are critical when you’re fully responsible for the product.
-
-The project’s scope quickly grew, showing me how large-scale applications require continuous iteration and why such work is often distributed across entire teams.
-
-## TODOs
-
-- Replace all placeholders
-- Create real notes
-- Add error messages to edit-profile
-- Make more tests on the backend
-- Add logo
-- Explore page
-- Translate website to english and french
-- Add multiple sign up options
-- Mobile design
-- Refactor chatbot layout
-- Chatbot stream response
-- Lower size of images to load faster
-- Ssr
+- Hosting: NGINX, Raspberry Pi 4, Cloudflared tunnels
 
 ## Deployement
+
+### Local
+
+```
+# appsettings.json
+
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "EduMeilleurAPIContext": "Host=localhost;Database=EduMeilleurAPIContext;Username=postgres;Password=edumeilleur"
+  },
+  "OpenRouter": {
+    "ApiKey": "superduperkey"
+  },
+  "JWT": {
+    "Key": "superduperkey",
+    "Issuer": "https://localhost:7027/",
+    "Audience": "http://localhost:4200/"
+  },
+  "Admin": {
+    "Email": "2ariasat@gmail.com",
+    "Password": "password"
+  },
+  "Teacher": {
+    "Password": "password"
+  },
+  "Teacher2": {
+    "Password": "password"
+  },
+  "Teacher3": {
+    "Password": "password"
+  },
+  "Teacher4": {
+    "Password": "password"
+  },
+  "Teacher5": {
+    "Password": "password"
+  },
+  "BREVO": {
+    "API": {
+      "KEY": "superduperkey"
+    },
+    "SENDER": {
+      "EMAIL": "support@edumeilleur.ca",
+      "NAME": "EduMeilleur team"
+    }
+  },
+  "AUTH": {
+    "GOOGLE": {
+      "CLIENT": {
+        "ID": "superduperkey",
+        "SECRET": "superduperkey"
+      }
+    }
+  }
+}
+```
+
+### Prod
 
 ```
 # cloudflared/config.yaml
@@ -74,10 +121,10 @@ tunnel: TUNNEL_ID
 credentials-file: /etc/cloudflared/TUNNEL_ID.json
 
 ingress:
-  - hostname: yourdomain.com
+  - hostname: domain.com
     service: http://nginx:80
 
-  - hostname: api.yourdomain.com
+  - hostname: api.domain.com
     service: http://nginx:80
 
   - service: http_status:404
@@ -86,9 +133,9 @@ ingress:
 ```
 # .env
 
-EDUMEILLEUR_POSTGRES_DATABASE='postgres'
+EDUMEILLEUR_POSTGRES_DATABASE='EduMeilleurAPIContext'
 EDUMEILLEUR_POSTGRES_PASSWORD='edumeilleur'
-EDUMEILLEUR_POSTGRES_USER='edumeilleur'
+EDUMEILLEUR_POSTGRES_USER='postgres'
 EDUMEILLEUR_POSTGRES_HOST='db'
 
 JWT__Key='superduperkey'
@@ -105,7 +152,11 @@ Teacher2__Password='somepassword'
 Teacher3__Password='somepassword'
 Teacher4__Password='somepassword'
 Teacher5__Password='somepassword'
+
+BREVO__API__KEY='api-key-hurray'
+BREVO__SENDER__EMAIL='support@edumeilleur.ca'
+BREVO__SENDER__NAME='EduMeilleur Team'
+
+AUTH__GOOGLE__CLIENT__ID='client-id'
+AUTH__GOOGLE__CLIENT__SECRET='client-secret'
 ```
-
-
-

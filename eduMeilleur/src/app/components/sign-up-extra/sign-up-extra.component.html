@@ -1,53 +1,52 @@
 <form class="auth-form-wrapper" [formGroup]="formGroup()!" (ngSubmit)="formGroup()!.valid && register.emit()">
-    <div class="auth-form-fields">
-        <div class="auth-field">
-            <label for="username">Username</label>
-            <input id="username" type="text" name="username" formControlName="username" required />
-            <div *ngIf="formGroup()!.get('username')?.hasError('required') && formGroup()!.get('username')?.touched"
-                class="text-danger">
-                <p>Username is required</p>
-            </div>
-            <div *ngIf="usernamePatternError()" class="text-danger">
-                <p>Username allows some special characters: - . _ &#64; + /</p>
-            </div>
-        </div>
-
-        <div class="auth-field">
-            <label for="confirmPassword">Select school</label>
-            <select id="school" class="form-control" name="school" formControlName="school">
-                <option value="" disabled selected hidden>Select your school</option>
-                <option value="1">Antoine-Brossard</option>
-                <option value="2">Lucille-Teasdale</option>
-            </select>
-        </div>
-
-        <div class="auth-field">
-            <label for="confirmPassword">Select grade</label>
-            <select id="schoolYear" class="form-control" name="schoolYear" formControlName="schoolYear">
-                <option value="" disabled selected hidden>Select your school year</option>
-                <option value="1">Secondaire 1</option>
-                <option value="2">Secondaire 2</option>
-                <option value="3">Secondaire 3</option>
-                <option value="4">Secondaire 4</option>
-                <option value="5">Secondaire 5</option>
-            </select>
-        </div>
+  <div class="auth-form-fields">
+    <div class="auth-field">
+      <label for="username">Username</label>
+      <input id="username" type="text" name="username" formControlName="username" required />
+      <div *ngIf="formGroup()!.get('username')?.hasError('required') && formGroup()!.get('username')?.touched" class="error-message">
+        <p>Username is required</p>
+      </div>
+      <div *ngIf="usernamePatternError()" class="error-message">
+        <p>Allowed special characters: - . _ &#64; + /</p>
+      </div>
     </div>
 
-    <div class="divider">
-        <div class="line"></div>
-        <p>Or</p>
-        <div class="line"></div>
+    <div class="auth-field">
+      <label for="confirmPassword">Select school</label>
+      <select id="school" class="form-control" name="school" formControlName="school">
+        <option value="" disabled selected hidden>Select your school</option>
+        <option value="1">Antoine-Brossard</option>
+        <option value="2">Lucille-Teasdale</option>
+      </select>
     </div>
 
-    <app-auth-extra-options></app-auth-extra-options>
-
-    <div id="signup-link">
-        <a [routerLink]="['/login']">Already have an account? Sign in</a>
+    <div class="auth-field">
+      <label for="confirmPassword">Select grade</label>
+      <select id="schoolYear" class="form-control" name="schoolYear" formControlName="schoolYear">
+        <option value="" disabled selected hidden>Select your school year</option>
+        <option value="1">Secondaire 1</option>
+        <option value="2">Secondaire 2</option>
+        <option value="3">Secondaire 3</option>
+        <option value="4">Secondaire 4</option>
+        <option value="5">Secondaire 5</option>
+      </select>
     </div>
+  </div>
 
-    <div class="cta">
-        <button type="button" (click)="back.emit()">Back</button>
-        <button type="submit" [disabled]="!formGroup()!.valid">Sign up</button>
-    </div>
+  <div class="divider">
+    <div class="line"></div>
+    <p>Or</p>
+    <div class="line"></div>
+  </div>
+
+  <app-auth-extra-options></app-auth-extra-options>
+
+  <div id="signup-link">
+    <a [routerLink]="['/login']">Already have an account? Sign in</a>
+  </div>
+
+  <div class="cta">
+    <button type="button" (click)="back.emit()">Back</button>
+    <button type="submit" [disabled]="!formGroup()!.valid">Sign up</button>
+  </div>
 </form>

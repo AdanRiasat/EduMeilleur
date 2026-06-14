@@ -24,23 +24,18 @@ namespace EduMeilleurAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Video>>> GetAllVideos(int id)
+        public async Task<ActionResult> GetAllVideos(int id)
         {
-            var exercises = await _videoService.GetAllAsync(id);
-            if (exercises == null) return StatusCode(StatusCodes.Status500InternalServerError);
+            var videos = await _videoService.GetAllAsync(id);
+            if (videos == null) return StatusCode(StatusCodes.Status500InternalServerError);
 
-            var items = new List<ItemDisplayDTO>();
-
-            foreach (var item in exercises)
-            {
-                items.Add(new ItemDisplayDTO(item.Id, item.Title, item.Content, item.Chapter.Title));
-            }
+            var items = videos.Select(v => new ItemResponseDTO(v, ItemTypes.Videos));
 
             return Ok(items);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Video>> GetVideos(int id) //s for simpler frontend
+        public async Task<ActionResult> GetVideos(int id) //s for simpler frontend
         {
             var video = await _videoService.GetAsync(id);
             if (video == null) return StatusCode(StatusCodes.Status500InternalServerError);
@@ -50,7 +45,9 @@ namespace EduMeilleurAPI.Controllers
 
             video.Content = await System.IO.File.ReadAllTextAsync(filePath);
 
-            return Ok(video);
+            
+            var item = new ItemResponseDTO(video, ItemTypes.Videos);
+            return Ok(item);
         }
     }
 }

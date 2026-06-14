@@ -13,8 +13,6 @@ using EduMeilleurAPI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var jwtKey = builder.Configuration["JWT:Key"];
-
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
@@ -25,6 +23,8 @@ builder.Services.AddDbContext<EduMeilleurAPIContext>(options =>
     options.UseLazyLoadingProxies(); 
 });
 
+builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<EduMeilleurAPIContext>().AddDefaultTokenProviders();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -32,9 +32,8 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
-
-    options.SaveToken = true; 
-    options.RequireHttpsMetadata = false; // Lors du développement on peut laisser à false
+    options.SaveToken = true;
+    options.RequireHttpsMetadata = false;
     options.TokenValidationParameters = new TokenValidationParameters()
     {
         ValidateAudience = true,
@@ -43,13 +42,16 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = builder.Configuration["JWT:Issuer"], // Issuer : Serveur 
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-            .GetBytes(jwtKey)), 
+            .GetBytes(builder.Configuration["JWT:Key"]!)),
 
         ClockSkew = TimeSpan.Zero
     };
+}).AddGoogle(options =>
+{
+    options.ClientId = builder.Configuration["AUTH:GOOGLE:CLIENT:ID"];
+    options.ClientSecret = builder.Configuration["AUTH:GOOGLE:CLIENT:SECRET"];
+    options.SignInScheme = IdentityConstants.ExternalScheme;
 });
-
-builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<EduMeilleurAPIContext>().AddDefaultTokenProviders();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -99,6 +101,7 @@ builder.Services.AddScoped<IPictureService, PictureService>();
 builder.Services.AddScoped<AttachmentService>();
 builder.Services.AddScoped<ChatService>();
 builder.Services.AddScoped<ISchoolService, SchoolService>();
+builder.Services.AddSingleton<IEmailService, EmailService>();
 
 var app = builder.Build();
 
@@ -106,7 +109,12 @@ app.UseRouting();
 
 app.UseCors("AllowAll");
 
-// Configure the HTTP request pipeline.
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.None,
+    Secure = CookieSecurePolicy.SameAsRequest
+});
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -130,4 +138,6 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
+
+public partial class Program { }
 

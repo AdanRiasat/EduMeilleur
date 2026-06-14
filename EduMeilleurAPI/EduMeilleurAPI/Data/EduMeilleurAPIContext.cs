@@ -24,6 +24,19 @@ namespace EduMeilleurAPI.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<NoteExercise>()
+                .HasKey(ne => new { ne.NoteId, ne.ExerciseId });
+
+            builder.Entity<NoteExercise>()
+                .HasOne(ne => ne.Note)
+                .WithMany(n => n.NoteExercises)
+                .HasForeignKey(ne => ne.NoteId);
+
+            builder.Entity<NoteExercise>()
+                .HasOne(ne => ne.Exercise)
+                .WithMany(e => e.NoteExercises)
+                .HasForeignKey(ne => ne.ExerciseId);
+
             builder.Entity<IdentityRole>().HasData(
                 new IdentityRole { Id = "1", Name = "admin", NormalizedName = "ADMIN"},
                 new IdentityRole { Id = "2", Name = "teacher", NormalizedName = "TEACHER" }
@@ -131,32 +144,46 @@ namespace EduMeilleurAPI.Data
             .HasForeignKey("SubjectId");
 
             builder.Entity<Chapter>().HasData(
-                new Chapter {Id = 1, Title = "Vectors", SubjectId = 2}
+                new Chapter {Id = 1, Title = "Vectors", SubjectId = 2},
+                new Chapter { Id = 2, Title = "Vectors2", SubjectId = 2 }
+
             );
 
             builder.Entity<Notes>().HasData(
-                new Notes { Id = 1, Title = "1.1 Introduction to Vectors", Content = "SN5_IntroVectors_EN.md", ChapterId = 1,},
-                new Notes {Id = 2, Title = "1.2 Components and Orientation", Content = "SN5_ComponentsandOrientation_EN.md", ChapterId = 1 }
-                //new Notes { Id = 3, Title = "1* REVISION on skibidi", Content = "test.md", ChapterId = 1 },
+                new Notes { Id = 1, Title = "Introduction to Vectors", Content = "SN5_IntroVectors_EN.md", ChapterId = 1,},
+                new Notes {Id = 2, Title = "Components and Orientation", Content = "SN5_ComponentsandOrientation_EN.md", ChapterId = 1 },
+                new Notes { Id = 3, Title = "testing", Content = "", ChapterId = 2 }
             );
             
-         //   builder.Entity<Exercise>().HasData(
-                //new Exercise {Id = 1, Title = "Pythagore with friends", Content = "testExerc.md", ChapterId = 1},
-                //new Exercise { Id = 2, Title = "Find the function", Content = "testExerc.md", ChapterId = 1},
-                //new Exercise { Id = 3, Title = "Simplification", Content = "testExerc.md", ChapterId = 1 }
-           // );
+            builder.Entity<Exercise>().HasData(
+                new Exercise {Id = 1, Title = "Introduction to Vectors", Content = "SN5_IntroVectors_EN.md", ChapterId = 1 },
+                new Exercise { Id = 2, Title = "Vectors and Components", Content = "SN5_Components_EN.md", ChapterId = 1}
+            );
 
             //builder.Entity<Video>().HasData(
-                //new Video { Id = 1, Title = "hmmm I cant quite remember", Content = "vidExample.md", ChapterId = 1},
-                //new Video { Id = 2, Title = "Favorite color?", Content = "vidExample.md", ChapterId = 1},
-                //new Video { Id = 3, Title = "Sigma vs Alpha", Content = "vidExample.md", ChapterId = 2}
+            //new Video { Id = 1, Title = "hmmm I cant quite remember", Content = "vidExample.md", ChapterId = 1},
+            //new Video { Id = 2, Title = "Favorite color?", Content = "vidExample.md", ChapterId = 1},
+            //new Video { Id = 3, Title = "Sigma vs Alpha", Content = "vidExample.md", ChapterId = 2}
             //);
 
-
-            builder.Entity<Chat>().HasData(
-                new Chat { Id = 1, Title = "My first Chat", UserId = u1.Id },
-                new Chat { Id = 2, Title = "My second Chat", UserId = u1.Id }
+            builder.Entity<NoteExercise>().HasData(
+                new NoteExercise
+                {
+                    NoteId = 1,
+                    ExerciseId = 1
+                },
+                new NoteExercise
+                {
+                    NoteId = 1,
+                    ExerciseId = 2
+                },
+                new NoteExercise
+                {
+                    NoteId = 2,
+                    ExerciseId = 2
+                }
             );
+
 
             builder.Entity<School>().HasData(
                 new School { Id = 1, Name = "Antoine-Brossard"},

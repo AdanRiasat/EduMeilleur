@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EduMeilleurAPI.Models.Interfaces;
 using Xunit;
 
 namespace EduMeilleur.Tests.Services
@@ -51,7 +52,11 @@ namespace EduMeilleur.Tests.Services
                 {"Jwt:Audience", "http://localhost:4200"},
                 {"Admin:Password", "alloo123" },
                 {"Admin:Email", "hellooo@gmail.com" },
-                {"Teacher:Password", "alloo123" }
+                {"Teacher:Password", "alloo123" },
+                {"Teacher2:Password",  "Test123!"},
+                {"Teacher3:Password",  "Test123!"},
+                {"Teacher4:Password",  "Test123!"},
+                {"Teacher5:Password",  "Test123!"},
             };
 
             IConfiguration config = new ConfigurationBuilder()
@@ -67,18 +72,18 @@ namespace EduMeilleur.Tests.Services
             // Arrange
             var question = new QuestionTeacher
             {
-                Id = 0,
                 Title = "CreateValidQuestionOK",
                 Message = "Test",
                 user = _user,
             };
+            
+            IFormCollection emptyForm = new FormCollection(new Dictionary<string, StringValues>());
 
             // Act
-            var result = await _questionService.CreateQuestionTeacher(question);
+            var result = await _questionService.CreateQuestionTeacher(question, emptyForm);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal("CreateValidQuestionOK", result.Title);
+            Assert.Equal("CreateValidQuestionOK", question.Title);
 
             var fromDb = await _context.QuestionTeacher.FindAsync(1);
 
@@ -92,20 +97,18 @@ namespace EduMeilleur.Tests.Services
             // Arrange
             var feedback = new Feedback
             {
-                Id = 0,
                 Title = "CreateValidFeedbackOK",
                 Message = "Test",
                 user = _user,
             };
 
-            //Assert.Equal(0, _context.Feedbacks.Count());
+            IFormCollection emptyForm = new FormCollection(new Dictionary<string, StringValues>());
 
             // Act
-            var result = await _questionService.CreateFeedback(feedback);
+            var result = await _questionService.CreateFeedback(feedback, emptyForm);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal("CreateValidFeedbackOK", result.Title);
+            Assert.Equal("CreateValidFeedbackOK", feedback.Title);
 
             var fromDb = await _context.Feedbacks.FindAsync(1);
 
@@ -141,7 +144,7 @@ namespace EduMeilleur.Tests.Services
             var pictures = new List<Picture>();
             var attachments = new List<Attachment>();
 
-            object entity;
+            IQuestionFeedback entity;
             if (targetType == typeof(QuestionTeacher))
             {
                 entity = new QuestionTeacher
@@ -164,7 +167,7 @@ namespace EduMeilleur.Tests.Services
             }
 
             // Act
-            await _questionService.SaveFilesAndAttachements(formCollection, pictures, attachments, entity);
+            await _questionService.SaveFilesAndAttachments(formCollection, pictures, attachments, entity);
 
             // Assert
             if (mimeType.StartsWith("image/"))

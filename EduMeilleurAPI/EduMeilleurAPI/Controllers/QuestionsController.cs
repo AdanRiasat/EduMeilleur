@@ -1,21 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using EduMeilleurAPI.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using EduMeilleurAPI.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using EduMeilleurAPI.Models.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using EduMeilleurAPI.Services;
-using EduMeilleurAPI.Models.DTO;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using SixLabors.ImageSharp;
 using EduMeilleurAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace EduMeilleurAPI.Controllers
 {
@@ -25,15 +16,13 @@ namespace EduMeilleurAPI.Controllers
     {
         private readonly QuestionService _questionService;
         private readonly UserManager<User> _userManager;
-        private readonly IPictureService _pictureService;
-        private readonly AttachmentService _attachmentService;
+        private readonly IEmailService _emailService; 
 
-        public QuestionsController(QuestionService questionService, UserManager<User> userManager, IPictureService pictureService, AttachmentService attachmentService)
+        public QuestionsController(QuestionService questionService, UserManager<User> userManager, IEmailService emailService)
         {
             _questionService = questionService;
             _userManager = userManager;
-            _pictureService = pictureService;
-            _attachmentService = attachmentService;
+            _emailService = emailService;
         }
 
         [HttpPost]
@@ -42,41 +31,41 @@ namespace EduMeilleurAPI.Controllers
         {
             User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             if (user == null) return NotFound();
+            
+            var userEmail = user.Email;
+            var userName = user.UserName;
+            
+            if (userEmail == null || userName == null) return BadRequest();
+            
+            IFormCollection formCollection = await Request.ReadFormAsync();
+            string? title = Request.Form["title"];
+            string? message = Request.Form["message"];
 
-            string? Title = Request.Form["title"];
-            string? Message = Request.Form["message"];
+            if (title == null || message == null) return BadRequest();
 
-            if (Title == null || Message == null) return BadRequest();
-
-            var pictures = new List<Picture>();
-            var attachments = new List<Attachment>();
-
-            QuestionTeacher question = new QuestionTeacher()
+            var question = new QuestionTeacher
             {
-                Id = 0,
-                Title = Title,
-                Message = Message,
+                Title = title,
+                Message = message,
                 user = user
             };
 
-            var newQuestion = await _questionService.CreateQuestionTeacher(question);
-
             try
             {
-                IFormCollection formcollection = await Request.ReadFormAsync();
-                await _questionService.SaveFilesAndAttachements(formcollection, pictures, attachments, question);
+                var error = await _questionService.CreateQuestionTeacher(question, formCollection);
+                if (error != null) return BadRequest(error);
                 
+                var filePaths = _questionService.GetFilePaths(question);
+                
+                await _emailService.SendQuestionConfirmation(userEmail, userName, title, message, filePaths);
+                await _emailService.SendQuestionToTeacher(title, message, userName, userEmail, filePaths);
             } 
             catch (Exception e)
             {
-                throw;
+                return Problem(e.Message);
             }
-
-            newQuestion.Pictures = pictures;
-            newQuestion.Attachments = attachments;
-
            
-            return Ok(newQuestion);
+            return Ok(question);
         }
 
         [HttpPost]
@@ -85,43 +74,42 @@ namespace EduMeilleurAPI.Controllers
         {
             User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             if (user == null) return NotFound();
+            
+            var userEmail = user.Email;
+            var userName = user.UserName;
+            
+            if (userEmail == null || userName == null) return BadRequest();
 
-            string? Title = Request.Form["title"];
-            string? Message = Request.Form["message"];
+            IFormCollection formCollection = await Request.ReadFormAsync();
+            string? title = Request.Form["title"];
+            string? message = Request.Form["message"];
 
-            if (Title == null || Message == null) return BadRequest();
-
-            var pictures = new List<Picture>();
-            var attachments = new List<Attachment>();
+            if (title == null || message == null) return BadRequest();
 
             Feedback feedback = new Feedback()
             {
-                Id = 0,
-                Title = Title,
-                Message = Message,
+                Title = title,
+                Message = message,
                 user = user
             };
 
-            var newFeedback = await _questionService.CreateFeedback(feedback);
-
             try
             {
-                IFormCollection formcollection = await Request.ReadFormAsync();
-                await _questionService.SaveFilesAndAttachements(formcollection, pictures, attachments, feedback);
+                var error = await _questionService.CreateFeedback(feedback, formCollection);
+                if (error != null) return BadRequest(error);
 
+                var filePaths = _questionService.GetFilePaths(feedback);
+                
+                await _emailService.SendFeedbackConfirmation(userEmail, userName, title, message, filePaths);
+                await _emailService.SendFeedbackToAdmin(title, message, userName, userEmail, filePaths);
             }
             catch (Exception e)
             {
-                throw;
+                return Problem(e.Message);
             }
 
-            newFeedback.Pictures = pictures;
-            newFeedback.Attachments = attachments;
 
-
-            return Ok(newFeedback);
+            return Ok(feedback);
         }
-
-
     }
 }

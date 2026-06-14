@@ -19,14 +19,6 @@ namespace EduMeilleurAPI.Services
             return _context != null && _context.Chat != null && _context.ChatMessages != null;
         }
 
-        public async Task<bool?> IsSchoolIdValid(int? id)
-        {
-            if (!IsConstextValid()) return null;
-            if (id == null) return false;
-
-            return await _context.Schools.AnyAsync(s => s.Id == id);
-        }
-
         public async Task<School?> GetSchool(int id)
         {
             if (!IsConstextValid()) return null;

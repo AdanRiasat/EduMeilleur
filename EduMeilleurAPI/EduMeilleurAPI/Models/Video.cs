@@ -1,8 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using EduMeilleurAPI.Models.Interfaces;
+using System.Text.Json.Serialization;
 
 namespace EduMeilleurAPI.Models
 {
-    public class Video
+    public class Video : IEducationalItem
     {
         public int Id { get; set; }
         public string Title { get; set; } = null!;

@@ -1,57 +1,47 @@
 <div class="container">
-    <div class="row">
-        <div class="col-3 text-center">
-            <img id="pfp" [src]='global.pfpSrc + username + "?t=" + timestamp' alt="profile picture" class="mb-3">
+  <div class="profile-content">
+    <div class="general-info">
+      <img id="pfp" [src]="global.pfpSrc + profile!.username" alt="profile picture" class="mb-3" />
 
-            <h4 class="fw-bold">{{username}}</h4>
-            <p class="text-muted mb-1">{{email}}</p>
+      <h4 class="fw-bold">{{ profile!.username }}</h4>
+      <p class="text-muted mb-1">{{ profile!.email }}</p>
 
-            <div *ngIf="userService.roles().includes('teacher')" class="badge bg-primary mb-1">Teacher</div>
-            <div *ngIf="userService.roles().includes('admin')" class="badge bg-danger mb-3">Admin</div>
+      <div *ngIf="userService.roles().includes('teacher')" class="badge bg-primary mb-1">Teacher</div>
+      <div *ngIf="userService.roles().includes('admin')" class="badge bg-danger mb-3">Admin</div>
 
-            <div class="card text-start">
-                <div class="card-header">
-                    <h6 class="mb-0">About Me</h6>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">{{bio || "No bio yet."}}</p>
-                </div>
-            </div>
-
-            <button class="btn btn-outline-secondary mt-3" [routerLink]="['/profile', username]">Edit profile</button>
+      <div class="card text-start">
+        <div class="card-header">
+          <h6 class="mb-0">About Me</h6>
         </div>
-
-        <div class="col">
-            <div class="row">
-
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body text-center" *ngIf="school == '' || school == undefined">
-                            School
-                        </div>
-                        <div class="card-body text-center" *ngIf="school != '' && school != undefined">
-                            {{school}}
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body text-center" *ngIf="schoolYear == undefined">
-                            School Year
-                        </div>
-                        <div class="card-body text-center" *ngIf="schoolYear != undefined">
-                            Secondaire {{schoolYear}}
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="row">
-                <!--TODO bookmark area-->
-            </div>
+        <div class="card-body">
+          <p class="card-text">{{ profile!.bio || "No bio yet." }}</p>
         </div>
+      </div>
+
+      <button class="btn btn-outline-secondary mt-3" [routerLink]="['/profile', profile!.username]">Edit profile</button>
     </div>
-    
 
+    <div class="extra-info">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-body text-center" *ngIf="profile!.school == '' || profile!.school == undefined">School</div>
+            <div class="card-body text-center" *ngIf="profile!.school != '' && profile!.school != undefined">
+              {{ profile!.school }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-body text-center" *ngIf="profile!.schoolYear == undefined">School Year</div>
+            <div class="card-body text-center" *ngIf="profile!.schoolYear != undefined">Secondaire {{ profile!.schoolYear }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!--TODO bookmark area-->
+      </div>
+    </div>
+  </div>
 </div>

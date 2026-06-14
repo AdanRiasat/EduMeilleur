@@ -25,24 +25,19 @@ namespace EduMeilleurAPI.Controllers
 
         // GET: api/Exercises
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Exercise>>> GetAllExercises(int id)
+        public async Task<ActionResult> GetAllExercises(int id)
         {
             var exercises = await _exerciseService.GetAllAsync(id);
             if (exercises == null) return StatusCode(StatusCodes.Status500InternalServerError);
 
-            var items = new List<ItemDisplayDTO>();
-
-            foreach (var item in exercises)
-            {
-                items.Add(new ItemDisplayDTO(item.Id, item.Title, item.Content, item.Chapter.Title));
-            }
+            var items = exercises.Select(e => new ItemResponseDTO(e, ItemTypes.Exercises, ItemTypes.Notes, e.NoteExercises.Select(ne => new RelatedItemDTO(ne.NoteId, ne.Note.Code)).ToList()));
 
             return Ok(items);
         }
 
         // GET: api/Exercises/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Exercise>> GetExercises(int id) //s for simpler frontend
+        public async Task<ActionResult> GetExercises(int id) //s for simpler frontend
         {
             var exercise = await _exerciseService.GetAsync(id);
             if (exercise == null) return StatusCode(StatusCodes.Status500InternalServerError);
@@ -52,7 +47,8 @@ namespace EduMeilleurAPI.Controllers
 
             exercise.Content = await System.IO.File.ReadAllTextAsync(filePath);
 
-            return Ok(exercise);
+            var item = new ItemResponseDTO(exercise, ItemTypes.Exercises, ItemTypes.Notes, exercise.NoteExercises.Select(ne => new RelatedItemDTO(ne.NoteId, ne.Note.Code)).ToList());
+            return Ok(item);
         }
 
        

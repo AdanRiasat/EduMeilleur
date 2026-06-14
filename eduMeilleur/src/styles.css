@@ -6,12 +6,13 @@
 
   --button: #5fa8d3;
   --btnHover: #4a94c0;
-  --item-hover: rgba(13, 110, 253, 0.5);
 
   --border: #457b9d;
   --border-lite: rgba(69, 123, 157, 0.5);
+  --border-lite-lite: rgba(69, 123, 157, 0.3);
 
-  --active: #457b9d;
+  --item-hover: #eef4f8;
+  --active: rgba(95, 168, 211, 0.16);
 
   --bg: hsl(202, 46%, 91%);
 
@@ -37,12 +38,12 @@ body {
   height: auto;
 }
 
-ul{
+ul {
   padding: 0;
 }
 
 li {
- list-style-type: none;
+  list-style-type: none;
 }
 
 h1 {
@@ -57,7 +58,10 @@ h3 {
   font-size: var(--h3-text-size);
 }
 
-p, input, label, a {
+p,
+input,
+label,
+a {
   font-size: var(--reg-text-size);
 }
 
@@ -106,6 +110,13 @@ button:disabled {
   height: 100vh;
 }
 
+#auth-logo {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+  cursor: pointer;
+}
+
 .right-side {
   width: 50vw;
   height: 100vh;
@@ -113,6 +124,7 @@ button:disabled {
 }
 
 .auth-field {
+  position: relative;
   align-self: stretch;
   display: flex;
   flex-direction: column;
@@ -143,7 +155,7 @@ button:disabled {
 .auth-form-fields {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 30px;
 }
 
 #signup-link {
@@ -157,6 +169,15 @@ button:disabled {
   width: 100%;
 }
 
+.error-message {
+  position: absolute;
+  bottom: -26px;
+}
+
+.error-message p {
+  color: red;
+}
+
 @media screen and (max-width: 1200px) {
   .right-side {
     display: none;
@@ -166,9 +187,3 @@ button:disabled {
     width: 100vw;
   }
 }
-
-
-
-
-
-

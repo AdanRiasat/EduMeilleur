@@ -27,10 +27,8 @@ namespace EduMeilleurAPI.Services
             return _context != null && _context.Chat != null && _context.ChatMessages != null; 
         }
 
-        public async Task<ChatMessage?> PostMessage(ChatMessage chatMessage)
+        public async IAsyncEnumerable<string> StreamMessage(ChatMessage chatMessage, string modelName)
         {
-            if (!IsConstextValid()) return null;
-
             string apiKey = _config["OpenRouter:ApiKey"];
 
             _context.ChatMessages.Add(chatMessage);
@@ -38,7 +36,8 @@ namespace EduMeilleurAPI.Services
 
             var request = new
             {
-                model = "deepseek/deepseek-chat-v3.1:free",
+                model = modelName,
+                stream = true,
                 messages = new[]
                 {
                     new { role = "user", content = chatMessage.Text }
@@ -47,27 +46,58 @@ namespace EduMeilleurAPI.Services
 
             var httpRequest = new HttpRequestMessage(HttpMethod.Post, Url);
             httpRequest.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
-            httpRequest.Headers.Add("HTTP-Referer", "https://localhost:7027");
+            httpRequest.Headers.Add("HTTP-Referer", _config["JWT:Issuer"]);
             httpRequest.Headers.Add("X-Title", "EduMeilleur");
             httpRequest.Content = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.SendAsync(httpRequest);
+            var response = await _httpClient.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead);
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception("AI service failed to respond.");
             }
 
-            var responseBody = await response.Content.ReadAsStringAsync();
-            using var doc = JsonDocument.Parse(responseBody);
-            string? aiText = doc.RootElement
-                .GetProperty("choices")[0]
-                .GetProperty("message")
-                .GetProperty("content")
-                .GetString();
+            var fullReply = new StringBuilder();
+
+            using var stream = await response.Content.ReadAsStreamAsync();
+            using var reader = new StreamReader(stream);
+
+
+            while (!reader.EndOfStream)
+            {
+                var line = await reader.ReadLineAsync();
+
+                if (string.IsNullOrWhiteSpace(line)) continue;
+                if (!line.StartsWith("data: ")) continue;
+
+                var json = line["data: ".Length..];
+
+                if (json == "[DONE]") break;
+
+                string? token = null;
+                try
+                {
+                    using var doc = JsonDocument.Parse(json);
+                    token = doc.RootElement
+                        .GetProperty("choices")[0]
+                        .GetProperty("delta")
+                        .GetProperty("content")
+                        .GetString();
+                }
+                catch (Exception)
+                {
+                    continue; // malformed chunk, skip
+                }
+
+                if (!string.IsNullOrEmpty(token))
+                {
+                    fullReply.Append(token);
+                    yield return token;
+                }
+            }
 
             var aiMessage = new ChatMessage
             {
-                Text = aiText ?? "No response.",
+                Text = fullReply.ToString(),
                 ChatId = chatMessage.ChatId,
                 TimeStamp = DateTime.UtcNow,
                 IsUser = false
@@ -75,8 +105,6 @@ namespace EduMeilleurAPI.Services
 
             _context.ChatMessages.Add(aiMessage);
             await _context.SaveChangesAsync();
-
-            return aiMessage;
         }
 
         public async Task<Chat?> PostChat(Chat chat)

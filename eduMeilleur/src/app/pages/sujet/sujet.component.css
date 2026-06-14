@@ -1,4 +1,5 @@
-.scroll-content{
+.scroll-content {
+  position: relative;
   background-color: #f2f2f2;
   padding: 20px clamp(10px, 10vw, 200px);
 }
@@ -6,11 +7,11 @@
 .scroll-sidebar {
   top: 70px;
   position: sticky;
-  height: 100vh;       /* Full screen height */
-  overflow-y: auto;    /* Enable vertical scrolling */
+  height: 100vh;
+  overflow-y: auto;
   padding: 1rem;
-  border-right: 1px solid #ddd; /* Optional: visual separation */
-  background-color: hsl(202, 46%, 91%);    /* Optional: subtle background */
+  border-right: 1px solid #ddd;
+  background-color: white;
 }
 
 #sujet-sidebar {
@@ -24,6 +25,41 @@
   min-width: 0;
 }
 
+.content-cta {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  padding: 10px;
+
+  color: white;
+  background: var(--button);
+  border: none;
+  border-radius: 5px;
+}
+
+/* The icon-only view is exclusive to the mobile breakpoint below. */
+.content-cta .cta-icon {
+  display: none;
+}
+
+.not-available {
+  scale: 1.1;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  opacity: 0.5;
+}
+
+.not-available svg {
+  opacity: 0.4;
+}
+
 app-subject-sidebar {
   display: block;
   width: 100%;
@@ -33,5 +69,31 @@ app-subject-sidebar {
   #sujet-sidebar {
     display: none !important;
   }
-}
 
+  .content-cta {
+    display: flex;
+    align-items: center;
+  }
+
+  .content-cta .cta-icon {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .content-cta .cta-text {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition:
+      max-width 0.35s ease,
+      opacity 0.3s ease,
+      margin-left 0.35s ease;
+  }
+
+  .content-cta.expanded .cta-text {
+    max-width: 70vw;
+    opacity: 1;
+    margin-left: 6px;
+  }
+}

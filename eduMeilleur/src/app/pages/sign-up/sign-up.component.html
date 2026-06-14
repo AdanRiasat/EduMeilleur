@@ -1,5 +1,8 @@
 <div class="auth-container">
   <div class="left-side">
+    <div id="auth-logo">
+      <img src="logo.png" width="75px" height="75px" [routerLink]="['']" />
+    </div>
 
     <div class="signup-forms">
       <h2>Sign up</h2>
@@ -8,18 +11,11 @@
       </div>
 
       <form>
-        <app-sign-up-main [formGroup]="formGroupMain" (next)="goToSecondPage()"
-          *ngIf="isFirstPage()"></app-sign-up-main>
-        <app-sign-up-extra [formGroup]="formGroupExtra" (back)="goToFirstPage()" (register)="register()"
-          *ngIf="!isFirstPage()"></app-sign-up-extra>
+        <app-sign-up-main [formGroup]="formGroupMain" (next)="goToSecondPage()" *ngIf="isFirstPage()"></app-sign-up-main>
+        <app-sign-up-extra [formGroup]="formGroupExtra" (back)="goToFirstPage()" (register)="register()" *ngIf="!isFirstPage()"></app-sign-up-extra>
       </form>
-
     </div>
   </div>
 
   <div class="right-side"></div>
 </div>
-
-<app-modal modalId="error500Modal" title="Something went wrong"
-  body="Our servers are currently having issues, please try again later" cancelText="Ok" confirmText="Try again"
-  (confirmed)="register()"></app-modal>

@@ -11,7 +11,8 @@ h3 {
   font-size: var(--h3-fixed-size);
 }
 
-p, button {
+p,
+button {
   font-size: var(--p-fixed-size) !important;
 }
 
@@ -24,6 +25,7 @@ p, button {
 }
 
 .chapter-section {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -38,13 +40,19 @@ p, button {
 .sub-chapters {
   display: flex;
   flex-direction: column;
-  gap: 15px; 
+  gap: 15px;
+}
+
+.sidebar-buttons {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .sidebar-buttons button {
   padding: 0.4rem 0.75rem;
   background-color: white;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-lite-lite);
   border-radius: 4px;
   text-align: left;
   transition: background-color 0.2s;
@@ -52,7 +60,11 @@ p, button {
 }
 
 .sidebar-buttons button:hover {
-  background-color: #deeef7;
+  background-color: var(--item-hover);
+}
+
+.sidebar-buttons button.active {
+  background-color: var(--active);
 }
 
 .item {
@@ -64,7 +76,7 @@ p, button {
   background-color: white;
 
   border-radius: 5px;
-  border: solid 1px #ccc;
+  border: solid 1px var(--border-lite-lite);
   transition: background-color 0.2s;
 }
 
@@ -78,6 +90,9 @@ p, button {
 
 .item.active {
   background-color: var(--active);
-  color: white;
 }
 
+.item:hover p,
+.item.active p {
+  color: var(--dark-text-color);
+}

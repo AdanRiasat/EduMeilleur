@@ -1,3 +1,14 @@
+#logo {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+#logo img {
+  position: relative;
+  top: -4px;
+}
+
 #main-row {
   height: 70px;
 }
@@ -51,7 +62,10 @@
 
 .user-nav .btn .bi {
   color: #fff;
-  transition: transform 0.18s ease, color 0.18s ease, fill 0.18s ease;
+  transition:
+    transform 0.18s ease,
+    color 0.18s ease,
+    fill 0.18s ease;
 }
 
 .user-nav .btn:hover .bi {
@@ -64,8 +78,6 @@ a {
   color: white;
   cursor: pointer;
 }
-
-
 
 .row {
   margin: 0;
@@ -93,7 +105,16 @@ a {
   border-radius: 0;
   text-decoration: underline;
   text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
+  text-underline-offset: 6px;
+}
+
+.nav-bar-active {
+  background-color: rgba(201, 232, 255, 0.2);
+  color: #f8f9fa;
+  border-radius: 0;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
 }
 
 .img-circle {

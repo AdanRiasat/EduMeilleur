@@ -11,16 +11,15 @@
 
   <!-- Subjects Grid -->
   <div class="row g-4">
-  <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let s of displaySujets">
-    <a [routerLink]="['/sujets', s.id]" class="text-decoration-none text-dark">
-      <div class="card h-100 shadow-sm border-0">
-        <div class="card-body">
-          <h5 class="card-title">{{ s.name }}</h5>
-          <p class="card-text">{{ s.description }}</p>
+    <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let s of displaySujets">
+      <a [routerLink]="['/sujets', s.id]" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body">
+            <h5 class="card-title">{{ s.name }}</h5>
+            <p class="card-text">{{ s.description }}</p>
+          </div>
         </div>
-      </div>
-    </a>
+      </a>
+    </div>
   </div>
 </div>
-
-<app-modal modalId="error500Modal" title="Something went wrong" body="Our servers are currently having issues, please try again later" cancelText="Ok" confirmText="Try again" (confirmed)="ngOnInit()"></app-modal>

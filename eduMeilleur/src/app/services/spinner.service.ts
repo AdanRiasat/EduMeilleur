@@ -1,25 +1,24 @@
 import { Injectable } from '@angular/core';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SpinnerService {
+  constructor(private spinner: NgxSpinnerService) {}
 
-  constructor(private spinner: NgxSpinnerService) { }
-
-  show(){
+  show() {
     this.spinner.show(undefined, {
       type: 'ball-clip-rotate',
       size: 'medium',
       bdColor: 'rgba(0,0,16,0.8)',
       color: '#fff',
-      fullScreen: true
-    })
+      fullScreen: true,
+      zIndex: 9,
+    });
   }
 
   hide() {
-    this.spinner.hide()
+    this.spinner.hide();
   }
 }

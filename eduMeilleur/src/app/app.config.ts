@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { errorInterceptor } from './interceptors/error.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,11 +14,11 @@ export const appConfig: ApplicationConfig = {
       routes,
       withInMemoryScrolling({
         scrollPositionRestoration: 'top',
-        anchorScrolling: 'enabled'
-      })
+        anchorScrolling: 'enabled',
+      }),
     ),
     provideAnimations(),
     importProvidersFrom(NgbCarouselModule),
-    provideHttpClient(withInterceptors([authInterceptor]))
-   ],
+    provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
+  ],
 };

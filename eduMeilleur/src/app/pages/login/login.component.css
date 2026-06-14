@@ -4,9 +4,14 @@ a {
   cursor: pointer;
 }
 
-h2, p {
+h2,
+p {
   padding: 0;
   margin: 0;
+}
+
+form {
+  position: relative;
 }
 
 .login-forms {
@@ -40,6 +45,3 @@ h2, p {
 .login-btn:hover {
   background: var(--btnHover);
 }
-
-
-

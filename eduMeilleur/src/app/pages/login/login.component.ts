@@ -5,63 +5,61 @@ import { UserService } from '../../services/user.service';
 import { Router, RouterModule } from '@angular/router';
 import { SpinnerService } from '../../services/spinner.service';
 import { Modal } from 'bootstrap';
-import { ModalComponent } from '../../components/modal/modal.component';
 import { AuthExtraOptionsComponent } from '../../components/auth-extra-options/auth-extra-options.component';
+import { ModalService } from '../../services/modal.service';
+import { ToastService } from '../../services/toast.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterModule, ModalComponent, AuthExtraOptionsComponent, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, RouterModule, AuthExtraOptionsComponent, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  errors: { [key: string]: string} = {}
+  errors: { [key: string]: string } = {};
 
-  formGroup: FormGroup
+  formGroup: FormGroup;
 
-  constructor(public userService: UserService, public router: Router, public spinner: SpinnerService, private formBuilder: FormBuilder) {
-    this.formGroup = formBuilder.group(
-      {
-        username: ['', [Validators.required]],
-        password: ['', [Validators.required]]
-      }
-    )
+  constructor(
+    public userService: UserService,
+    public spinnerService: SpinnerService,
+    public router: Router,
+    private formBuilder: FormBuilder,
+    public modalService: ModalService,
+    public toastService: ToastService,
+  ) {
+    this.formGroup = formBuilder.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
   }
 
   async login() {
-    this.spinner.show()
-    this.errors = {}
+    this.spinnerService.show();
+    this.errors = {};
 
-    let username = this.formGroup.get('username')?.value
-    let password = this.formGroup.get('password')?.value
+    let username = this.formGroup.get('username')?.value;
+    let password = this.formGroup.get('password')?.value;
 
     try {
-      await this.userService.login(username, password)
+      await this.userService.login(username, password);
 
-      if (this.userService.token() != null){
-        this.spinner.hide()
+      if (this.userService.token() != null) {
+        this.spinnerService.hide();
         this.router.navigate(['/profile']);
       }
-    } catch (error: any){
+    } catch (error: any) {
       console.log(error);
-      
-      if (error.status === 0){
-        this.openErrorModal()
-        return
-      }
-      this.errors["badRequest"] = error.error.message
-    }
-    
-    this.spinner.hide()
-  }
 
-  openErrorModal(){
-      let modalElement = document.getElementById('error500Modal')
-      if (modalElement){
-        let modal = new Modal(modalElement)
-        modal.show()
-        this.spinner.hide()
+      if (error.status === 0 || error.status === 500) {
+        this.modalService.openErrorModal(() => this.login());
+        return;
       }
+      this.toastService.error(error.error.message);
+    }
+
+    this.spinnerService.hide();
   }
 }
