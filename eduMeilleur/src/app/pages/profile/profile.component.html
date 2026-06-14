@@ -1,6 +1,6 @@
 <div class="container">
-  <div class="row">
-    <div class="col-3 text-center">
+  <div class="profile-content">
+    <div class="general-info">
       <img id="pfp" [src]="global.pfpSrc + profile!.username" alt="profile picture" class="mb-3" />
 
       <h4 class="fw-bold">{{ profile!.username }}</h4>
@@ -21,7 +21,7 @@
       <button class="btn btn-outline-secondary mt-3" [routerLink]="['/profile', profile!.username]">Edit profile</button>
     </div>
 
-    <div class="col">
+    <div class="extra-info">
       <div class="row">
         <div class="col">
           <div class="card">
