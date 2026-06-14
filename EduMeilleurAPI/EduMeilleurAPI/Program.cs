@@ -50,6 +50,7 @@ builder.Services.AddAuthentication(options =>
 {
     options.ClientId = builder.Configuration["AUTH:GOOGLE:CLIENT:ID"];
     options.ClientSecret = builder.Configuration["AUTH:GOOGLE:CLIENT:SECRET"];
+    options.CallbackPath = "/api/signin-google";
     options.SignInScheme = IdentityConstants.ExternalScheme;
 });
 
